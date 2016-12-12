@@ -26,16 +26,16 @@
 
 application data diagramm (схема данных приложения)
 
-          user 
-           /∞
-          /
-         /1
-       role
-      1/  \∞
-      /    \
-    ∞/      \∞
-action      view
-    ∞\______/1
+              user 
+               /∞
+              /
+             /1
+           role
+          1/  \∞
+          /    \
+        ∞/      \∞
+    action      view
+        ∞\______/1
 
 roles:
   administrator (Администратор)
@@ -66,9 +66,9 @@ actions:
 
 information model ontology (онтология информационной модели)
 
-              1 1
-     employee --- card
-      |1         /1  \1
-      |         /     \
-      |∞        |∞    |∞
-month_pay  position  children
+                  1 1
+         employee --- card
+          |1         /1  \1
+          |         /     \
+          |∞        |∞    |∞
+    month_pay  position  children
