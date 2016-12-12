@@ -37,31 +37,31 @@ application data diagramm (схема данных приложения)
     action      view
         ∞\______/1
 
-roles:
-  administrator (Администратор)
-  boss (Руководитель)
-  booker (Бухгалтер)
-  personnel officer (Кадровый сотрудник)
-  trade union leader (Профсоюзный лидер)
+    roles:
+      administrator (Администратор)
+      boss (Руководитель)
+      booker (Бухгалтер)
+      personnel officer (Кадровый сотрудник)
+      trade union leader (Профсоюзный лидер)
 
-views:
-  base:
-    employee-children (дети сотрудника)
-    employee-address (место жительства сотрудника)
-    employee-cards (личные листки учета кадров)
-    employee-finance (зарплата)
-  query:
-    employee-children(up 1 to 13 years old)
-    employee-pay(by three months)
+    views:
+      base:
+        employee-children (дети сотрудника)
+        employee-address (место жительства сотрудника)
+        employee-cards (личные листки учета кадров)
+        employee-finance (зарплата)
+      query:
+        employee-children(up 1 to 13 years old)
+        employee-pay(by three months)
 
-actions:
-  add-employee-card (добавить карточку сотрудника)
-  rem-employee-card (удалить карточку сотрудника)
-  mod-employee-card (изменить карточку сотрудника)
-  change-position (изменить должность сотрудника)
-  change-address (изменить адрес сотрудника)
-  add-child (добавить ребенка сотрудника)
-  set-month-pay (добавить свдения о з/п за текущий месяц)
+    actions:
+      add-employee-card (добавить карточку сотрудника)
+      rem-employee-card (удалить карточку сотрудника)
+      mod-employee-card (изменить карточку сотрудника)
+      change-position (изменить должность сотрудника)
+      change-address (изменить адрес сотрудника)
+      add-child (добавить ребенка сотрудника)
+      set-month-pay (добавить свдения о з/п за текущий месяц)
 
 
 information model ontology (онтология информационной модели)
