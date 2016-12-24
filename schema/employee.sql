@@ -62,6 +62,7 @@ CREATE TABLE 'employee_children_association' (
 );
 
 CREATE TABLE `position` (
+  `id` int NOT NULL primary key AUTO_INCREMENT,
   `post_name` varchar(30),
   `assign_date` int,
 );
