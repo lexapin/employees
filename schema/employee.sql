@@ -1,11 +1,11 @@
 DROP TABLE IF EXISTS employee_month_pay_association;
 DROP TABLE IF EXISTS employee_children_association;
-DROP TABLE IF EXISTS employee_position_association;
-DROP TABLE IF EXISTS card;
-DROP TABLE IF EXISTS employee;
-DROP TABLE IF EXISTS month_pay;
+DROP TABLE IF EXISTS employee_place_association;
 DROP TABLE IF EXISTS child;
-DROP TABLE IF EXISTS position;
+DROP TABLE IF EXISTS place;
+DROP TABLE IF EXISTS card;
+DROP TABLE IF EXISTS month_pay;
+DROP TABLE IF EXISTS employee;
 
 CREATE TABLE `employee` (
   `id` int NOT NULL AUTO_INCREMENT primary key,
@@ -67,7 +67,7 @@ CREATE TABLE `place` (
   `assign_date` int(11)
 );
 
-CREATE TABLE `employee_position_association` (
+CREATE TABLE `employee_place_association` (
   `id` int NOT NULL AUTO_INCREMENT primary key,
   `employee_id` int(11) DEFAULT NULL,
   `place_id` int(11) DEFAULT NULL,
