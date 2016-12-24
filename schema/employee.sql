@@ -36,7 +36,7 @@ CREATE TABLE `month_pay` (
 );
 
 CREATE TABLE `employee_month_pay_association` (
-  `id` int NOT NULL primary key AUTO_INCREMENT,
+  `id` int NOT NULL AUTO_INCREMENT primary key,
   `employee_id` int NOT NULL,
   `month_pay_id` int NOT NULL,
   FOREIGN KEY (employee_id)
@@ -51,8 +51,8 @@ CREATE TABLE `child` (
   `date_of_birth` int(11)
 );
 
-CREATE TABLE 'employee_children_association' (
-  `id` int NOT NULL primary key AUTO_INCREMENT,
+CREATE TABLE `employee_children_association` (
+  `id` int NOT NULL AUTO_INCREMENT primary key,
   `employee_id` int DEFAULT NULL,
   `child_id` int DEFAULT NULL,
   FOREIGN KEY (employee_id)
@@ -67,7 +67,7 @@ CREATE TABLE `position` (
   `assign_date` int
 );
 
-CREATE TABLE 'employee_position_association' (
+CREATE TABLE `employee_position_association` (
   `id` int NOT NULL primary key AUTO_INCREMENT,
   `employee_id` int DEFAULT NULL,
   `position_id` int DEFAULT NULL,
