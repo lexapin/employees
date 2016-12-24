@@ -10,7 +10,7 @@ DROP TABLE IF EXISTS position;
 CREATE TABLE `employee` (
   `id` int NOT NULL AUTO_INCREMENT primary key,
   `first_name` varchar(20),
-  `last_name` varchar(20),
+  `last_name` varchar(20)
 );
 
 CREATE TABLE `card` (
@@ -24,7 +24,7 @@ CREATE TABLE `card` (
   `education`        varchar(20),
   `foreign_language` varchar(20),
   FOREIGN KEY (employee_id)
-        REFERENCES employee(id),
+        REFERENCES employee(id)
 );
 
 CREATE TABLE `month_pay` (
@@ -32,7 +32,7 @@ CREATE TABLE `month_pay` (
   `month` int NOT NULL,
   `year` int NOT NULL,
   `salary` int NOT NULL,
-  `bonus` int NOT NULL,
+  `bonus` int NOT NULL
 );
 
 CREATE TABLE `employee_month_pay_association` (
@@ -48,7 +48,7 @@ CREATE TABLE `employee_month_pay_association` (
 CREATE TABLE `child` (
   `id` int NOT NULL primary key AUTO_INCREMENT,
   `name` varchar(100),
-  `date_of_birth` int(11),
+  `date_of_birth` int(11)
 );
 
 CREATE TABLE 'employee_children_association' (
@@ -64,7 +64,7 @@ CREATE TABLE 'employee_children_association' (
 CREATE TABLE `position` (
   `id` int NOT NULL primary key AUTO_INCREMENT,
   `post_name` varchar(30),
-  `assign_date` int,
+  `assign_date` int
 );
 
 CREATE TABLE 'employee_position_association' (
