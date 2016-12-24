@@ -71,7 +71,7 @@ information model ontology (онтология информационной мо
           |1         /1  \1
           |         /     \
           |∞        |∞    |∞
-    month_pay  position  child
+    month_pay     place  child
 
     employee (сотрудник)
       first_name
@@ -91,8 +91,8 @@ information model ontology (онтология информационной мо
       children
       positions
 
-    position (должность)
-      post_name
+    place (должность)
+      place_name
       assign_date
 
     child (ребенок)
