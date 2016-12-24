@@ -40,4 +40,4 @@ def login_required_when_anonymous(func):
     return func(*args, **kwargs)
   return decorated_view
 
-from app import views
+from application import views
