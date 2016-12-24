@@ -61,18 +61,18 @@ CREATE TABLE `employee_children_association` (
         REFERENCES child(id)
 );
 
-CREATE TABLE `position` (
+CREATE TABLE `place` (
   `id` int NOT NULL primary key AUTO_INCREMENT,
-  `post_name` varchar(30),
-  `assign_date` int
+  `place_name` varchar(30),
+  `assign_date` int(11)
 );
 
 CREATE TABLE `employee_position_association` (
-  `id` int NOT NULL primary key AUTO_INCREMENT,
-  `employee_id` int DEFAULT NULL,
-  `position_id` int DEFAULT NULL,
+  `id` int NOT NULL AUTO_INCREMENT primary key,
+  `employee_id` int(11) DEFAULT NULL,
+  `place_id` int(11) DEFAULT NULL,
   FOREIGN KEY (employee_id)
         REFERENCES employee(id),
-  FOREIGN KEY (position_id)
-        REFERENCES position(id)
+  FOREIGN KEY (place_id)
+        REFERENCES place(id)
 );
