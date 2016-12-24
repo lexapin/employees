@@ -5,7 +5,7 @@ app = Flask(__name__)
 app.config.from_object('config')
 
 from flask.ext.login import LoginManager, AnonymousUser, current_user
-from app.user import User
+from application.user import User
 from functools import wraps
 
 login_manager = LoginManager()
