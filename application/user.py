@@ -19,12 +19,12 @@ class User(object):
     return False
 
   def get_id(self):
-    f = File()
-    cursor = f.db.cursor()
-    cursor.execute("SELECT id FROM users WHERE username = %s", (self.username,))
-    self.id = cursor.fetchone()[0]
-    print "!"*50, self.id
-    cursor.close()
+    # f = File()
+    # cursor = f.db.cursor()
+    # cursor.execute("SELECT id FROM users WHERE username = %s", (self.username,))
+    # self.id = cursor.fetchone()[0]
+    # cursor.close()
+    self.id = id(self)
     return unicode(self.id)
 
   def __repr__(self):
@@ -36,6 +36,5 @@ class User(object):
     cursor = f.db.cursor()
     cursor.execute("SELECT username, password FROM users WHERE id = %s;", (_id,))
     data = cursor.fetchone()
-    print data
     cursor.close()
     return User(data[0], data[1]) if data else None
