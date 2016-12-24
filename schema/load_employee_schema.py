@@ -10,7 +10,7 @@ script = script_file.read()
 script_file.close()
 
 conf = {
-	"host": "mysql.server",
+	"host": "robot4.mysql.pythonanywhere-services.com",
 	"username": "robot4",
 	"password": "12345",
 	"database": "robot4$employee"
