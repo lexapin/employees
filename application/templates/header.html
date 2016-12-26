@@ -27,6 +27,7 @@
               {% for button in current_user.buttons %}
                   <li><a href="{{ url_for(button["func"]) }}">{{ button["name"] }}</a></li>
               {% endfor %}
+                  <li><a href="{{ request.url_root+"/foma" }}">FOMA</a></li>
           {% endif %}
       </ul>
     </div>
