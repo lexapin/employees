@@ -24,14 +24,14 @@ def registration_failed_redirection():
 def login():
   if request.method == 'GET':
     return render_template('login.html', title = u"Вход")
-  f = File()
-  cursor = f.db.cursor()
   username = request.form['username']
   password = request.form['password']
   if username == "admin":
     if password == admin_password: login_user(User("admin", admin_password))
     else: return registration_failed_redirection()
   else:
+    f = File()
+    cursor = f.db.cursor()
     count = cursor.execute("SELECT username, password FROM users WHERE username = %s AND password = %s", (username, password))
     if not count: return registration_failed_redirection()
     registered_user = cursor.fetchone()
