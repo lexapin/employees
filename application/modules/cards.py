@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from flask import render_template
 from config import get_db
 
 def get_cards():
