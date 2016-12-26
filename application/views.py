@@ -55,4 +55,5 @@ def index():
     user = "not imported"
   else:
     user = "password %s"%admin
-  return str(current_user)+user
+  returned_string = repr(current_user) + user
+  return returned_string
