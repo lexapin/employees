@@ -1,4 +1,4 @@
-DROP TABLE IF EXISTS user
+DROP TABLE IF EXISTS user;
 CREATE TABLE `user` (
   `id` int NOT NULL AUTO_INCREMENT primary key,
   `username` varchar(20) unique,
