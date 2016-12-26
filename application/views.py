@@ -34,7 +34,7 @@ def login():
   login_user(User(registered_user[0], registered_user[1]))
 
   flash(u"Вход выполнен, %s"%current_user)
-  return redirect(request.args.get('next'))
+  return redirect(request.args.get('next') or url_for('index'))
 
 
 @app.route('/logout')
