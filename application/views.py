@@ -55,5 +55,5 @@ def index():
     user = "not imported"
   else:
     user = "password %s"%admin
-  returned_string = repr(current_user).encode('utf-8') + user
+  returned_string = repr(current_user).encode('utf-8') + user.encode('utf-8')
   return returned_string
