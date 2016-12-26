@@ -28,7 +28,7 @@ def login():
   password = request.form['password']
   db = get_db()
   cursor = db.cursor()
-  count = cursor.execute("SELECT username, password FROM users WHERE username = %s AND password = %s", (username, password))
+  count = cursor.execute("SELECT username, password FROM user WHERE username = %s AND password = %s", (username, password))
   if not count: return registration_failed_redirection()
   registered_user = cursor.fetchone()
   login_user(User(registered_user[0], registered_user[1]))
