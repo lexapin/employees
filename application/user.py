@@ -22,7 +22,7 @@ class User(object):
   def get_id(self):
     db = get_db()
     cursor = db.cursor()
-    cursor.execute("SELECT id FROM users WHERE username = %s", (self.username,))
+    cursor.execute("SELECT id FROM user WHERE username = %s", (self.username,))
     self.id = cursor.fetchone()[0]
     cursor.close()
     return unicode(self.id)
@@ -34,7 +34,7 @@ class User(object):
   def get(cls, _id):
     db = get_db()
     cursor = db.cursor()
-    cursor.execute("SELECT username, password FROM users WHERE id = %s;", (_id,))
+    cursor.execute("SELECT username, password FROM user WHERE id = %s;", (_id,))
     data = cursor.fetchone()
     cursor.close()
     return User(data[0], data[1]) if data else None
