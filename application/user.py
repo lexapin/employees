@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from flask.ext.login import UserMixin
+from config import get_db
 
 class User(object):
   __slots__ = 'id', 'username', 'password', 'buttons'
@@ -19,8 +20,8 @@ class User(object):
     return False
 
   def get_id(self):
-    f = File()
-    cursor = f.db.cursor()
+    db = get_db()
+    cursor = db.cursor()
     cursor.execute("SELECT id FROM users WHERE username = %s", (self.username,))
     self.id = cursor.fetchone()[0]
     cursor.close()
@@ -31,8 +32,8 @@ class User(object):
 
   @classmethod
   def get(cls, _id):
-    f = File()
-    cursor = f.db.cursor()
+    db = get_db()
+    cursor = db.cursor()
     cursor.execute("SELECT username, password FROM users WHERE id = %s;", (_id,))
     data = cursor.fetchone()
     cursor.close()

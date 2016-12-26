@@ -8,7 +8,7 @@ from flask.ext.login import login_user, logout_user, current_user
 import StringIO
 
 from config import admin as admin_password
-
+from config import get_db
 
 @app.before_request
 def before_request():
@@ -26,8 +26,8 @@ def login():
     return render_template('login.html', title = u"Вход")
   username = request.form['username']
   password = request.form['password']
-  f = File()
-  cursor = f.db.cursor()
+  db = get_db()
+  cursor = db.cursor()
   count = cursor.execute("SELECT username, password FROM users WHERE username = %s AND password = %s", (username, password))
   if not count: return registration_failed_redirection()
   registered_user = cursor.fetchone()
@@ -45,8 +45,8 @@ def logout():
 
 @app.route('/')
 def index():
-  # f = File()
-  # cursor = f.db.cursor()
+  # db = get_db()
+  # cursor = db.cursor()
   # cursor.execute("SELECT id, name, size FROM file;")
   # data = cursor.fetchall()
   # cursor.close()
