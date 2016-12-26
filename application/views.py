@@ -54,3 +54,8 @@ def index():
   if current_user.is_anonymous(): return redirect(url_for('login'))
   returned_string = "Hello, "+ current_user.username.encode('utf-8')
   return returned_string
+
+from application.modules.cards import *
+@app.route('/cards', methods=['GET', 'POST'])
+def cards():
+  return None

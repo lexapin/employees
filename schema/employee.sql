@@ -17,7 +17,7 @@ CREATE TABLE `card` (
   `id` int NOT NULL AUTO_INCREMENT primary key,
   `employee_id` int NOT NULL,
   `personnel_number` varchar(20),
-  `nature of work`   varchar(20),
+  `nature_of_work`   varchar(20),
   `type_of_work`     varchar(20),
   `date_of_birth`    int(11),
   `place_of_birth`   varchar(20),
