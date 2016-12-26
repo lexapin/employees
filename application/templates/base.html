@@ -1,0 +1,32 @@
+<html>
+    <head>
+        <title>
+        {% if title %}
+            {{title}} Файловое хранилище
+        {% else %}
+            Файловое хранилище
+        {% endif %}
+        </title>
+        {% include 'css.html' %}
+    </head>
+    <body>
+        {% include 'header.html' %}
+        <div id="flash">
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    <div>
+                        {% for message in messages %}
+                            <div class="alert alert-info" role="alert">{{ message }}</div>
+                        {% endfor %}
+                    <div>
+                <hr>
+                {% endif %}
+            {% endwith %}
+        </div>
+        <div id = "Content">
+            {% block content %}{% endblock %}
+        </div>
+        {% include 'footer.html' %}
+        {% include 'js.html' %}
+    </body>
+</html>

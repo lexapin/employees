@@ -3,10 +3,11 @@ from application import app, login_required_when_anonymous
 from flask import render_template, flash, redirect, make_response, request, url_for, \
           send_file, g
 
-# from database.deduplication import *
 from application.user import User
 from flask.ext.login import login_user, logout_user, current_user
 import StringIO
+
+from config import admin as admin_password
 
 
 @app.before_request
@@ -49,11 +50,6 @@ def index():
   # data = cursor.fetchall()
   # cursor.close()
   # return render_template("index.html", title = u"Файловое хранилище. Бета-версия. Версия 2.0", files = data)
-  try:
-    from config import admin
-  except:
-    user = "not imported"
-  else:
-    user = "password %s"%admin
-  returned_string = current_user.username.encode('utf-8') + user
+  if current_user.is_anonymous(): return redirect(url_for('login'))
+  returned_string = "Hello, ", current_user.username.encode('utf-8')
   return returned_string

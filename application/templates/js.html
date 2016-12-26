@@ -1,0 +1,29 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script src="http://getbootstrap.com/dist/js/bootstrap.min.js"></script>
+<script type="text/javascript" charset="utf-8">
+    $('li')
+    .mouseenter(function(e){
+        className = $(this).context.parentElement.className
+        console.log(className);
+        if (className.search("nav")>=0)
+        {
+            console.log("True");
+            $(this).addClass("active");
+        }
+
+    })
+    .mouseout(function(e){
+        className = $(this).context.parentElement.className
+        console.log(className);
+        if (className.search("nav")>=0)
+        {
+            console.log("True");
+            $(this).removeClass("active");
+        }
+    })
+    $(window).resize(function(e){
+        console.log("resize");
+        console.log($("#bs-example-navbar-collapse-1")[0].clientWidth)
+        console.log(e)
+    })
+</script>
