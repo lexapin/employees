@@ -26,16 +26,12 @@ def login():
     return render_template('login.html', title = u"Вход")
   username = request.form['username']
   password = request.form['password']
-  if username == "admin":
-    if password == admin_password: login_user(User("admin", admin_password))
-    else: return registration_failed_redirection()
-  else:
-    f = File()
-    cursor = f.db.cursor()
-    count = cursor.execute("SELECT username, password FROM users WHERE username = %s AND password = %s", (username, password))
-    if not count: return registration_failed_redirection()
-    registered_user = cursor.fetchone()
-    login_user(User(registered_user[0], registered_user[1]))
+  f = File()
+  cursor = f.db.cursor()
+  count = cursor.execute("SELECT username, password FROM users WHERE username = %s AND password = %s", (username, password))
+  if not count: return registration_failed_redirection()
+  registered_user = cursor.fetchone()
+  login_user(User(registered_user[0], registered_user[1]))
 
   flash(u"Вход выполнен, %s"%current_user)
   return redirect(request.args.get('next') or url_for('user'))
