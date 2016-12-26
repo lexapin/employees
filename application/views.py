@@ -52,8 +52,8 @@ def index():
   try:
     from config import admin
   except:
-    user = u"not imported"
+    user = "not imported"
   else:
-    user = u"password %s"%admin
-  # returned_string = repr(current_user) + user
-  return u"Привет"#returned_string
+    user = "password %s"%admin
+  returned_string = repr(current_user).encode('utf-8') + user
+  return returned_string
