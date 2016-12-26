@@ -15,6 +15,11 @@ def before_request():
   g.user = current_user
 
 
+def registration_failed_redirection():
+  flash(u"Имя пользователя или пароль введены неправильно")
+  return redirect(url_for('login'))
+
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
   if request.method == 'GET':
@@ -23,13 +28,13 @@ def login():
   cursor = f.db.cursor()
   username = request.form['username']
   password = request.form['password']
-  if username != "guest":
+  if username == "admin":
+    if password == admin_password: login_user(User("admin", admin_password))
+    else: return registration_failed_redirection()
+  else:
     count = cursor.execute("SELECT username, password FROM users WHERE username = %s AND password = %s", (username, password))
-    if not count:
-      flash(u"Имя пользователя или пароль введены неправильно")
-      return redirect(url_for('login'))
+    if not count: return registration_failed_redirection()
     registered_user = cursor.fetchone()
-    print registered_user, "1"*10
     login_user(User(registered_user[0], registered_user[1]))
 
   flash(u"Вход выполнен, %s"%current_user)
