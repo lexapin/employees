@@ -8,7 +8,7 @@ class User(object):
   def __init__(self, username, password):
     self.username = username
     self.password = password
-    self.buttons = [{"func": "upload", "name": u"Загрузить файл"}, {"func": "logout", "name": u"Выйти"}]
+    self.buttons = [{"func": "logout", "name": u"Выйти"}]
 
   def is_authenticated(self):
     return True
