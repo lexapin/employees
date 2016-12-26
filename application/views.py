@@ -56,4 +56,4 @@ def index():
   else:
     user = "password %s"%admin
   # returned_string = repr(current_user).encode('utf-8') + user.encode('utf-8')
-  return type(repr(current_user)).__name__
+  return current_user.username

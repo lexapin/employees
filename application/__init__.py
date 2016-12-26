@@ -17,10 +17,10 @@ login_manager.login_message_category = "info"
 
 class Anonymous(AnonymousUser):
   def __init__(self):
-    self.username = "guest"
+    self.username = u"Гость"
 
   def __repr__(self):
-    return u"Гость"
+    return self.username
 
   def is_anonymous(self):
     return True
