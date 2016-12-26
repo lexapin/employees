@@ -56,4 +56,4 @@ def index():
   else:
     user = u"password %s"%admin
   # returned_string = repr(current_user) + user
-  return u"привет"#returned_string
+  return u"Привет"#returned_string
