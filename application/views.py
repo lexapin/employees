@@ -58,4 +58,4 @@ def index():
 from application.modules.cards import *
 @app.route('/cards', methods=['GET', 'POST'])
 def cards():
-  return None
+  if request.method == 'GET': return get_cards()

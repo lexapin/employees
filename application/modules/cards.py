@@ -13,9 +13,10 @@ def get_cards():
   cursor.execute(SQL)
   data = cursor.fetchall()
   cursor.close()
-  return render_template("user.html", title = u"Личные карточки учета кадров", files = data)
+  return render_template("cards.html", title = u"Личные карточки учета кадров", cards = data)
 
 def get_card(card_id):
+  card = None
   return card
 
 def create_card(data):
@@ -48,7 +49,7 @@ CREATE TABLE `card` (
         REFERENCES employee(id)
 );
 
-insert into employee (first_name, second_name) values ("Алексей", "Фомин");
+insert into employee (first_name, last_name) values ("Алексей", "Фомин");
 insert into card (
   employee_id,
   personnel_number,
@@ -68,4 +69,25 @@ insert into card (
   "ЧГУ им.И.Н.Ульянова(2010)",
   "английский"
 );
+insert into employee (first_name, last_name) values ("Михаил", "Инюшкин");
+insert into card (
+  employee_id,
+  personnel_number,
+  nature_of_work,
+  type_of_work,
+  date_of_birth,
+  place_of_birth,
+  education,
+  foreign_language
+) values(
+  2,
+  "1800",
+  "офис",
+  "инженер-программист",
+  609984000,
+  "Чебоксары",
+  "ЧГУ им.И.Н.Ульянова(2012)",
+  "английский"
+);
+
 """
