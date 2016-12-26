@@ -5,4 +5,4 @@ CREATE TABLE `user` (
   `password` varchar(20),
    index(username)
 );
-INSERT INTO users (username, password) VALUES ("admin", "admin");
+INSERT INTO user (username, password) VALUES ("admin", "admin");
