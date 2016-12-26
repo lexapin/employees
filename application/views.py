@@ -49,4 +49,10 @@ def index():
   # data = cursor.fetchall()
   # cursor.close()
   # return render_template("index.html", title = u"Файловое хранилище. Бета-версия. Версия 2.0", files = data)
-  return "hello world"
+  try:
+    from config import admin
+  except:
+    user = "not imported"
+  else:
+    user = "password %s"%admin
+  return str(current_user)+user
