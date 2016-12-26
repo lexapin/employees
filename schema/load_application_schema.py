@@ -21,8 +21,8 @@ db = mysql.connect(conf["host"], conf["username"], conf["password"], conf["datab
 
 cursor = db.cursor()
 cursor.execute(script)
-db.commit()
 cursor.close()
+
 cursor = db.cursor()
 cursor.execute("""INSERT INTO user (username, password) VALUES ("admin", "admin");""")
 db.commit()
