@@ -2,7 +2,7 @@
 from config import get_db
 
 def get_cards():
-  cursor = f.db.cursor()
+  cursor = get_db().cursor()
   SQL = """
   SELECT
   employee.first_name, employee.last_name, card.personnel_number
