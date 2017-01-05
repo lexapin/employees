@@ -14,6 +14,8 @@ def get_cards():
   cursor.execute(SQL)
   data = cursor.fetchall()
   cursor.close()
+  for i, row in enumerate(data):
+    data[i][0] = type(row[0])
   return render_template("cards.html", title = u"Личные карточки учета кадров", cards = data)
 
 def get_card(card_id):
