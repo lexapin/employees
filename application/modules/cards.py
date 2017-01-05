@@ -45,7 +45,11 @@ def employees():
   cursor.execute(SQL)
   data = cursor.fetchall()
   cursor.close()
-  return render_template("table.html", title = u"Сотрудники предприятия (базовая таблица)", data = data, header = [u"Идентификатор", u"Имя", u"Фамилия"])
+  return render_template("table.html",
+                  title = u"Сотрудники предприятия (базовая таблица)",
+                  data = data, 
+                  header = [u"#", u"Имя", u"Фамилия"]
+                  )
 
 
 """
