@@ -26,4 +26,11 @@
         console.log($("#bs-example-navbar-collapse-1")[0].clientWidth)
         console.log(e)
     })
+    $('tr')
+    .mouseenter(function(e){
+        console.log("enter", $(this).closest('tr').attr('id'));
+    })
+    .mouseout(function(e){
+        console.log("leave", $(this).closest('tr').attr('id'));
+    })
 </script>

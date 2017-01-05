@@ -8,15 +8,6 @@
   <hr>
 {% endblock %}
 {% block content %}
-{% if data %}
-<ul class="list-group"  style = "margin-left: 1%; margin-right: 1%">
-    {% for row in data %}
-    <li class="list-group-item">
-        <h4>{{ row[0] }} {{ row[1] }} {{ row[2] }})</h4>
-    </li>
-    {% endfor %}
-</ul>
-{% endif %}
 <div id="data_table" style = "margin-left: 1%; margin-right: 1%">
 {% if data %}
   <table class="table">
@@ -28,7 +19,7 @@
       </tr>
     {% endif %}
     {% for row in data %}
-    <tr>
+    <tr id="{{row[0]}}">
       {% for item in row %}
       <td> {{ item }} </td>
       {% endfor %}
