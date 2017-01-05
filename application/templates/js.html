@@ -28,11 +28,11 @@
     })
     $('tr')
     .mouseenter(function(e){
-        obj = $(this).closest('tr')
-        if(obj){obj.closest('tr').addClass("active");}
+        obj = $(this).closest('tr');
+        if(obj.attr('id')){obj.closest('tr').addClass("active");}
     })
     .mouseout(function(e){
-        obj = $(this).closest('tr')
-        if(obj){obj.closest('tr').removeClass("active");}
+        obj = $(this).closest('tr');
+        if(obj.attr('id')){obj.closest('tr').removeClass("active");}
     })
 </script>
