@@ -59,6 +59,6 @@ from application.modules.cards import *
 @app.route('/cards', methods=['GET'])
 @app.route('/cards/<int:card_id>', methods=['GET', 'POST'])
 def cards(card_id = None):
-  if card_id is None and request.method == 'GET': return get_cards()
+  if card_id is None and request.method == 'GET': return employees()
   if request.method == 'GET': return "try to view %s"%card_id
   if request.method == 'POST': return "try to add card"
