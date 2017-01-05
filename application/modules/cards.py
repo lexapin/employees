@@ -2,6 +2,9 @@
 from flask import render_template
 from config import get_db
 
+def tuple_to_list(tuple_data):
+  return [list(tuple_row) for tuple_row in tuple_data]
+
 def get_cards():
   cursor = get_db().cursor()
   SQL = """
@@ -14,6 +17,7 @@ def get_cards():
   cursor.execute(SQL)
   data = cursor.fetchall()
   cursor.close()
+  data = tuple_to_list(data)
   for i, row in enumerate(data):
     data[i][0] = type(row[0])
   return render_template("cards.html", title = u"Личные карточки учета кадров", cards = data)
