@@ -19,7 +19,7 @@ def get_cards():
   cursor.close()
   data = tuple_to_list(data)
   for i, row in enumerate(data):
-    data[i][0] = type(row[0])
+    data[i][0] = row[0].decode("utf-8")
   return render_template("cards.html", title = u"Личные карточки учета кадров", cards = data)
 
 def get_card(card_id):
