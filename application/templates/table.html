@@ -17,20 +17,23 @@
     {% endfor %}
 </ul>
 {% endif %}
-<table class="table">
-<tr>
-  <td class="active">...</td>
-  <td class="success">...</td>
-  <td class="warning">...</td>
-  <td class="danger">...</td>
-  <td class="info">...</td>
-</tr>
-<tr>
-  <td class="active">...</td>
-  <td class="success">...</td>
-  <td class="warning">...</td>
-  <td class="danger">...</td>
-  <td class="info">...</td>
-</tr>
-</table>
+
+{% if data %}
+  <table class="table" style = "margin-left: 1%; margin-right: 1%">
+    {% if header %}
+      <tr>
+      {% for col_name in header %}
+        <th>{{ col_name }}</th>
+      {% endfor %}
+      </tr>
+    {% endif %}
+    {% for row in data %}
+    <tr>
+      {% for item in row %}
+      <td> {{ item }} </td>
+      {% endfor %}
+    </tr>
+    {% endfor %}
+  </table>
+{% endif %}
 {% endblock %}
