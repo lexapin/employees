@@ -35,6 +35,19 @@ def update_card(card_id, data):
 def delete_card(card_id):
   return True
 
+def employees():
+  cursor = get_db().cursor()
+  SQL = """
+  SELECT
+  id, first_name, last_name
+  FROM employee;
+  """
+  cursor.execute(SQL)
+  data = cursor.fetchall()
+  cursor.close()
+  return render_template("table.html", title = u"Сотрудники предприятия (базовая таблица)", data = data, header = ["Идентификатор", "Имя", "Фамилия"])
+
+
 """
 CREATE TABLE `employee` (
   `id` int NOT NULL AUTO_INCREMENT primary key,

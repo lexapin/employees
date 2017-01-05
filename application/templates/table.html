@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block title %}
+  <h1>
+    {% if title %}
+      {{title}}
+    {% endif %}
+  </h1>
+  <hr>
+{% endblock %}
+{% block content %}
+{% if data %}
+<ul class="list-group"  style = "margin-left: 1%; margin-right: 1%">
+    {% for row in data %}
+    <li class="list-group-item">
+        <h4>{{ row[0] }} {{ row[1] }} {{ row[2] }})</h4>
+    </li>
+    {% endfor %}
+</ul>
+{% endif %}
+<table class="table">
+<tr>
+  <td class="active">...</td>
+  <td class="success">...</td>
+  <td class="warning">...</td>
+  <td class="danger">...</td>
+  <td class="info">...</td>
+</tr>
+<tr>
+  <td class="active">...</td>
+  <td class="success">...</td>
+  <td class="warning">...</td>
+  <td class="danger">...</td>
+  <td class="info">...</td>
+</tr>
+</table>
+{% endblock %}
