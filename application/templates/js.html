@@ -55,7 +55,7 @@
                 "delete": {name: "Delete", icon: "delete"},
                 "sep1": "---------",
                 {% for action in contextmenu["actions"] %}
-                "{{ action['name'] }}": {name: "{{ action['caption'] }}"}
+                "{{ action['name'] }}": {name: "{{ action['caption'] }}"},
                 {% endfor %}
             }
         });
