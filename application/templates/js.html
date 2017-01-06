@@ -38,6 +38,7 @@
 </script>
 <script src="static/contextmenu/jquery.contextMenu.js"></script>
 <script src="static/contextmenu/jquery.ui.position.js"></script>
+{% if contextmenu %}
 <script type="text/javascript"  charset="utf-8">
     $(function() {
         $.contextMenu({
@@ -63,3 +64,4 @@
         })    
     });
 </script>
+{% endif %}
