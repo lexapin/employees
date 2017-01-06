@@ -45,11 +45,27 @@ def employees():
   cursor.execute(SQL)
   data = cursor.fetchall()
   cursor.close()
+  employee_contextmenu = {
+    "module": {
+      "name": "employees",
+      "caption": u"Сотрудники предприятия (базовая таблица)",
+    },
+    "actions": [
+      {
+        "name": "edit",
+        "caption": u"Редактировать",
+      },
+      {
+        "name": "delete",
+        "caption": u"Удалить",
+      },
+    ]
+  }
   return render_template("table.html",
                   title = u"Сотрудники предприятия (базовая таблица)",
                   data = data, 
                   header = [u"#", u"Имя", u"Фамилия"],
-                  contextmenu = True,
+                  contextmenu = employee_contextmenu,
                   )
 
 

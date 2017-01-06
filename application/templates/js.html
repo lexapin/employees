@@ -54,9 +54,9 @@
                 "paste": {name: "Paste", icon: "paste"},
                 "delete": {name: "Delete", icon: "delete"},
                 "sep1": "---------",
-                "quit": {name: "Quit", icon: function(){
-                    return 'context-menu-icon context-menu-icon-quit';
-                }}
+                {% for action in contextmenu["actions"] %}
+                "{{ action['name'] }}": {name: "{{ action['caption'] }}"}
+                {% endfor %}
             }
         });
         $('.table-context-menu').on('click', function(e){
