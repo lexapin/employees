@@ -47,6 +47,7 @@
                 var m = "clicked: " + key;
                 window.console && console.log(m) || alert(m);
                 console.log(options);
+                console.log(this);
             },
             items: {
                 {% for action in contextmenu["actions"] %}
