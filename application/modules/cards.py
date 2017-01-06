@@ -48,7 +48,8 @@ def employees():
   return render_template("table.html",
                   title = u"Сотрудники предприятия (базовая таблица)",
                   data = data, 
-                  header = [u"#", u"Имя", u"Фамилия"]
+                  header = [u"#", u"Имя", u"Фамилия"],
+                  contextmenu = True,
                   )
 
 
