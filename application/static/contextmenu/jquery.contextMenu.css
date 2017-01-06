@@ -23,7 +23,7 @@
     list-style-type: none;
     
     border: 1px solid #DDD;
-    background: #EEE;
+    background: #FFF;
     
     -webkit-box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
        -moz-box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
@@ -37,7 +37,7 @@
 
 .context-menu-item {
     padding: 2px 2px 2px 24px;
-    background-color: #EEE;
+    background-color: #FFF;
     position: relative;
     -webkit-user-select: none;
        -moz-user-select: -moz-none;
@@ -70,7 +70,7 @@
 .context-menu-input.hover,
 .context-menu-item.disabled.hover {
     cursor: default;
-    background-color: #EEE;
+    background-color: #FFF;
 }
 
 .context-menu-submenu:after {
