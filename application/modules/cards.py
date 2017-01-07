@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from flask import render_template, redirect
+from flask import render_template, redirect, url_for, flash
 from config import get_db
 
 def tuple_to_list(tuple_data):
@@ -69,12 +69,42 @@ def employees():
                   contextmenu = employee_contextmenu,
                   )
 
+
 def employee_form(_id, data = None):
   if data is None:
     QUERY = "SELECT id, first_name, last_name FROM employee WHERE id=%s;"%(_id,)
     employee = get_data_from_db(QUERY)
-    if employee: return str(employee)
-    else: return redirect(url_for('index'))
+    if employee:
+      employee = [
+        dict(
+          type = "text",
+          id = "_id",
+          name = "_id",
+          placeholder = "#",
+          value = employee[0],
+          disabled = True,
+          ),
+        dict(
+          type = "text",
+          id = "first_name",
+          name = "first_name",
+          placeholder = "Имя",
+          value = employee[1],
+          disabled = False,
+          ),
+        dict(
+          type = "text",
+          id = "last_name",
+          name = "last_name",
+          placeholder = "Фамилия",
+          value = employee[2],
+          disabled = False,
+          ),
+      ]
+      return render_template("form.html", items = employee, title = u"Основная информация о сотруднике")
+    else:
+      flash(u"Информация о сотруднике не найдена")
+      return redirect(url_for('index'))
 
 """
 CREATE TABLE `employee` (

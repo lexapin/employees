@@ -7,15 +7,22 @@
           {% for item in items %}
             <div>
                <input 
-                type = {{ item["type"] }}
-                id = {{ item["id"]}}
-                name = {{ item["name"] }}
-                placeholder = {{ item["placeholder"] }}
+                type = "{{ item['type'] }}"
+                id = "{{ item['id']}}"
+                name = "{{ item['name'] }}"
+                placeholder = "{{ item['placeholder'] }}"
+                {% if "value" in item %}
+                value = "{{ item['value'] }}"
+                {% endif %}
+                {% if item.get('disbled', False) %}
+                disabled
+                {% endif %}
                 required>
-            </div>
-            <br>
+            </div><br>
           {% endfor %}
-            <button type="submit">Войти</button>
+            <button type="submit">Изменить</button>
+            <button type="reset">Сброс</button>
+            <button>Отмена</button>
         </form>
     </div>
 </div>
