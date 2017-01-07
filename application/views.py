@@ -56,9 +56,10 @@ def index():
   return returned_string
 
 from application.modules.cards import *
-@app.route('/cards', methods=['GET'])
-@app.route('/cards/<int:card_id>', methods=['GET', 'POST'])
-def cards(card_id = None):
-  if card_id is None and request.method == 'GET': return employees()
-  if request.method == 'GET': return "try to view %s"%card_id
+@app.route('/employees', methods=['GET'])
+@app.route('/employees/<action>', methods=['POST'])
+@app.route('/employees/<action>/<_id>', methods=['GET', 'POST'])
+def cards(action = None, _id = None):
+  if _id is None and request.method == 'GET': return employees()
+  if request.method == 'GET': return "try to view %s"%_id
   if request.method == 'POST': return "try to add card"
