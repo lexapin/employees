@@ -97,7 +97,7 @@ def employee_form(_id, data = None):
           name = "_id",
           placeholder = u"#",
           value = employee[0],
-          disabled = True,
+          readonly = True,
           ),
         dict(
           type = "text",
@@ -105,7 +105,7 @@ def employee_form(_id, data = None):
           name = "first_name",
           placeholder = u"Имя",
           value = employee[1],
-          disabled = False,
+          readonly = False,
           ),
         dict(
           type = "text",
@@ -113,7 +113,7 @@ def employee_form(_id, data = None):
           name = "last_name",
           placeholder = u"Фамилия",
           value = employee[2],
-          disabled = False,
+          readonly = False,
           ),
       ]
       return render_template("form.html", items = employee, title = u"Основная информация о сотруднике")

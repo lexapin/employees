@@ -14,8 +14,8 @@
                 {% if "value" in item %}
                 value = "{{ item['value'] }}"
                 {% endif %}
-                {% if item.get('disabled', False) %}
-                disabled
+                {% if item.get('readonly', False) %}
+                readonly
                 {% endif %}
                 required>
             </div><br>
