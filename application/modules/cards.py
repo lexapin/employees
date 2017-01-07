@@ -44,7 +44,8 @@ def get_data_from_db(SQL_QUERY):
 
 
 def set_data_to_db(SQL_QUERY):
-  db = get_db().cursor()
+  db = get_db()
+  cursor = db.cursor()
   cursor.execute(SQL_QUERY)
   db.commit()
   data = cursor.fetchone()
