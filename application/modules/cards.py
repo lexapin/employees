@@ -73,7 +73,8 @@ employee_contextmenu = {
 def employees():
   QUERY = "SELECT id, first_name, last_name FROM employee;"
   data = get_data_from_db(QUERY)
-  for i, row in enumerate(tuple_to_list(data)):
+  data = tuple_to_list(data)
+  for i, row in enumerate(data):
     for j, item in enumerate(row):
       try:
         data[i][j] = item.encode('utf-8')
