@@ -1,66 +1,67 @@
 # -*- coding: utf-8 -*-
-from flask import render_template
+from flask import render_template, redirect
 from config import get_db
 
 def tuple_to_list(tuple_data):
   return [list(tuple_row) for tuple_row in tuple_data]
 
-def get_cards():
+# def get_cards():
+#   cursor = get_db().cursor()
+#   SQL = """
+#   SELECT
+#   employee.first_name, employee.last_name, card.personnel_number
+#   FROM employee
+#   INNER JOIN card
+#   WHERE employee_id = employee.id;
+#   """
+#   cursor.execute(SQL)
+#   data = cursor.fetchall()
+#   cursor.close()
+#   data = tuple_to_list(data)
+#   for i, row in enumerate(data):
+#     data[i][0] = row[0].decode("utf-8")
+#   return render_template("cards.html", title = u"Личные карточки учета кадров", cards = data)
+
+# def get_card(card_id):
+#   card = None
+#   return card
+
+# def create_card(data):
+#   return True
+
+# def update_card(card_id, data):
+#   return True
+
+# def delete_card(card_id):
+#   return True
+
+def get_data_from_db(SQL_QUERY):
   cursor = get_db().cursor()
-  SQL = """
-  SELECT
-  employee.first_name, employee.last_name, card.personnel_number
-  FROM employee
-  INNER JOIN card
-  WHERE employee_id = employee.id;
-  """
-  cursor.execute(SQL)
+  cursor.execute(SQL_QUERY)
   data = cursor.fetchall()
   cursor.close()
-  data = tuple_to_list(data)
-  for i, row in enumerate(data):
-    data[i][0] = row[0].decode("utf-8")
-  return render_template("cards.html", title = u"Личные карточки учета кадров", cards = data)
+  return data
 
-def get_card(card_id):
-  card = None
-  return card
-
-def create_card(data):
-  return True
-
-def update_card(card_id, data):
-  return True
-
-def delete_card(card_id):
-  return True
+employee_contextmenu = {
+  "module": {
+    "name": "employees",
+    "caption": u"Сотрудники предприятия (базовая таблица)",
+  },
+  "actions": [
+    {
+      "name": "edit",
+      "caption": u"Редактировать",
+    },
+    {
+      "name": "delete",
+      "caption": u"Удалить",
+    },
+  ]
+}
 
 def employees():
-  cursor = get_db().cursor()
-  SQL = """
-  SELECT
-  id, first_name, last_name
-  FROM employee;
-  """
-  cursor.execute(SQL)
-  data = cursor.fetchall()
-  cursor.close()
-  employee_contextmenu = {
-    "module": {
-      "name": "employees",
-      "caption": u"Сотрудники предприятия (базовая таблица)",
-    },
-    "actions": [
-      {
-        "name": "edit",
-        "caption": u"Редактировать",
-      },
-      {
-        "name": "delete",
-        "caption": u"Удалить",
-      },
-    ]
-  }
+  QUERY = "SELECT id, first_name, last_name FROM employee;"
+  data = get_data_from_db(QUERY)
   return render_template("table.html",
                   title = u"Сотрудники предприятия (базовая таблица)",
                   data = data, 
@@ -68,6 +69,12 @@ def employees():
                   contextmenu = employee_contextmenu,
                   )
 
+def employee_form(_id, data = None):
+  if data is None:
+    QUERY = "SELECT id, first_name, last_name FROM employee WHERE id=%s;"%(_id,)
+    employee = get_data_from_db(QUERY)
+    if employee: return str(employee)
+    else: return redirect(url_for('index'))
 
 """
 CREATE TABLE `employee` (

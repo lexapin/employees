@@ -53,7 +53,7 @@ def index():
   # return render_template("index.html", title = u"Файловое хранилище. Бета-версия. Версия 2.0", files = data)
   if current_user.is_anonymous(): return redirect(url_for('login'))
   returned_string = "Hello, "+ current_user.username.encode('utf-8')
-  return returned_string
+  return redirect(url_for('cards'))
 
 from application.modules.cards import *
 @app.route('/employees', methods=['GET'])
