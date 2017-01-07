@@ -44,7 +44,7 @@
         $.contextMenu({
             selector: '.table-context-menu', 
             callback: function(key, options) {
-                var m = "clicked: " + key;
+                var m = "url: " + "{{ contextmenu['module']['name'] }}/" + key;
                 window.console && console.log(m) || alert(m);
                 console.log($(this).closest('tr').attr('id'));
             },

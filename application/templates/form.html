@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="panel panel-default" style = "margin-left: 10%; margin-right: 10%">
+    <div class="panel-heading">{{ title }}</div>
+    <div class="panel-body">
+        <form role="form" method="post">
+          {% for item in items %}
+            <div>
+               <input 
+                type = {{ item["type"] }}
+                id = {{ item["id"]}}
+                name = {{ item["name"] }}
+                placeholder = {{ item["placeholder"] }}
+                required>
+            </div>
+            <br>
+          {% endfor %}
+            <button type="submit">Войти</button>
+        </form>
+    </div>
+</div>
+{% endblock %}
