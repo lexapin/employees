@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from flask import render_template, redirect, url_for, flash
+from flask import render_template, redirect, url_for, flash, url_root
 from config import get_db
 
 def tuple_to_list(tuple_data):
