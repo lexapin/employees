@@ -62,4 +62,4 @@ from application.modules.cards import *
 def cards(action = None, _id = None):
   if _id is None and request.method == 'GET': return employees()
   if request.method == 'GET': return employee_form(_id)
-  if request.method == 'POST': return "try to add card"
+  if request.method == 'POST': return employee_form(_id, request.form)

@@ -42,6 +42,16 @@ def get_data_from_db(SQL_QUERY):
   cursor.close()
   return data
 
+
+def set_data_to_db(SQL_QUERY):
+  db = get_db().cursor()
+  cursor.execute(SQL_QUERY)
+  db.commit()
+  data = cursor.fetchone()
+  cursor.close()
+  return data
+
+
 employee_contextmenu = {
   "module": {
     "name": "employees",
@@ -71,9 +81,13 @@ def employees():
 
 
 def employee_form(_id, data = None):
+  GET_QUERY = "SELECT id, first_name, last_name FROM employee WHERE id=%s;"%(_id,)
+  UPDATE_QUERY = """
+  UPDATE employee SET first_name = %s, last_name = %s
+  WHERE _id = %s;
+  """
   if data is None:
-    QUERY = "SELECT id, first_name, last_name FROM employee WHERE id=%s;"%(_id,)
-    employee = get_data_from_db(QUERY)
+    employee = get_data_from_db(GET_QUERY)
     if employee:
       employee = employee[0]
       employee = [
@@ -106,6 +120,20 @@ def employee_form(_id, data = None):
     else:
       flash(u"Информация о сотруднике не найдена")
       return redirect(url_for('index'))
+  else:
+    if not get_data_from_db(GET_QUERY) or _id != data["_id"]:
+      flash(u"Данные о сотруднике введены некорректно!!!")
+      return redirect(url_for('index'))
+    first_name = data["first_name"]
+    last_name = data["last_name"]
+    try:
+      data = set_data_to_db(UPDATE_QUERY%(first_name, last_name, _id))
+    except:
+      flash(u"Ошибка в процессе изменения данных")
+    else:
+      flash(u"Данные успешно изменены")
+    return redirect(url_for('index'))
+
 
 """
 CREATE TABLE `employee` (
