@@ -63,5 +63,5 @@ def cards(action = None, _id = None):
   if _id is None and request.method == 'GET': return employees()
   if request.method == 'GET': return employee_form(_id)
   if request.method == 'POST':
-    return str(request.form)
-    # return employee_form(_id, request.form)
+    # return str(request.form)
+    return employee_form(_id, request.form)
