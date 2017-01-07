@@ -14,4 +14,6 @@ def get_db():
     "password": "12345",
     "database": "robot4$employee"
   }
-  return mysql.connect(conf["host"], conf["username"], conf["password"], conf["database"])
+  db = mysql.connect(conf["host"], conf["username"], conf["password"], conf["database"])
+  db.set_character_set('utf8')
+  return db
