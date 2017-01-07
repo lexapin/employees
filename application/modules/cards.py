@@ -126,12 +126,13 @@ def employee_form(_id, data = None):
       return redirect(url_for('index'))
     first_name = data["first_name"]
     last_name = data["last_name"]
-    try:
-      data = set_data_to_db(UPDATE_QUERY%(first_name, last_name, _id))
-    except:
-      flash(u"Ошибка в процессе изменения данных")
-    else:
-      flash(u"Данные успешно изменены")
+    data = set_data_to_db(UPDATE_QUERY%(first_name, last_name, _id))
+    # try:
+    #   data = set_data_to_db(UPDATE_QUERY%(first_name, last_name, _id))
+    # except:
+    #   flash(u"Ошибка в процессе изменения данных")
+    # else:
+    #   flash(u"Данные успешно изменены")
     return redirect(url_for('index'))
 
 
