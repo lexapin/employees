@@ -75,6 +75,7 @@ def employee_form(_id, data = None):
     QUERY = "SELECT id, first_name, last_name FROM employee WHERE id=%s;"%(_id,)
     employee = get_data_from_db(QUERY)
     if employee:
+      employee = employee[0]
       employee = [
         dict(
           type = "text",
