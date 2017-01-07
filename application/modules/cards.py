@@ -85,7 +85,7 @@ def employee_form(_id, data = None):
   GET_QUERY = "SELECT id, first_name, last_name FROM employee WHERE id=%s;"%(_id,)
   UPDATE_QUERY = """
   UPDATE employee SET first_name = %s, last_name = %s
-  WHERE _id = %s;
+  WHERE id = %s;
   """
   if data is None:
     employee = get_data_from_db(GET_QUERY)
