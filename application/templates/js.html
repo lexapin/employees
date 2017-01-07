@@ -44,10 +44,8 @@
         $.contextMenu({
             selector: '.table-context-menu', 
             callback: function(key, options) {
-                var item = $(this).closest('tr').attr('id')
-                var m = "url: " + "{{ contextmenu['module']['name'] }}/" + key + "/" + item;
-                window.console && console.log(m) || alert(m);
-                console.log(item);
+                var item = $(this).closest('tr').attr('id');
+                location.replace("{{ contextmenu['module']['name'] }}/" + key + "/" + item);
             },
             items: {
                 {% for action in contextmenu["actions"] %}
