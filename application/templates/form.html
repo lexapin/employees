@@ -14,7 +14,7 @@
                 {% if "value" in item %}
                 value = "{{ item['value'] }}"
                 {% endif %}
-                {% if item.get('disbled', False) %}
+                {% if item.get('disabled', False) %}
                 disabled
                 {% endif %}
                 required>
