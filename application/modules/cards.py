@@ -73,6 +73,12 @@ employee_contextmenu = {
 def employees():
   QUERY = "SELECT id, first_name, last_name FROM employee;"
   data = get_data_from_db(QUERY)
+  for i, row in enumerate(tuple_to_list(data)):
+    for j, item in enumerate(row):
+      try:
+        data[i][j] = item.encode('utf-8')
+      except:
+        data[i][j] = u"@@@"
   return render_template("table.html",
                   title = u"Сотрудники предприятия (базовая таблица)",
                   data = data, 
