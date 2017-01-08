@@ -124,7 +124,11 @@ def employee_form(_id, data = None):
           readonly = False,
           ),
       ]
-      return render_template("form.html", items = employee, title = u"Основная информация о сотруднике")
+      return render_template("form.html", 
+                              items = employee,
+                              title = u"Основная информация о сотруднике",
+                              decode = employee_decodes,
+                            )
     else:
       flash(u"Информация о сотруднике не найдена")
       return redirect(url_for('index'))
