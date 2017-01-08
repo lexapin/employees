@@ -22,7 +22,7 @@
     {% endif %}
     {% for row in data %}
     <tr id="{{row[0]}}" class="table-context-menu">
-      {% for i in len(row) %}
+      {% for i in row|length %}
       <td> {{ decode[i](row[i]) }} </td>
       {% endfor %}
     </tr>
