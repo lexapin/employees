@@ -115,9 +115,9 @@ def add_employee(data = None):
   else:
     first_name = data["first_name"]
     last_name = data["last_name"]
-    try Exception as err:
+    try:
       data = set_data_to_db(UPDATE_QUERY%(first_name, last_name, _id))
-    except:
+    except Exception as err:
       flash(u"Ошибка в процессе изменения данных")
       flash(str(err))
     else:
