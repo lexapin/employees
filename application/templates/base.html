@@ -1,10 +1,10 @@
 <html>
     <head>
         <title>
-        {% if title %}
-            {{title}} Файловое хранилище
+        {% if base %}
+            {{ base["caption"] }} - База данных сотрудников
         {% else %}
-            Файловое хранилище
+            База данных сотрудников
         {% endif %}
         </title>
         {% include 'css.html' %}

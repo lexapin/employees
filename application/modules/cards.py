@@ -3,12 +3,12 @@ from flask import render_template, redirect, url_for, flash
 from utilites import *
 
 employee_module = {
-  "module": {
+  "base": {
     "name": "employees",
     "caption": u"Сотрудники предприятия (базовая таблица)",
   },
   "contextmenu_actions": ["edit", "delete",],
-  "button_actions": ["add",],
+  "buttonsmenu_actions": ["add",],
   "actions": {
     "add": {
       "caption": u"Добавить",
@@ -22,37 +22,23 @@ employee_module = {
   },
   "attributes": {
     "_id": {
+      "position": 0,
       "caption": u"#",
       "type": int,
     },
     "first_name": {
+      "position": 1,
       "caption": u"Имя",
       "decode_function": lambda value: value.decode("utf-8"),
       "type": basestring,
     },
     "last_name": {
+      "position": 2,
       "caption": u"Фамилия",
       "decode_function": lambda value: value.decode("utf-8"),
       "type": basestring,
     },
   },
-}
-
-employee_contextmenu = {
-  "module": {
-    "name": "employees",
-    "caption": u"Сотрудники предприятия (базовая таблица)",
-  },
-  "actions": [
-    {
-      "name": "edit",
-      "caption": u"Редактировать",
-    },
-    {
-      "name": "delete",
-      "caption": u"Удалить",
-    },
-  ]
 }
 
 employee_decodes = {
@@ -61,22 +47,24 @@ employee_decodes = {
   2: lambda value: value.decode("utf-8"),
 }
 
+employee_actions = [
+  dict(
+    name = "add",
+    caption = "Добавить",
+  ),
+]
+
+
 def employees():
   QUERY = "SELECT id, first_name, last_name FROM employee;"
   data = get_data_from_db(QUERY)
-  employee_actions = [
-    dict(
-      name = "add",
-      caption = "Добавить",
-    ),
-  ]
   return render_template("table.html",
-                  title = u"Сотрудники предприятия (базовая таблица)",
-                  data = data, 
-                  header = [u"#", u"Имя", u"Фамилия"],
-                  contextmenu = employee_contextmenu,
-                  decode = employee_decodes,
-                  actions = employee_actions,
+                  base = employee_module["base"],
+                  contextmenu = create_context_menu(employee_module),
+                  buttonsmenu = create_buttons_menu(employee_module),
+                  header = create_table_header(employee_module),
+                  decode = {},
+                  data = data,
                   )
 
 
@@ -118,7 +106,7 @@ def employee_form(_id, data = None):
       ]
       return render_template("form.html", 
                               items = employee,
-                              title = u"Основная информация о сотруднике",
+                              base = employee_module["base"],
                               decode = employee_decodes,
                             )
     else:
@@ -145,7 +133,7 @@ def add_employee(data = None):
   if data is None:
     return render_template("form.html", 
                               items = employee,
-                              title = u"Основная информация о сотруднике",
+                              base = employee_module["base"],
                               decode = employee_decodes,
                             )
   else:
