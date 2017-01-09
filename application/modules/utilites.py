@@ -50,5 +50,5 @@ def create_table_header(module):
 
 def create_decode_table(module):
   return {
-    attr["position"]: attr["decode_function"] for attr in module["attributes"].values()
+    attr["position"]: attr.get("decode_function", lambda value: value) for attr in module["attributes"].values()
   }
