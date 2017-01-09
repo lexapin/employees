@@ -54,32 +54,32 @@ def create_decode_table(module):
   }
 
 
-employee = [
-        dict(
-          type = "text",
-          id = "_id",
-          name = "_id",
-          placeholder = u"#",
-          value = employee[0],
-          readonly = True,
-          ),
-        dict(
-          type = "text",
-          id = "first_name",
-          name = "first_name",
-          placeholder = u"Имя",
-          value = employee[1],
-          readonly = False,
-          ),
-        dict(
-          type = "text",
-          id = "last_name",
-          name = "last_name",
-          placeholder = u"Фамилия",
-          value = employee[2],
-          readonly = False,
-          ),
-      ]
+# employee = [
+#         dict(
+#           type = "text",
+#           id = "_id",
+#           name = "_id",
+#           placeholder = u"#",
+#           value = employee[0],
+#           readonly = True,
+#           ),
+#         dict(
+#           type = "text",
+#           id = "first_name",
+#           name = "first_name",
+#           placeholder = u"Имя",
+#           value = employee[1],
+#           readonly = False,
+#           ),
+#         dict(
+#           type = "text",
+#           id = "last_name",
+#           name = "last_name",
+#           placeholder = u"Фамилия",
+#           value = employee[2],
+#           readonly = False,
+#           ),
+#       ]
 def create_form_items(module, view = None, values = None):
   if view is None: create_view(module)
 
