@@ -24,7 +24,7 @@ def set_data_to_db(SQL_QUERY):
   return data
 
 def create_context_menu(module):
-  contextmenu = {
+  context_menu = {
     "actions": [{
       "name": action_name,
       "caption": module["actions"][action_name],
