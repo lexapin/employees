@@ -2,6 +2,42 @@
 from flask import render_template, redirect, url_for, flash
 from utilites import *
 
+employee_module = {
+  "module": {
+    "name": "employees",
+    "caption": u"Сотрудники предприятия (базовая таблица)",
+  },
+  "contextmenu_actions": ["edit", "delete",],
+  "button_actions": ["add",],
+  "actions": {
+    "add": {
+      "caption": u"Добавить",
+    },
+    "edit": {
+      "caption": u"Редактировать",
+    },
+    "delete": {
+      "caption": u"Удалить",
+    },
+  },
+  "attributes": {
+    "_id": {
+      "caption": u"#",
+      "type": int,
+    },
+    "first_name": {
+      "caption": u"Имя",
+      "decode_function": lambda value: value.decode("utf-8"),
+      "type": basestring,
+    },
+    "last_name": {
+      "caption": u"Фамилия",
+      "decode_function": lambda value: value.decode("utf-8"),
+      "type": basestring,
+    },
+  },
+}
+
 employee_contextmenu = {
   "module": {
     "name": "employees",
