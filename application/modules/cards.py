@@ -41,19 +41,6 @@ employee_module = {
   },
 }
 
-employee_decodes = {
-  0: lambda value: value,
-  1: lambda value: value.decode("utf-8"),
-  2: lambda value: value.decode("utf-8"),
-}
-
-employee_actions = [
-  dict(
-    name = "add",
-    caption = "Добавить",
-  ),
-]
-
 
 def employees():
   QUERY = "SELECT id, first_name, last_name FROM employee;"
@@ -107,7 +94,7 @@ def employee_form(_id, data = None):
       return render_template("form.html", 
                               items = employee,
                               base = employee_module["base"],
-                              decode = employee_decodes,
+                              decode = create_decode_table(employee_module),
                             )
     else:
       flash(u"Информация о сотруднике не найдена")
