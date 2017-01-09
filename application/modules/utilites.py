@@ -23,6 +23,7 @@ def set_data_to_db(SQL_QUERY):
   cursor.close()
   return data
 
+
 def create_context_menu(module):
   context_menu = {
     "actions": [{
@@ -31,6 +32,7 @@ def create_context_menu(module):
     } for action_name in module["contextmenu_actions"]],
   }
   return context_menu
+
 
 def create_buttons_menu(module):
   buttons_menu = {
@@ -41,5 +43,12 @@ def create_buttons_menu(module):
   }
   return buttons_menu
 
+
 def create_table_header(module):
   return [attr["caption"] for attr in sorted(module["attributes"].values(), key = lambda attr: attr["position"])]
+
+
+def create_decode_table(module):
+  return {
+    attr["position"]: attr["decode_function"] for attr in module["attributes"].values()
+  }

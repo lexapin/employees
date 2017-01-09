@@ -63,7 +63,7 @@ def employees():
                   contextmenu = create_context_menu(employee_module),
                   buttonsmenu = create_buttons_menu(employee_module),
                   header = create_table_header(employee_module),
-                  decode = {},
+                  decode = create_decode_table(employee_module),
                   data = data,
                   )
 
