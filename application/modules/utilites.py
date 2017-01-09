@@ -80,7 +80,7 @@ employee = [
           readonly = False,
           ),
       ]
-def create_form_items(module, view = None, values):
+def create_form_items(module, view = None, values = None):
   if view is None: create_view(module)
 
 
