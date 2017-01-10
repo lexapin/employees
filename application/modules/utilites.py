@@ -38,7 +38,7 @@ def create_buttons_menu(module):
   buttons_menu = {
     "actions": [{
       "name": action_name,
-      "caption": module["actions"][action_name],
+      "caption": module["actions"][action_name]["caption"],
     } for action_name in module["buttonsmenu_actions"]],
   }
   return buttons_menu
