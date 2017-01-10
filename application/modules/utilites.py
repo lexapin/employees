@@ -61,9 +61,7 @@ def create_form_items(module, view = None, values = None, disabled = []):
       view[item]["value"] = value
   form_fields = [create_input_field(item) for item in view]
   for field in form_fields:
-    if field["name"] in disabled:
-      field.update({"disabled": True})
-      # field["hidden"] = True
+    if field["name"] in disabled: field.update({"disabled": True, "hidden": True})
   return form_fields
 
 
@@ -82,6 +80,7 @@ def set_field(attr):
         ),
     )
 
+
 def create_input_field(item):
   field = {}
   field["id"] = item["name"]
@@ -95,6 +94,7 @@ def create_input_field(item):
   else: field.update({"readonly": False, "hidden": False,})
   if "value" in item: field["value"] = item["value"]
   return field
+
 
 type_table = {
   int.__name__: "text",
