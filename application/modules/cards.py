@@ -66,33 +66,6 @@ def employee_form(_id = None, data = None):
   if data is None:
     employee = get_data_from_db(GET_QUERY%(_id,))
     if employee:
-      # employee = employee[0]
-      # employee = [
-      #   dict(
-      #     type = "text",
-      #     id = "_id",
-      #     name = "_id",
-      #     placeholder = u"#",
-      #     value = employee[0],
-      #     readonly = True,
-      #     ),
-      #   dict(
-      #     type = "text",
-      #     id = "first_name",
-      #     name = "first_name",
-      #     placeholder = u"Имя",
-      #     value = employee[1],
-      #     readonly = False,
-      #     ),
-      #   dict(
-      #     type = "text",
-      #     id = "last_name",
-      #     name = "last_name",
-      #     placeholder = u"Фамилия",
-      #     value = employee[2],
-      #     readonly = False,
-      #     ),
-      # ]
       return render_template("form.html", 
                               items = create_form_items(employee_module, view = None, values = employee[0]),
                               base = employee_module["base"],
