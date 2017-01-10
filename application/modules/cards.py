@@ -5,7 +5,9 @@ from utilites import *
 employee_module = {
   "base": {
     "name": "employees",
-    "caption": u"Сотрудники предприятия (базовая таблица)",
+    "title": u"Сотрудники предприятия",
+    "table_caption": u"Сотрудники предприятия (базовая таблица)",
+    "form_caption": u"Имя, Фамилия сотрудника",
   },
   "contextmenu_actions": ["edit", "delete",],
   "buttonsmenu_actions": ["add",],

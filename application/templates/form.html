@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
 <div class="panel panel-default" style = "margin-left: 10%; margin-right: 10%">
-    <div class="panel-heading">{{ title }}</div>
+    <div class="panel-heading">{{ base["form_caption"] }}</div>
     <div class="panel-body">
         <form role="form" method="post">
           {% for item in items %}
@@ -20,9 +20,9 @@
                 required>
             </div><br>
           {% endfor %}
-            <button type="submit">Изменить</button>
-            <button type="reset">Сброс</button>
-            <button type="button">Отмена</button>
+            <button type="submit" class="btn btn-default">Изменить</button>
+            <button type="reset" class="btn btn-default">Сброс</button>
+            <a class="btn btn-default" href="{{ request.url_root }}{{ base['name'] }}" role="button">Отмена</a>
         </form>
     </div>
 </div>

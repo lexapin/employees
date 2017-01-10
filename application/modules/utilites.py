@@ -28,7 +28,7 @@ def create_context_menu(module):
   context_menu = {
     "actions": [{
       "name": action_name,
-      "caption": module["actions"][action_name],
+      "caption": module["actions"][action_name]["caption"],
     } for action_name in module["contextmenu_actions"]],
   }
   return context_menu
