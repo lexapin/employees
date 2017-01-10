@@ -83,7 +83,7 @@ def create_decode_table(module):
 def create_form_items(module, view = None, values = None):
   if view is None: view = create_view(module)
   from flask import flash
-  flash(u"%s | %s"%(len(values), len(view)))
+  flash(u"%s | %s /%s/"%(len(values), len(view), values))
   if values and (len(values) == len(view)):
     for item, value in enumerate(values):
       view[item]["value"] = value
