@@ -110,9 +110,9 @@ def create_input_field(item):
   field["placeholder"] = item["caption"]
   field["type"] = type_table[item["type"].__name__]
   if "activity" in item: field.update({
-    "readonly" = item["activity"]["readonly"],
-    "hidden" = item["activity"]["hidden"],
+    "readonly": item["activity"]["readonly"],
+    "hidden": item["activity"]["hidden"],
     })
-  else: field.update({"readonly" = False, "hidden" = False,})
+  else: field.update({"readonly": False, "hidden": False,})
   if "value" in item: field["value"] = item["value"]
   return field
