@@ -62,7 +62,7 @@ def create_form_items(module, view = None, values = None, disabled = []):
   form_fields = [create_input_field(item) for item in view]
   for field in form_fields:
     if field["name"] in disabled:
-      field["disabled"] = True
+      field.update({"disabled": True})
       # field["hidden"] = True
   return form_fields
 
