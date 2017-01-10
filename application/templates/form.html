@@ -17,6 +17,12 @@
                 {% if item.get('readonly', False) %}
                 readonly
                 {% endif %}
+                {% if item.get('hidden', False) %}
+                hidden
+                {% endif %}
+                {% if item.get('disabled', False) %}
+                disabled
+                {% endif %}
                 required>
             </div><br>
           {% endfor %}

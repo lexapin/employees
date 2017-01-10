@@ -65,8 +65,9 @@ def employee_form(_id = None, data = None):
   """
   if data is None:
     db_items = None if _id is None else get_data_from_db(GET_QUERY%(_id,))[0]
+    disabled = ["id"] if _id is None else []
     return render_template("form.html", 
-                            items = create_form_items(employee_module, view = None, values = db_items),
+                            items = create_form_items(employee_module, view = None, values = db_items, disabled = disabled),
                             base = employee_module["base"],
                             decode = create_decode_table(employee_module),
                           )

@@ -54,38 +54,17 @@ def create_decode_table(module):
   }
 
 
-# employee = [
-#         dict(
-#           type = "text",
-#           id = "_id",
-#           name = "_id",
-#           placeholder = u"#",
-#           value = employee[0],
-#           readonly = True,
-#           ),
-#         dict(
-#           type = "text",
-#           id = "first_name",
-#           name = "first_name",
-#           placeholder = u"Имя",
-#           value = employee[1],
-#           readonly = False,
-#           ),
-#         dict(
-#           type = "text",
-#           id = "last_name",
-#           name = "last_name",
-#           placeholder = u"Фамилия",
-#           value = employee[2],
-#           readonly = False,
-#           ),
-#       ]
-def create_form_items(module, view = None, values = None):
+def create_form_items(module, view = None, values = None, disabled = []):
   if view is None: view = create_view(module)
   if values is not None and len(values) == len(view):
     for item, value in enumerate(values):
       view[item]["value"] = value
-  return [create_input_field(item) for item in view]
+  return [make_disabled(field) for field in [create_input_field(item) for item in view] if field["name"] in disabled]
+
+
+def make_disabled(field):
+  field["disabled"] = True
+  field["hidden"] = True
 
 
 def create_view(module):
