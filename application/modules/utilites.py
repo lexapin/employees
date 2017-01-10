@@ -64,7 +64,7 @@ def create_form_items(module, view = None, values = None, disabled = []):
 
 def make_disabled(field):
   field["disabled"] = True
-  field["hidden"] = True
+  # field["hidden"] = True
   return field
 
 
