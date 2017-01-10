@@ -116,3 +116,8 @@ def create_input_field(item):
   else: field.update({"readonly": False, "hidden": False,})
   if "value" in item: field["value"] = item["value"]
   return field
+
+type_table = {
+  int.__name__: "text",
+  basestring.__name__: "text",
+}
