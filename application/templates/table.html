@@ -10,6 +10,9 @@
 {% if buttonsmenu %}
 <div>
   <!-- кнопки -->
+  {% for action in buttonsmenu["actions"] %}
+    <a class="btn btn-default" href="{{ request.url_root }}{{ base['name'] }}/{{ action['name'] }}" role="button">{{ action['caption'] }}</a>
+  {% endfor %}
 </div>
 {% endif %}
 <div id="data_table" style = "margin-left: 1%; margin-right: 1%">
