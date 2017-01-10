@@ -94,7 +94,7 @@ def employee_form(_id = None, data = None):
           ),
       ]
       return render_template("form.html", 
-                              items = create_form_items(module, view = None, values = employee[0]),
+                              items = create_form_items(employee_module, view = None, values = employee[0]),
                               base = employee_module["base"],
                               decode = create_decode_table(employee_module),
                             )
