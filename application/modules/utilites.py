@@ -82,7 +82,7 @@ def create_decode_table(module):
 #       ]
 def create_form_items(module, view = None, values = None):
   if view is None: view = create_view(module)
-  if values and (len(values) == len(view)):
+  if values is not None and len(values) == len(view):
     for item, value in enumerate(values):
       view[item]["value"] = value
   return [create_input_field(item) for item in view]
