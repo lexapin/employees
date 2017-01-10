@@ -81,9 +81,38 @@ def create_decode_table(module):
 #           ),
 #       ]
 def create_form_items(module, view = None, values = None):
-  if view is None: create_view(module)
+  if view is None: view = create_view(module)
+  if values and (len(values) == len(view)):
+    for item, value in enumerate(values):
+      view[item]["value"] = value
+  return [create_input_field(item) for item in view]
 
 
 def create_view(module):
-  # [{item: form_item, attr: module_attr, caption}, ... ]
-  return [{} for attr in sorted(module["attributes"].values(), key = lambda attr: attr["position"])]
+  return [set_field(attr) for attr in sorted(module["attributes"].items(), key = lambda attr: attr[1]["position"])]
+
+
+def set_field(attr):
+  return dict(
+      name = attr[0],
+      caption = attr[1]["caption"],
+      type = attr[1]["type"],
+      activity = dict(
+          readonly = False,
+          hidden = False,
+        ),
+    )
+
+def create_input_field(item):
+  field = {}
+  field["id"] = item["name"]
+  field["name"] = item["name"]
+  field["placeholder"] = item["caption"]
+  field["type"] = type_table[item["type"].__name__]
+  if "activity" in item: field.update({
+    "readonly" = item["activity"]["readonly"],
+    "hidden" = item["activity"]["hidden"],
+    })
+  else: field.update({"readonly" = False, "hidden" = False,})
+  if "value" in item: field["value"] = item["value"]
+  return field

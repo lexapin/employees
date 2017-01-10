@@ -57,14 +57,14 @@ def employees():
                   )
 
 
-def employee_form(_id, data = None):
-  GET_QUERY = "SELECT id, first_name, last_name FROM employee WHERE id=%s;"%(_id,)
+def employee_form(_id = None, data = None):
+  GET_QUERY = "SELECT id, first_name, last_name FROM employee WHERE id=%s;"
   UPDATE_QUERY = """
   UPDATE employee SET first_name="%s", last_name="%s"
   WHERE id = %s;
   """
   if data is None:
-    employee = get_data_from_db(GET_QUERY)
+    employee = get_data_from_db(GET_QUERY%(_id,))
     if employee:
       employee = employee[0]
       employee = [
@@ -94,7 +94,7 @@ def employee_form(_id, data = None):
           ),
       ]
       return render_template("form.html", 
-                              items = employee,
+                              items = create_form_items(module, view = None, values = employee[0]),
                               base = employee_module["base"],
                               decode = create_decode_table(employee_module),
                             )

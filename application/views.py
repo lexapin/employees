@@ -45,23 +45,14 @@ def logout():
 
 @app.route('/')
 def index():
-  # db = get_db()
-  # cursor = db.cursor()
-  # cursor.execute("SELECT id, name, size FROM file;")
-  # data = cursor.fetchall()
-  # cursor.close()
-  # return render_template("index.html", title = u"Файловое хранилище. Бета-версия. Версия 2.0", files = data)
   if current_user.is_anonymous(): return redirect(url_for('login'))
-  returned_string = "Hello, "+ current_user.username.encode('utf-8')
   return redirect(url_for('cards'))
 
 from application.modules.cards import *
 @app.route('/employees', methods=['GET'])
-@app.route('/employees/<action>', methods=['POST'])
+@app.route('/employees/<action>', methods=['GET', 'POST'])
 @app.route('/employees/<action>/<_id>', methods=['GET', 'POST'])
 def cards(action = None, _id = None):
-  if _id is None and request.method == 'GET': return employees()
+  if _id is None and action is None: return employees()
   if request.method == 'GET': return employee_form(_id)
-  if request.method == 'POST':
-    # return str(request.form)
-    return employee_form(_id, request.form)
+  if request.method == 'POST': return employee_form(_id, request.form)
