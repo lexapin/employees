@@ -59,13 +59,12 @@ def create_form_items(module, view = None, values = None, disabled = []):
   if values is not None and len(values) == len(view):
     for item, value in enumerate(values):
       view[item]["value"] = value
-  return [make_disabled(field) for field in [create_input_field(item) for item in view] if field["name"] in disabled]
-
-
-def make_disabled(field):
-  field["disabled"] = True
-  # field["hidden"] = True
-  return field
+  form_fields = [create_input_field(item) for item in view]
+  for field in form_fields:
+    if field["name"] in disabled:
+      field["disabled"] = True
+      # field["hidden"] = True
+  return form_fields
 
 
 def create_view(module):
