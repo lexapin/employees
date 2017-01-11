@@ -18,7 +18,7 @@ employee_module = {
     "add": {
       "caption": u"Добавить",
       "function": update_function,
-      "set_query": "INSERT INTO employee (first_name, last_name) VALUES ('%s', '%s');",
+      "set_query": "INSERT INTO employee (first_name, last_name) VALUES ('%s', '%s'); INSERT INTO card (emloyee_id) VALUES (LAST_INSERT_ID());",
       "attrs": ["first_name", "last_name"],
     },
     "edit": {
@@ -58,12 +58,12 @@ employee_module = {
 
 card_module = {
   "base": {
-    "name": "employees",
-    "title": u"Сотрудники предприятия",
-    "table_caption": u"Сотрудники предприятия (базовая таблица)",
+    "name": "cards",
+    "title": u"Личные карточки учета кадров предприятия",
+    "table_caption": u"Личные карточки учета кадров предприятия",
     "form_caption": u"Имя, Фамилия сотрудника",
     "function": table_view,
-    "query": "SELECT id, first_name, last_name FROM employee;"
+    "query": "SELECT id, first_name, last_name, nature_of_work, type_of_work FROM employee JOIN card WHERE employee.id=employee_id;"
   },
   "contextmenu_actions": ["edit", "delete",],
   "buttonsmenu_actions": ["add",],
@@ -103,6 +103,48 @@ card_module = {
     "last_name": {
       "position": 2,
       "caption": u"Фамилия",
+      "decode_function": lambda value: value.decode("utf-8"),
+      "type": basestring,
+    },
+    "personnel_number": {
+      "position": 3,
+      "caption": u"Табельный номер",
+      "decode_function": lambda value: value.decode("utf-8"),
+      "type": basestring,
+    },
+    "nature_of_work": {
+      "position": 4,
+      "caption": u"Рабочее место",
+      "decode_function": lambda value: value.decode("utf-8"),
+      "type": basestring,
+    },
+    "type_of_work": {
+      "position": 5,
+      "caption": u"Профессия",
+      "decode_function": lambda value: value.decode("utf-8"),
+      "type": basestring,
+    },
+    "date_of_birth": {
+      "position": 6,
+      "caption": u"Дата рождения",
+      "decode_function": lambda value: int(value),
+      "type": basestring,
+    },
+    "place_of_birth": {
+      "position": 7,
+      "caption": u"Место рождения",
+      "decode_function": lambda value: value.decode("utf-8"),
+      "type": basestring,
+    },
+    "education": {
+      "position": 8,
+      "caption": u"Образование",
+      "decode_function": lambda value: value.decode("utf-8"),
+      "type": basestring,
+    },
+    "foreign_language": {
+      "position": 9,
+      "caption": u"Основной иностранный язык",
       "decode_function": lambda value: value.decode("utf-8"),
       "type": basestring,
     },
