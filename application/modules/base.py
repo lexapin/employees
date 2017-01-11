@@ -30,12 +30,12 @@ def update_function(module, action, _id = None, data = None):
       return redirect(url_for('index'))
     attrs = []
     for attr in module["actions"][action]["attrs"]: attrs.append(data[attr])
+    return u"%s"%(list(attrs))
     try:
-      set_data_to_db(SET_QUERY%tuple(attrs))
+      set_data_to_db(SET_QUERY%attrs)
     except Exception as err:
       flash(u"Ошибка в процессе записи в базу данных новых значений")
       flash(str(err))
-      flash(u"%s"%(attrs))
     else:
       flash(u"Данные успешно изменены")
     return redirect(url_for('index'))
