@@ -63,6 +63,7 @@ def employee_form(_id = None, data = None):
   UPDATE employee SET first_name="%s", last_name="%s"
   WHERE id = %s;
   """
+  INSERT_QUERY = "INSERT INTO employee (first_name, last_name) VALUES (%s, %s);"
   if data is None:
     db_items = None if _id is None else get_data_from_db(GET_QUERY%(_id,))[0]
     disabled = ["_id"] if _id is None else []
@@ -78,35 +79,15 @@ def employee_form(_id = None, data = None):
     first_name = data["first_name"]
     last_name = data["last_name"]
     try:
-      if _id is None: pass
+      if _id is None: set_data_to_db(INSERT_QUERY%(first_name, last_name))
       else: set_data_to_db(UPDATE_QUERY%(first_name, last_name, _id))
     except Exception as err:
-      flash(u"Ошибка в процессе записи в базу данных новых данных")
+      flash(u"Ошибка в процессе записи в базу данных новых значений")
       flash(str(err))
     else:
       flash(u"Данные успешно изменены")
     return redirect(url_for('index'))
 
-
-def add_employee(data = None):
-  INSERT_QUERY = "INSERT INTO "
-  if data is None:
-    return render_template("form.html", 
-                              items = employee,
-                              base = employee_module["base"],
-                              decode = employee_decodes,
-                            )
-  else:
-    first_name = data["first_name"]
-    last_name = data["last_name"]
-    try:
-      data = set_data_to_db(UPDATE_QUERY%(first_name, last_name, _id))
-    except Exception as err:
-      flash(u"Ошибка в процессе изменения данных")
-      flash(str(err))
-    else:
-      flash(u"Данные успешно изменены")
-    return redirect(url_for('index'))
 
 """
 CREATE TABLE `employee` (
