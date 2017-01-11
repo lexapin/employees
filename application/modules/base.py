@@ -35,7 +35,7 @@ def update_function(module, action, _id = None, data = None):
       flash(u"Ошибка в процессе записи в базу данных новых значений")
       flash(str(err))
       flash(u"%s"%SET_QUERY)
-      flash(u"%s"%str(attrs))
+      flash(u"%s"%str((data[attr] for attr in module["actions"][action]["attrs"])))
     else:
       flash(u"Данные успешно изменены")
     return redirect(url_for('index'))
