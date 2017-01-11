@@ -3,6 +3,10 @@ from flask import render_template, redirect, url_for, flash
 from utilites import *
 from base import *
 
+def add_employee_card(employee_id):
+  set_data_to_db("INSERT INTO card (employee_id) VALUES (%s);"%employee_id)
+  return
+
 employee_module = {
   "base": {
     "name": "employees",
@@ -20,6 +24,7 @@ employee_module = {
       "function": update_function,
       "set_query": "INSERT INTO employee (first_name, last_name) VALUES ('%s', '%s');",
       "attrs": ["first_name", "last_name"],
+      "trigger": add_employee_card
     },
     "edit": {
       "caption": u"Редактировать",
