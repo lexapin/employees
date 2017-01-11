@@ -43,3 +43,6 @@ def update_function(module, _id = None, data = None):
     else:
       flash(u"Данные успешно изменены")
     return redirect(url_for('index'))
+
+def delete_function(module, _id):
+  return redirect(url_for('index'))
