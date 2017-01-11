@@ -39,6 +39,8 @@ def update_function(module, action, _id = None, data = None):
     else:
       flash(u"Данные успешно изменены")
       flash(u"%s"%data)
+      trigger_function = module["actions"][action].get("trigger", lambda value: value)
+      trigger_function(data)
     return redirect(url_for('index'))
 
 def delete_function(module, _id):
