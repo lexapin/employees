@@ -25,11 +25,12 @@ def update_function(module, action, _id = None, data = None):
                             decode = create_decode_table(module),
                           )
   else:
+    if _id is not None:
+      if not get_data_from_db(GET_QUERY%(_id,)) or _id != data["_id"]:
+        flash(u"Данные введены некорректно!!!")
+        return redirect(url_for('index'))
     flash(u"хз чо происходит")
     return redirect(url_for('index'))
-    if (_id is not None) and ( (not get_data_from_db(GET_QUERY%(_id,)) ) or ( _id != data["_id"]) ):
-      flash(u"Данные введены некорректно!!!")
-      return redirect(url_for('index'))
     attrs = []
     for attr in module["actions"][action]["attrs"]: attrs.append(data[attr])
     try:
