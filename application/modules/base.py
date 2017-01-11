@@ -20,9 +20,9 @@ def update_function(module, action, _id = None, data = None):
     db_items = None if _id is None else get_data_from_db(GET_QUERY%(_id,))[0]
     disabled = ["_id"] if _id is None else []
     return render_template("form.html", 
-                            items = create_form_items(employee_module, view = None, values = db_items, disabled = disabled),
-                            base = employee_module["base"],
-                            decode = create_decode_table(employee_module),
+                            items = create_form_items(module, view = None, values = db_items, disabled = disabled),
+                            base = module["base"],
+                            decode = create_decode_table(module),
                           )
   else:
     if (_id is not None) and ( (not get_data_from_db(GET_QUERY%(_id,)) ) or ( _id != data["_id"]) ):
