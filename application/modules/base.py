@@ -29,11 +29,8 @@ def update_function(module, action, _id = None, data = None):
       if not get_data_from_db(GET_QUERY%(_id,)) or _id != data["_id"]:
         flash(u"Данные введены некорректно!!!")
         return redirect(url_for('index'))
-    attrs = []
     try:
-      for attr in module["actions"][action]["attrs"]: attrs.append(data[attr])
-      attrs = tuple(attrs)
-      set_data_to_db(SET_QUERY%attrs)
+      set_data_to_db(SET_QUERY%(data[attr] for attr in module["actions"][action]["attrs"]))
     except Exception as err:
       flash(u"Ошибка в процессе записи в базу данных новых значений")
       flash(str(err))
