@@ -46,15 +46,25 @@ def logout():
 @app.route('/')
 def index():
   if current_user.is_anonymous(): return redirect(url_for('login'))
-  return redirect(url_for('cards'))
+  return redirect(url_for('employees'))
 
-from application.modules.cards import employee_module
+from application.modules.cards import employee_module, card_module
 
 @app.route('/employees', methods=['GET'])
 @app.route('/employees/<action>', methods=['GET', 'POST'])
 @app.route('/employees/<action>/<_id>', methods=['GET', 'POST'])
-def cards(action = None, _id = None):
+def employees(action = None, _id = None):
   if _id is None and action is None: return employee_module["base"]["function"](employee_module)
   form = employee_module["actions"][action]["function"]
   if request.method == 'GET': return form(employee_module, action, _id)
   if request.method == 'POST': return form(employee_module, action, _id, request.form)
+
+
+@app.route('/cards', methods=['GET'])
+@app.route('/cards/<action>', methods=['GET', 'POST'])
+@app.route('/cards/<action>/<_id>', methods=['GET', 'POST'])
+def cards(action = None, _id = None):
+  if _id is None and action is None: return card_module["base"]["function"](card_module)
+  form = card_module["actions"][action]["function"]
+  if request.method == 'GET': return form(card_module, action, _id)
+  if request.method == 'POST': return form(card_module, action, _id, request.form)
