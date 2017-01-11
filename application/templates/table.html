@@ -30,11 +30,7 @@
     {% for row in data %}
     <tr id="{{row[0]}}" class="table-context-menu">
       {% for item in row %}
-      <td>
-      {% if item is not None %}
-        {{ decode[loop.index0](item) }}
-      {% endif %}
-      </td>
+      <td>{{ decode[loop.index0](item) if item is not None }}</td>
       {% endfor %}
     </tr>
     {% endfor %}
