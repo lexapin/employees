@@ -63,7 +63,7 @@ def employee_form(_id = None, data = None):
   UPDATE employee SET first_name="%s", last_name="%s"
   WHERE id = %s;
   """
-  INSERT_QUERY = "INSERT INTO employee (first_name, last_name) VALUES (%s, %s);"
+  INSERT_QUERY = "INSERT INTO employee (first_name, last_name) VALUES ('%s', '%s');"
   if data is None:
     db_items = None if _id is None else get_data_from_db(GET_QUERY%(_id,))[0]
     disabled = ["_id"] if _id is None else []
