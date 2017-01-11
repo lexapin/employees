@@ -14,8 +14,8 @@ def table_view(module):
 
 
 def update_function(module, action, _id = None, data = None):
-  GET_QUERY = module["actions"][action]["get_query"]
-  SET_QUERY = module["actions"][action]["set_query"]
+  GET_QUERY = module["actions"][action].get("get_query", None)
+  SET_QUERY = module["actions"][action].get("set_query", None)
   if data is None:
     db_items = None if _id is None else get_data_from_db(GET_QUERY%(_id,))[0]
     disabled = ["_id"] if _id is None else []
