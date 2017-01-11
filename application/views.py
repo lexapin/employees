@@ -48,11 +48,12 @@ def index():
   if current_user.is_anonymous(): return redirect(url_for('login'))
   return redirect(url_for('cards'))
 
-from application.modules.cards import *
+from application.modules.cards import employee_module
+
 @app.route('/employees', methods=['GET'])
 @app.route('/employees/<action>', methods=['GET', 'POST'])
 @app.route('/employees/<action>/<_id>', methods=['GET', 'POST'])
 def cards(action = None, _id = None):
-  if _id is None and action is None: return employees()
-  if request.method == 'GET': return employee_form(_id)
-  if request.method == 'POST': return employee_form(_id, request.form)
+  if _id is None and action is None: return employee_module["base"]["function"](employee_module)
+  if request.method == 'GET': return employee_form(action, _id)
+  if request.method == 'POST': return employee_form(action, _id, request.form)

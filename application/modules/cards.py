@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from flask import render_template, redirect, url_for, flash
 from utilites import *
+from base import *
 
 employee_module = {
   "base": {
@@ -8,18 +9,23 @@ employee_module = {
     "title": u"Сотрудники предприятия",
     "table_caption": u"Сотрудники предприятия (базовая таблица)",
     "form_caption": u"Имя, Фамилия сотрудника",
+    "function": table_view,
+    "query": "SELECT id, first_name, last_name FROM employee;"
   },
   "contextmenu_actions": ["edit", "delete",],
   "buttonsmenu_actions": ["add",],
   "actions": {
     "add": {
       "caption": u"Добавить",
+      "function": update_function,
     },
     "edit": {
       "caption": u"Редактировать",
+      "function": update_function,
     },
     "delete": {
       "caption": u"Удалить",
+      "function": delete_function,
     },
   },
   "attributes": {
@@ -44,20 +50,20 @@ employee_module = {
 }
 
 
-def employees():
-  QUERY = "SELECT id, first_name, last_name FROM employee;"
-  data = get_data_from_db(QUERY)
-  return render_template("table.html",
-                  base = employee_module["base"],
-                  contextmenu = create_context_menu(employee_module),
-                  buttonsmenu = create_buttons_menu(employee_module),
-                  header = create_table_header(employee_module),
-                  decode = create_decode_table(employee_module),
-                  data = data,
-                  )
+# def employees():
+#   QUERY = "SELECT id, first_name, last_name FROM employee;"
+#   data = get_data_from_db(QUERY)
+#   return render_template("table.html",
+#                   base = employee_module["base"],
+#                   contextmenu = create_context_menu(employee_module),
+#                   buttonsmenu = create_buttons_menu(employee_module),
+#                   header = create_table_header(employee_module),
+#                   decode = create_decode_table(employee_module),
+#                   data = data,
+#                   )
 
 
-def employee_form(_id = None, data = None):
+def employee_form(action = None, _id = None, data = None):
   GET_QUERY = "SELECT id, first_name, last_name FROM employee WHERE id=%s;"
   UPDATE_QUERY = """
   UPDATE employee SET first_name="%s", last_name="%s"
@@ -87,6 +93,7 @@ def employee_form(_id = None, data = None):
     else:
       flash(u"Данные успешно изменены")
     return redirect(url_for('index'))
+
 
 
 """
