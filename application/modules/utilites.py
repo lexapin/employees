@@ -19,7 +19,7 @@ def set_data_to_db(SQL_QUERY):
   cursor = db.cursor()
   cursor.execute(SQL_QUERY)
   db.commit()
-  data = cursor.fetchone()
+  data = cursor.lastrowid
   cursor.close()
   return data
 
