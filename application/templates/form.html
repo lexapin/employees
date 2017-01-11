@@ -12,7 +12,7 @@
                 name = "{{ item['name'] }}"
                 placeholder = "{{ item['placeholder'] }}"
                 {% if "value" in item %}
-                value = "{{ decode[loop.index0](item['value']) }}"
+                value = "{{ decode[loop.index0](item['value']) if item['value'] is not none }}"
                 {% endif %}
                 {% if item.get('readonly', False) %}
                 readonly

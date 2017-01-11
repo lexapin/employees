@@ -63,7 +63,7 @@ card_module = {
     "table_caption": u"Личные карточки учета кадров предприятия",
     "form_caption": u"Имя, Фамилия сотрудника",
     "function": table_view,
-    "query": "SELECT employee_id, first_name, last_name, nature_of_work, type_of_work FROM employee JOIN card WHERE employee.id=employee_id;"
+    "query": "SELECT employee_id, first_name, last_name, personnel_number, nature_of_work, type_of_work, date_of_birth, place_of_birth, education, foreign_language FROM employee JOIN card WHERE employee.id=employee_id;"
   },
   "contextmenu_actions": ["edit", "delete",],
   "buttonsmenu_actions": ["add",],
