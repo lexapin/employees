@@ -18,7 +18,7 @@ employee_module = {
     "add": {
       "caption": u"Добавить",
       "function": update_function,
-      "set_query": "INSERT INTO employee (first_name, last_name) VALUES ('%s', '%s'); INSERT INTO card (employee_id) VALUES (LAST_INSERT_ID());",
+      "set_query": "INSERT INTO employee (first_name, last_name) VALUES ('%s', '%s');",
       "attrs": ["first_name", "last_name"],
     },
     "edit": {

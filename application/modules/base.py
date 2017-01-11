@@ -30,7 +30,7 @@ def update_function(module, action, _id = None, data = None):
         flash(u"Данные введены некорректно!!!")
         return redirect(url_for('index'))
     try:
-      set_data_to_db(SET_QUERY%tuple(data[attr] for attr in module["actions"][action]["attrs"]))
+      data = set_data_to_db(SET_QUERY%tuple(data[attr] for attr in module["actions"][action]["attrs"]))
     except Exception as err:
       flash(u"Ошибка в процессе записи в базу данных новых значений")
       flash(str(err))
@@ -38,6 +38,7 @@ def update_function(module, action, _id = None, data = None):
       flash(u"%s"%str(tuple(data[attr] for attr in module["actions"][action]["attrs"])))
     else:
       flash(u"Данные успешно изменены")
+      flash(u"%s"%data)
     return redirect(url_for('index'))
 
 def delete_function(module, _id):
