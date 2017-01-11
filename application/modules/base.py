@@ -39,7 +39,8 @@ def update_function(module, action, _id = None, data = None):
     except Exception as err:
       flash(u"Ошибка в процессе записи в базу данных новых значений")
       flash(str(err))
-      flash(SET_QUERY%attrs)
+      q = SET_QUERY%attrs
+      flash(u"%s"%q)
     else:
       flash(u"Данные успешно изменены")
     return redirect(url_for('index'))
