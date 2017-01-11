@@ -57,4 +57,6 @@ def cards(action = None, _id = None):
   if _id is None and action is None: return employee_module["base"]["function"](employee_module)
   form = employee_module["actions"][action]["function"]
   if request.method == 'GET': return form(employee_module, action, _id)
-  if request.method == 'POST': return form(employee_module, action, _id, request.form)
+  if request.method == 'POST':
+    return u"hello"
+    return form(employee_module, action, _id, request.form)
