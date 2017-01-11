@@ -30,7 +30,8 @@ def update_function(module, action, _id = None, data = None):
       return redirect(url_for('index'))
     attrs = []
     for attr in module["actions"][action]["attrs"]: attrs.append(data[attr])
-    return u"%s"%(list(attrs))
+    flash(u"хз чо происходит")
+    return redirect(url_for('index'))
     try:
       set_data_to_db(SET_QUERY%attrs)
     except Exception as err:
