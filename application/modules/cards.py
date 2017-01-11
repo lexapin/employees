@@ -18,14 +18,21 @@ employee_module = {
     "add": {
       "caption": u"Добавить",
       "function": update_function,
+      "get_query": "SELECT id, first_name, last_name FROM employee WHERE id=%s;",
+      "set_query": "UPDATE employee SET first_name='%s', last_name='%s' WHERE id = %s;",
+      "attrs": ["first_name", "last_name", "_id"],
     },
     "edit": {
       "caption": u"Редактировать",
       "function": update_function,
+      "set_query": "INSERT INTO employee (first_name, last_name) VALUES ('%s', '%s');",
+      "attrs": ["first_name", "last_name"],
     },
     "delete": {
       "caption": u"Удалить",
       "function": delete_function,
+      "set_query": "",
+      "attrs": ["_id"],
     },
   },
   "attributes": {
@@ -50,49 +57,30 @@ employee_module = {
 }
 
 
-# def employees():
-#   QUERY = "SELECT id, first_name, last_name FROM employee;"
-#   data = get_data_from_db(QUERY)
-#   return render_template("table.html",
-#                   base = employee_module["base"],
-#                   contextmenu = create_context_menu(employee_module),
-#                   buttonsmenu = create_buttons_menu(employee_module),
-#                   header = create_table_header(employee_module),
-#                   decode = create_decode_table(employee_module),
-#                   data = data,
-#                   )
-
-
-def employee_form(action = None, _id = None, data = None):
-  GET_QUERY = "SELECT id, first_name, last_name FROM employee WHERE id=%s;"
-  UPDATE_QUERY = """
-  UPDATE employee SET first_name="%s", last_name="%s"
-  WHERE id = %s;
-  """
-  INSERT_QUERY = "INSERT INTO employee (first_name, last_name) VALUES ('%s', '%s');"
-  if data is None:
-    db_items = None if _id is None else get_data_from_db(GET_QUERY%(_id,))[0]
-    disabled = ["_id"] if _id is None else []
-    return render_template("form.html", 
-                            items = create_form_items(employee_module, view = None, values = db_items, disabled = disabled),
-                            base = employee_module["base"],
-                            decode = create_decode_table(employee_module),
-                          )
-  else:
-    if (_id is not None) and ( (not get_data_from_db(GET_QUERY%(_id,)) ) or ( _id != data["_id"]) ):
-      flash(u"Данные о сотруднике введены некорректно!!!")
-      return redirect(url_for('index'))
-    first_name = data["first_name"]
-    last_name = data["last_name"]
-    try:
-      if _id is None: set_data_to_db(INSERT_QUERY%(first_name, last_name))
-      else: set_data_to_db(UPDATE_QUERY%(first_name, last_name, _id))
-    except Exception as err:
-      flash(u"Ошибка в процессе записи в базу данных новых значений")
-      flash(str(err))
-    else:
-      flash(u"Данные успешно изменены")
-    return redirect(url_for('index'))
+# def employee_form(module, action, _id = None, data = None):
+#   GET_QUERY = module["actions"][action]["get_query"]
+#   SET_QUERY = module["actions"][action]["set_query"]
+#   if data is None:
+#     db_items = None if _id is None else get_data_from_db(GET_QUERY%(_id,))[0]
+#     disabled = ["_id"] if _id is None else []
+#     return render_template("form.html", 
+#                             items = create_form_items(employee_module, view = None, values = db_items, disabled = disabled),
+#                             base = employee_module["base"],
+#                             decode = create_decode_table(employee_module),
+#                           )
+#   else:
+#     if (_id is not None) and ( (not get_data_from_db(GET_QUERY%(_id,)) ) or ( _id != data["_id"]) ):
+#       flash(u"Данные о сотруднике введены некорректно!!!")
+#       return redirect(url_for('index'))
+#     attrs = [data[attr] for attr in module["actions"][action]["attrs"]]
+#     try:
+#       set_data_to_db(SET_QUERY%(*attrs))
+#     except Exception as err:
+#       flash(u"Ошибка в процессе записи в базу данных новых значений")
+#       flash(str(err))
+#     else:
+#       flash(u"Данные успешно изменены")
+#     return redirect(url_for('index'))
 
 
 

@@ -13,30 +13,24 @@ def table_view(module):
                   )
 
 
-def update_function(module, _id = None, data = None):
-  GET_QUERY = "SELECT id, first_name, last_name FROM employee WHERE id=%s;"
-  UPDATE_QUERY = """
-  UPDATE employee SET first_name="%s", last_name="%s"
-  WHERE id = %s;
-  """
-  INSERT_QUERY = "INSERT INTO employee (first_name, last_name) VALUES ('%s', '%s');"
+def update_function(module, action, _id = None, data = None):
+  GET_QUERY = module["actions"][action]["get_query"]
+  SET_QUERY = module["actions"][action]["set_query"]
   if data is None:
     db_items = None if _id is None else get_data_from_db(GET_QUERY%(_id,))[0]
     disabled = ["_id"] if _id is None else []
     return render_template("form.html", 
-                            items = create_form_items(module, view = None, values = db_items, disabled = disabled),
-                            base = module["base"],
-                            decode = create_decode_table(module),
+                            items = create_form_items(employee_module, view = None, values = db_items, disabled = disabled),
+                            base = employee_module["base"],
+                            decode = create_decode_table(employee_module),
                           )
   else:
     if (_id is not None) and ( (not get_data_from_db(GET_QUERY%(_id,)) ) or ( _id != data["_id"]) ):
-      flash(u"Данные о сотруднике введены некорректно!!!")
+      flash(u"Данные введены некорректно!!!")
       return redirect(url_for('index'))
-    first_name = data["first_name"]
-    last_name = data["last_name"]
+    attrs = [data[attr] for attr in module["actions"][action]["attrs"]]
     try:
-      if _id is None: set_data_to_db(INSERT_QUERY%(first_name, last_name))
-      else: set_data_to_db(UPDATE_QUERY%(first_name, last_name, _id))
+      set_data_to_db(SET_QUERY%(*attrs))
     except Exception as err:
       flash(u"Ошибка в процессе записи в базу данных новых значений")
       flash(str(err))

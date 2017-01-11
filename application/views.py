@@ -55,5 +55,6 @@ from application.modules.cards import employee_module
 @app.route('/employees/<action>/<_id>', methods=['GET', 'POST'])
 def cards(action = None, _id = None):
   if _id is None and action is None: return employee_module["base"]["function"](employee_module)
-  if request.method == 'GET': return employee_form(action, _id)
-  if request.method == 'POST': return employee_form(action, _id, request.form)
+  form = employee_module["actions"][action]["function"]
+  if request.method == 'GET': return form(employee_module, action, _id)
+  if request.method == 'POST': return form(employee_module, action, _id, request.form)
