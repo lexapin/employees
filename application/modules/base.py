@@ -33,14 +33,14 @@ def update_function(module, action, _id = None, data = None):
     # flash(u"хз чо происходит")
     # flash(u"%s"%str(module["actions"][action]["attrs"]))
     # return redirect(url_for('index'))
+    query = SET_QUERY%attrs
     try:
       for attr in module["actions"][action]["attrs"]: attrs.append(data[attr])
-      set_data_to_db(SET_QUERY%attrs)
+      set_data_to_db(query)
     except Exception as err:
       flash(u"Ошибка в процессе записи в базу данных новых значений")
       flash(str(err))
-      q = SET_QUERY%attrs
-      flash(u"%s"%q)
+      flash(u"%s"%query)
     else:
       flash(u"Данные успешно изменены")
     return redirect(url_for('index'))
