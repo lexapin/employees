@@ -32,6 +32,7 @@ def update_function(module, action, _id = None, data = None):
     attrs = []
     try:
       for attr in module["actions"][action]["attrs"]: attrs.append(data[attr])
+      attrs = tuple(attrs)
       set_data_to_db(SET_QUERY%attrs)
     except Exception as err:
       flash(u"Ошибка в процессе записи в базу данных новых значений")
