@@ -99,7 +99,7 @@ def create_input_field(item):
 
 def get_date(value):
   date = datetime.datetime.fromtimestamp(value)
-  return u"-".join([str(value) for value in [date.year, date.month, date.day]])
+  return u"-".join(["%02d"%value for value in [date.year, date.month, date.day]])
 
 
 type_table = {
