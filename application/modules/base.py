@@ -28,7 +28,7 @@ def update_function(module, action, _id = None, data = None):
     if _id is not None:
       if not get_data_from_db(GET_QUERY%(_id,)) or _id != data["_id"]:
         flash(u"Данные введены некорректно!!!")
-        return redirect(url_for('index'))
+        return redirect(url_for(module["base"]["name"]))
     try:
       data = set_data_to_db(SET_QUERY%tuple(data[attr] for attr in module["actions"][action]["attrs"]))
     except Exception as err:
@@ -41,7 +41,7 @@ def update_function(module, action, _id = None, data = None):
       flash(u"%s"%data)
       trigger_function = module["actions"][action].get("trigger", lambda value: None)
       trigger_function(data)
-    return redirect(url_for('index'))
+    return redirect(url_for(module["base"]["name"]))
 
 def delete_function(module, _id):
-  return redirect(url_for('index'))
+  return redirect(url_for(module["base"]["name"]))
