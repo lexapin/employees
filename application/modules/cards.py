@@ -3,9 +3,11 @@ from flask import render_template, redirect, url_for, flash
 from utilites import *
 from base import *
 
+
 def add_employee_card(employee_id):
   set_data_to_db("INSERT INTO card (employee_id) VALUES (%s);"%employee_id)
   return
+
 
 employee_module = {
   "base": {
@@ -132,7 +134,7 @@ card_module = {
     "date_of_birth": {
       "position": 6,
       "caption": u"Дата рождения",
-      "decode_function": lambda value: int(value),
+      "decode_function": lambda value: get_date(value),
       "type": basestring,
     },
     "place_of_birth": {

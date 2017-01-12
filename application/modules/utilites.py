@@ -96,6 +96,12 @@ def create_input_field(item):
   return field
 
 
+import datetime
+def get_date(value):
+  date = datetime.datetime.fromtimestamp(value)
+  return "-".join([date.year, date.month, date.day])
+
+
 type_table = {
   int.__name__: "text",
   basestring.__name__: "text",
