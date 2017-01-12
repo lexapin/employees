@@ -73,16 +73,16 @@ card_module = {
   "contextmenu_actions": ["edit", "delete",],
   "buttonsmenu_actions": ["add",],
   "actions": {
-    "add": {
-      "caption": u"Добавить",
-      "function": update_function,
-      "set_query": "INSERT INTO employee (first_name, last_name) VALUES ('%s', '%s');",
-      "attrs": ["first_name", "last_name"],
-    },
+    # "add": {
+    #   "caption": u"Добавить",
+    #   "function": update_function,
+    #   "set_query": "INSERT INTO employee (first_name, last_name) VALUES ('%s', '%s');",
+    #   "attrs": ["first_name", "last_name"],
+    # },
     "edit": {
       "caption": u"Редактировать",
       "function": update_function,
-      "get_query": "SELECT id, first_name, last_name FROM employee WHERE id=%s;",
+      "get_query": "SELECT employee_id, first_name, last_name, personnel_number, nature_of_work, type_of_work, date_of_birth, place_of_birth, education, foreign_language FROM employee JOIN card WHERE employee.id=employee_id and employee_id=%s;",
       "set_query": "UPDATE employee SET first_name='%s', last_name='%s' WHERE id = %s;",
       "attrs": ["first_name", "last_name", "_id"],
     },
