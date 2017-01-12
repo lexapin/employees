@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from config import get_db
+import datetime
 
 
 def tuple_to_list(tuple_data):
@@ -96,7 +97,6 @@ def create_input_field(item):
   return field
 
 
-import datetime
 def get_date(value):
   date = datetime.datetime.fromtimestamp(value)
   return u"-".join([str(value) for value in [date.year, date.month, date.day]])
@@ -105,4 +105,5 @@ def get_date(value):
 type_table = {
   int.__name__: "text",
   basestring.__name__: "text",
+  datetime.date.__name__: "date"
 }

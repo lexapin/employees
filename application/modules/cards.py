@@ -2,6 +2,7 @@
 from flask import render_template, redirect, url_for, flash
 from utilites import *
 from base import *
+from datetime import date
 
 
 def add_employee_card(employee_id):
@@ -135,7 +136,7 @@ card_module = {
       "position": 6,
       "caption": u"Дата рождения",
       "decode_function": lambda value: get_date(value),
-      "type": basestring,
+      "type": date,
     },
     "place_of_birth": {
       "position": 7,
