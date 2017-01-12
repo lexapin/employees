@@ -30,7 +30,8 @@ def update_function(module, action, _id = None, data = None):
         flash(u"Данные введены некорректно!!!")
         return redirect(url_for(module["base"]["name"]))
     try:
-      data = set_data_to_db(SET_QUERY%tuple(data[attr] for attr in module["actions"][action]["attrs"]))
+      encode_function = lambda attr: module["attributes"][attr].get("encode_function", lambda value: value)
+      data = set_data_to_db(SET_QUERY%tuple(encode_function(attr)(data[attr]) for attr in module["actions"][action]["attrs"]))
     except Exception as err:
       flash(u"Ошибка в процессе записи в базу данных новых значений")
       flash(str(err))

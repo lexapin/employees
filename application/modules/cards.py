@@ -136,6 +136,7 @@ card_module = {
       "position": 6,
       "caption": u"Дата рождения",
       "decode_function": lambda value: get_date(value),
+      "encode_function": lambda value: set_date(value),
       "type": date,
     },
     "place_of_birth": {

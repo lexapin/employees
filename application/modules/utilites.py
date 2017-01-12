@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from config import get_db
 import datetime
+import time
 
 
 def tuple_to_list(tuple_data):
@@ -100,6 +101,12 @@ def create_input_field(item):
 def get_date(value):
   date = datetime.datetime.fromtimestamp(value)
   return u"-".join(["%02d"%value for value in [date.year, date.month, date.day]])
+
+
+def set_date(value):
+  year, month, day = [int(item) for item in value.split("-")]
+  _date = datetime.datetime(year = year, month = month, day = day)
+  return int(time.mktime(_date.timetuple()))
 
 
 type_table = {
