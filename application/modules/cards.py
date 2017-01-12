@@ -83,8 +83,8 @@ card_module = {
       "caption": u"Редактировать",
       "function": update_function,
       "get_query": "SELECT employee_id, first_name, last_name, personnel_number, nature_of_work, type_of_work, date_of_birth, place_of_birth, education, foreign_language FROM employee JOIN card WHERE employee.id=employee_id and employee_id=%s;",
-      "set_query": "UPDATE employee SET first_name='%s', last_name='%s' WHERE id = %s;",
-      "attrs": ["first_name", "last_name", "_id"],
+      "set_query": "UPDATE card SET personnel_number = '%s', nature_of_work = '%s', type_of_work = '%s', date_of_birth = '%s', place_of_birth = '%s', education = '%s', foreign_language = '%s' WHERE employee_id = %s;",
+      "attrs": ["personnel_number", "nature_of_work", "type_of_work", "date_of_birth", "place_of_birth", "education", "foreign_language", "_id"],
     },
     "delete": {
       "caption": u"Удалить",
@@ -180,7 +180,6 @@ card_module = {
 #     else:
 #       flash(u"Данные успешно изменены")
 #     return redirect(url_for('index'))
-
 
 
 """
