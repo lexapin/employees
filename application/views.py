@@ -68,3 +68,10 @@ def cards(action = None, _id = None):
   form = card_module["actions"][action]["function"]
   if request.method == 'GET': return form(card_module, action, _id)
   if request.method == 'POST': return form(card_module, action, _id, request.form)
+
+
+from application.modules.finance import finance_module
+
+@app.route('/halfyearreport', methods=['GET'])
+def halfyearreport():
+  return finance_module["base"]["function"](finance_module)
