@@ -70,8 +70,17 @@ def cards(action = None, _id = None):
   if request.method == 'POST': return form(card_module, action, _id, request.form)
 
 
-from application.modules.finance import finance_module
+from application.modules.finance import finance_module, finance_report_module
 
-@app.route('/halfyearreport', methods=['GET'])
+@app.route('/report/finance', methods=['GET'])
 def halfyearreport():
-  return finance_module["base"]["function"](finance_module)
+  return finance_report_module["base"]["function"](finance_report_module)
+
+@app.route('/finance', methods=['GET'])
+@app.route('/finance/<action>', methods=['GET', 'POST'])
+@app.route('/finance/<action>/<_id>', methods=['GET', 'POST'])
+def cards(action = None, _id = None):
+  if _id is None and action is None: return finance_module["base"]["function"](finance_module)
+  form = finance_module["actions"][action]["function"]
+  if request.method == 'GET': return form(finance_module, action, _id)
+  if request.method == 'POST': return form(finance_module, action, _id, request.form)
