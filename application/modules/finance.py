@@ -24,7 +24,15 @@ finance_report_module = {
   },
   "contextmenu_actions": [],
   "buttonsmenu_actions": [],
-  "actions": {},
+  "actions": {
+    "add": {
+      "caption": u"Добавить",
+      "function": update_function,
+      "set_query": "INSERT INTO employee (first_name, last_name) VALUES ('%s', '%s');",
+      "attrs": ["first_name", "last_name"],
+      "trigger": add_employee_card
+    },
+  },
   "attributes": {
     "_id": {
       "position": 0,
