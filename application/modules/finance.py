@@ -46,13 +46,13 @@ finance_module = {
     "salary": {
       "position": 3,
       "caption": u"Оклад",
-      "decode_function": lambda value: value.decode("utf-8"),
+      "decode_function": lambda value: str(value),
       "type": basestring,
     },
     "bonus": {
       "position": 4,
       "caption": u"Премия",
-      "decode_function": lambda value: value.decode("utf-8"),
+      "decode_function": lambda value: str(value),
       "type": basestring,
     },
   },
