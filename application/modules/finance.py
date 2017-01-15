@@ -89,7 +89,7 @@ ORDER BY (year*100+month) DESC;
       "function": update_function,
       "set_query": """
 INSERT INTO month_pay (month, year, salary, bonus)
-SELECT * FROM (SELECT %s, %s, %s, %s) AS tmp
+SELECT * FROM (SELECT %s AS month, %s AS year, %s AS salary, %s AS bonus) AS tmp
 WHERE NOT EXISTS (
 SELECT employee_id, month, year
 FROM employee_month_pay_association
@@ -97,6 +97,16 @@ INNER JOIN month_pay
 WHERE month_pay.id=month_pay_id AND month=%s AND year=%s AND employee_id=%s
 ) LIMIT 1;
       """,
+      "attrs": ["month", "year", "salary", "bonus", "month", "year", "name"],
+      "trigger": add_employee_month_pay_association,
+      "vars_to_trigger": ["name"],
+      "disabled": ["_id"],
+    },
+    "update": {
+      "caption": u"Обновить",
+      "function": update_function,
+      "get_query": "SELECT id, first_name, last_name FROM employee WHERE id=%s;",
+      "set_query": "UPDATE employee SET first_name='%s', last_name='%s' WHERE id = %s;",
       "attrs": ["month", "year", "salary", "bonus", "month", "year", "name"],
       "trigger": add_employee_month_pay_association,
       "vars_to_trigger": ["name"],
@@ -210,7 +220,7 @@ WHERE month_pay.id=month_pay_id AND month=%(month)s AND year=%(year)s
 
 """
 INSERT INTO month_pay (month, year, salary, bonus)
-SELECT * FROM (SELECT 12, 2016, 20000, 5000) AS tmp
+SELECT * FROM (SELECT 12 as month, 2016 as year, 5000 as salary, 5000 as bonus) AS tmp
 WHERE NOT EXISTS (
 SELECT employee_id, month, year
 FROM employee_month_pay_association
