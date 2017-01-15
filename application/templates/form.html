@@ -6,10 +6,11 @@
         <form role="form" method="post">
           {% for item in items %}
             <div>
+              {% decode_function = decode[loop.index0] %}
               {% if item['type'] == 'select' %}
                 <select name="{{ item['name'] }}">
                   {% for value in item['values'] %}
-                    <option value="{{ value['id'] }}">{{ decode[loop.index0](value['name']) if value['name'] is not none }}</option>
+                    <option value="{{ value['id'] }}">{{ decode_function(value['name']) if value['name'] is not none }}</option>
                   {% endfor %}
                 </select>
               {% else %}
@@ -19,7 +20,7 @@
                 name = "{{ item['name'] }}"
                 placeholder = "{{ item['placeholder'] }}"
                 {% if "value" in item %}
-                value = "{{ decode[loop.index0](item['value']) if item['value'] is not none }}"
+                value = "{{ decode_function(item['value']) if item['value'] is not none }}"
                 {% endif %}
                 {% if item.get('readonly', False) %}
                 readonly
