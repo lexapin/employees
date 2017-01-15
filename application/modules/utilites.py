@@ -94,6 +94,8 @@ def create_input_field(item):
     "hidden": item["activity"]["hidden"],
     })
   else: field.update({"readonly": False, "hidden": False,})
+  if field["type"] == "select":
+    field["values"] = [{"id": data[0], "name": data[1]} for data in get_data_from_db(item.get("values_query"))]
   if "value" in item: field["value"] = item["value"]
   return field
 

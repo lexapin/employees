@@ -7,6 +7,11 @@
           {% for item in items %}
             <div>
               {% if item['type'] == 'select' %}
+                <select name="{{ item['name'] }}">
+                  {% for value in item['values'] %}
+                    <option value="{{ value['id'] }}">{{ decode[loop.index0](value['name']) if value['name'] is not none }}</option>
+                  {% endfor %}
+                </select>
               {% else %}
                <input 
                 type = "{{ item['type'] }}"
