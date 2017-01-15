@@ -43,7 +43,9 @@ def update_function(module, action, _id = None, data = None):
       trigger_function = module["actions"][action].get("trigger", lambda value: None)
       trigger_attrs = module["actions"][action].get("vars_to_trigger", [])
       data = [data]
-      for attr in trigger_attrs: data.append(encode_function(attr)(data[attr]))
+      for attr in trigger_attrs:
+        encode_function = lambda attr: module["attributes"][attr].get("encode_function", lambda value: value)
+        data.append(encode_function(attr)(data[attr]))
       trigger_function(data)
     return redirect(url_for(module["base"]["name"]))
 
