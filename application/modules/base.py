@@ -42,7 +42,7 @@ def update_function(module, action, _id = None, request_data = None):
       flash(u"%s"%response_data)
       trigger_function = module["actions"][action].get("trigger", lambda value: None)
       trigger_attrs = module["actions"][action].get("vars_to_trigger", [])
-      response_data = [data]
+      response_data = [response_data]
       for attr in trigger_attrs:
         encode_function = lambda attr: module["attributes"][attr].get("encode_function", lambda value: value)
         response_data.append(encode_function(attr)(request_data[attr]))
