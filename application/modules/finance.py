@@ -97,9 +97,10 @@ INNER JOIN month_pay
 WHERE month_pay.id=month_pay_id AND month=%s AND year=%s AND employee_id=%s
 ) LIMIT 1;
       """,
-      "attrs": ["month", "year", "salary", "bonus", "month", "year", "_id"],
+      "attrs": ["month", "year", "salary", "bonus", "month", "year", "name"],
       "trigger": add_employee_month_pay_association,
       "vars_to_trigger": ["_id"],
+      "disabled": ["_id"],
     },
   },
   "attributes": {
