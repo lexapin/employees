@@ -41,6 +41,9 @@ def update_function(module, action, _id = None, data = None):
       flash(u"Данные успешно изменены")
       flash(u"%s"%data)
       trigger_function = module["actions"][action].get("trigger", lambda value: None)
+      trigger_attrs = module["actions"][action].get("vars_to_trigger", [])
+      data = [data]
+      for attr in trigger_attrs: data.append(encode_function(attr)(data[attr]))
       trigger_function(data)
     return redirect(url_for(module["base"]["name"]))
 

@@ -79,7 +79,7 @@ def halfyearreport():
 @app.route('/finance', methods=['GET'])
 @app.route('/finance/<action>', methods=['GET', 'POST'])
 @app.route('/finance/<action>/<_id>', methods=['GET', 'POST'])
-def cards(action = None, _id = None):
+def finance(action = None, _id = None):
   if _id is None and action is None: return finance_module["base"]["function"](finance_module)
   form = finance_module["actions"][action]["function"]
   if request.method == 'GET': return form(finance_module, action, _id)

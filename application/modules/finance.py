@@ -15,7 +15,7 @@ GROUP BY employee_id;
 
 finance_report_module = {
   "base": {
-    "name": "employees",
+    "name": "halfyearreport",
     "title": u"Отчетность по зарплате за 6 месяцев",
     "table_caption": u"Отчетность по зарплате за 6 месяцев",
     "form_caption": u"Имя, Фамилия, полугодовая зарплата сотрудника сотрудника",
@@ -66,9 +66,16 @@ finance_report_module = {
   },
 }
 
+
+def add_employee_month_pay_association(data):
+  data = tuple(data)
+  set_data_to_db("INSERT INTO employee_month_pay_association (month_pay_id, employee_id) values (%s, %s);"%(data))
+  return
+
+
 finance_module = {
   "base": {
-    "name": "employees",
+    "name": "finance",
     "title": u"Бухгалтерская отчетность по зарплате",
     "table_caption": u"Бухгалтерская отчетность по зарплате",
     "form_caption": u"Информация о зарплате сотрудника",
@@ -83,8 +90,26 @@ ORDER BY (year*100+month) DESC;
 """,
   },
   "contextmenu_actions": [],
-  "buttonsmenu_actions": [],
-  "actions": {},
+  "buttonsmenu_actions": ["add"],
+  "actions": {
+    "add": {
+      "caption": u"Добавить",
+      "function": update_function,
+      "set_query": """
+INSERT INTO month_pay (month, year, salary, bonus)
+SELECT * FROM (SELECT %(month)s, %(year)s, %(salary)s, %(bonus)s) AS tmp
+WHERE NOT EXISTS (
+SELECT employee_id, month, year
+FROM employee_month_pay_association
+INNER JOIN month_pay
+WHERE month_pay.id=month_pay_id AND month=%(month)s AND year=%(year)s AND employee_id=%(_id)s
+) LIMIT 1;
+      """,
+      "attrs": ["month", "year", "salary", "bonus", "month", "year", "_id"],
+      "trigger": add_employee_month_pay_association,
+      "vars_to_trigger": ["_id"],
+    },
+  },
   "attributes": {
     "_id": {
       "position": 0,
@@ -184,9 +209,27 @@ LIMIT 2;
 """
 
 
+"""
+INSERT INTO month_pay (month, year, salary, bonus)
+SELECT * FROM (SELECT %(month)s, %(year)s, %(salary)s, %(bonus)s) AS tmp
+WHERE NOT EXISTS (
+SELECT employee_id, month, year
+FROM employee_month_pay_association
+INNER JOIN month_pay
+WHERE month_pay.id=month_pay_id AND month=%(month)s AND year=%(year)s
+) LIMIT 1;
+"""
 
-
-
+"""
+INSERT INTO month_pay (month, year, salary, bonus)
+SELECT * FROM (SELECT 12, 2016, 20000, 5000) AS tmp
+WHERE NOT EXISTS (
+SELECT employee_id, month, year
+FROM employee_month_pay_association
+INNER JOIN month_pay
+WHERE month_pay.id=month_pay_id AND month=12 AND year=2016 AND employee_id=1
+) LIMIT 1;
+"""
 
 
 

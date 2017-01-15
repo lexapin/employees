@@ -5,8 +5,9 @@ from base import *
 from datetime import date
 
 
-def add_employee_card(employee_id):
-  set_data_to_db("INSERT INTO card (employee_id) VALUES (%s);"%employee_id)
+def add_employee_card(data):
+  data = tuple(data)
+  set_data_to_db("INSERT INTO card (employee_id) VALUES (%s);"%(data))
   return
 
 
