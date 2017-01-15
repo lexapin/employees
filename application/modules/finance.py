@@ -112,7 +112,7 @@ WHERE month_pay.id=month_pay_id AND month=%s AND year=%s AND employee_id=%s
       "position": 1,
       "caption": u"Имя, Фамилия",
       "decode_function": lambda value: value.decode("utf-8"),
-      "type": basestring,
+      "type": list,
     },
     "month": {
       "position": 2,

@@ -112,5 +112,6 @@ def set_date(value):
 type_table = {
   int.__name__: "text",
   basestring.__name__: "text",
-  datetime.date.__name__: "date"
+  datetime.date.__name__: "date",
+  list.__name__: "select",
 }
