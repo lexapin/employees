@@ -73,7 +73,7 @@ finance_module = {
     "form_caption": u"Информация о зарплате сотрудника",
     "function": table_view,
     "query": """
-SELECT employee.id, (first_name+" "+last_name), month, year, salary, bonus
+SELECT employee.id, CONCAT(first_name, " ", last_name), month, year, salary, bonus
 FROM employee
 INNER JOIN employee_month_pay_association
 INNER JOIN month_pay 
