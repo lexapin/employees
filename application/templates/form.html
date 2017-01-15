@@ -6,7 +6,7 @@
         <form role="form" method="post">
           {% for item in items %}
             <div>
-              {% decode_function = decode[loop.index0] %}
+              {% set decode_function = decode[loop.index0] %}
               {% if item['type'] == 'select' %}
                 <select name="{{ item['name'] }}">
                   {% for value in item['values'] %}
