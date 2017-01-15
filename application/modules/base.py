@@ -18,7 +18,7 @@ def update_function(module, action, _id = None, data = None):
   SET_QUERY = module["actions"][action].get("set_query", None)
   if data is None:
     db_items = None if _id is None else get_data_from_db(GET_QUERY%(_id,))[0]
-    disabled = ["_id"] if _id is None else []
+    disabled = module["actions"][action].get("disabled", [])
     return render_template("form.html", 
                             items = create_form_items(module, view = None, values = db_items, disabled = disabled),
                             base = module["base"],

@@ -28,7 +28,8 @@ employee_module = {
       "function": update_function,
       "set_query": "INSERT INTO employee (first_name, last_name) VALUES ('%s', '%s');",
       "attrs": ["first_name", "last_name"],
-      "trigger": add_employee_card
+      "trigger": add_employee_card,
+      "disabled": ["_id"]
     },
     "edit": {
       "caption": u"Редактировать",
