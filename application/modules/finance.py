@@ -73,7 +73,7 @@ finance_module = {
     "form_caption": u"Информация о зарплате сотрудника",
     "function": table_view,
     "query": """
-SELECT employee.id, first_name, last_name, month, year, salary, bonus
+SELECT employee.id, (first_name+" "+last_name), month, year, salary, bonus
 FROM employee
 INNER JOIN employee_month_pay_association
 INNER JOIN month_pay 
@@ -108,38 +108,32 @@ WHERE month_pay.id=month_pay_id AND month=%s AND year=%s AND employee_id=%s
       "caption": u"#",
       "type": int,
     },
-    "first_name": {
+    "name": {
       "position": 1,
-      "caption": u"Имя",
-      "decode_function": lambda value: value.decode("utf-8"),
-      "type": basestring,
-    },
-    "last_name": {
-      "position": 2,
-      "caption": u"Фамилия",
+      "caption": u"Имя, Фамилия",
       "decode_function": lambda value: value.decode("utf-8"),
       "type": basestring,
     },
     "month": {
-      "position": 3,
+      "position": 2,
       "caption": u"Месяц",
       "decode_function": lambda value: str(value),
       "type": basestring,
     },
     "year": {
-      "position": 4,
+      "position": 3,
       "caption": u"Год",
       "decode_function": lambda value: str(value),
       "type": basestring,
     },
     "salary": {
-      "position": 5,
+      "position": 4,
       "caption": u"Оклад",
       "decode_function": lambda value: str(value),
       "type": basestring,
     },
     "bonus": {
-      "position": 6,
+      "position": 5,
       "caption": u"Премия",
       "decode_function": lambda value: str(value),
       "type": basestring,
