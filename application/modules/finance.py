@@ -89,12 +89,12 @@ ORDER BY (year*100+month) DESC;
       "function": update_function,
       "set_query": """
 INSERT INTO month_pay (month, year, salary, bonus)
-SELECT * FROM (SELECT %(month)s, %(year)s, %(salary)s, %(bonus)s) AS tmp
+SELECT * FROM (SELECT %s, %s, %s, %s) AS tmp
 WHERE NOT EXISTS (
 SELECT employee_id, month, year
 FROM employee_month_pay_association
 INNER JOIN month_pay
-WHERE month_pay.id=month_pay_id AND month=%(month)s AND year=%(year)s AND employee_id=%(_id)s
+WHERE month_pay.id=month_pay_id AND month=%s AND year=%s AND employee_id=%s
 ) LIMIT 1;
       """,
       "attrs": ["month", "year", "salary", "bonus", "month", "year", "_id"],
