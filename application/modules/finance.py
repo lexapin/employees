@@ -109,7 +109,7 @@ WHERE month_pay.id=month_pay_id AND month=%s AND year=%s AND employee_id=%s
 SELECT month_pay.id, employee_id, month, year, salary, bonus
 FROM employee_month_pay_association
 INNER JOIN month_pay 
-WHERE employee_id = %s AND month_pay.id=month_pay_id;
+WHERE month_pay_id = %s AND month_pay.id=month_pay_id;
       """,
       "set_query": "UPDATE month_pay SET salary='%s', bonus='%s' WHERE id = %s;",
       "attrs": ["salary", "bonus", "_id"],
