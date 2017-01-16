@@ -81,7 +81,7 @@ WHERE employee.id=employee_id AND month_pay.id=month_pay_id
 ORDER BY (year*100+month) DESC;
 """,
   },
-  "contextmenu_actions": [],
+  "contextmenu_actions": ["edit"],
   "buttonsmenu_actions": ["add"],
   "actions": {
     "add": {
@@ -102,7 +102,7 @@ WHERE month_pay.id=month_pay_id AND month=%s AND year=%s AND employee_id=%s
       "vars_to_trigger": ["name"],
       "disabled": ["_id"],
     },
-    "update": {
+    "edit": {
       "caption": u"Обновить",
       "function": update_function,
       "get_query": """
