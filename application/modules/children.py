@@ -54,7 +54,7 @@ children_module = {
       "set_query": add_child_query,
       "attrs": ["name", "date_of_birth"],
       "trigger": add_employee_children_association,
-      "vars_to_trigger": ["name"],
+      "vars_to_trigger": ["employee"],
       "disabled": ["_id"],
     },
     "edit": {
