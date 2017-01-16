@@ -25,10 +25,11 @@ def update_function(module, action, _id = None, request_data = None):
                             decode = create_decode_table(module),
                           )
   else:
-    if _id is not None:
-      if not get_data_from_db(GET_QUERY%(_id,)) or _id != request_data["_id"]:
-        flash(u"Данные введены некорректно!!!")
-        return redirect(url_for(module["base"]["name"]))
+    # Мешает менять данные, надо что-то новое придумать для защиты вводимой информации
+    # if _id is not None:
+    #   if not get_data_from_db(GET_QUERY%(_id,)) or _id != request_data["_id"]:
+    #     flash(u"Данные введены некорректно!!!")
+    #     return redirect(url_for(module["base"]["name"]))
     try:
       encode_function = lambda attr: module["attributes"][attr].get("encode_function", lambda value: value)
       response_data = set_data_to_db(SET_QUERY%tuple(encode_function(attr)(request_data[attr]) for attr in module["actions"][action]["attrs"]))
