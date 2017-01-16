@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 from base import *
+from datetime import date
+
 
 children_query = """
 SELECT child_id, name, child.date_of_birth, CONCAT(first_name, " ", last_name)
