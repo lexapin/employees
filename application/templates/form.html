@@ -7,10 +7,17 @@
           {% for item in items %}
             <div>
               {% set decode_function = decode[loop.index0] %}
+              {% set default_value = decode_function(item['value']) if item['value'] is not none else "" %}
               {% if item['type'] == 'select' %}
                 <select name="{{ item['name'] }}">
                   {% for value in item['values'] %}
-                    <option value="{{ value['id'] }}">{{ decode_function(value['name']) if value['name'] is not none }}</option>
+                    <option value="{{ value['id'] }}"
+                    {% if default_value == value['id'] %}
+                    selected 
+                    {% endif %}
+                    >
+                    {{ decode_function(value['name']) if value['name'] is not none }}
+                    </option>
                   {% endfor %}
                 </select>
               {% else %}
@@ -20,7 +27,7 @@
                 name = "{{ item['name'] }}"
                 placeholder = "{{ item['placeholder'] }}"
                 {% if "value" in item %}
-                value = "{{ decode_function(item['value']) if item['value'] is not none }}"
+                value = "{{ default_value }}"
                 {% endif %}
                 {% if item.get('readonly', False) %}
                 readonly

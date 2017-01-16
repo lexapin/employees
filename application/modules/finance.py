@@ -105,12 +105,14 @@ WHERE month_pay.id=month_pay_id AND month=%s AND year=%s AND employee_id=%s
     "update": {
       "caption": u"Обновить",
       "function": update_function,
-      "get_query": "SELECT id, first_name, last_name FROM employee WHERE id=%s;",
+      "get_query": """
+SELECT month_pay.id, employee_id, month, year, salary, bonus
+FROM employee_month_pay_association
+INNER JOIN month_pay 
+WHERE employee_id = %s AND month_pay.id=month_pay_id;
+      """,
       "set_query": "UPDATE employee SET first_name='%s', last_name='%s' WHERE id = %s;",
       "attrs": ["month", "year", "salary", "bonus", "month", "year", "name"],
-      "trigger": add_employee_month_pay_association,
-      "vars_to_trigger": ["name"],
-      "disabled": ["_id"],
     },
   },
   "attributes": {
