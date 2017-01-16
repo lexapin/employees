@@ -84,3 +84,15 @@ def finance(action = None, _id = None):
   form = finance_module["actions"][action]["function"]
   if request.method == 'GET': return form(finance_module, action, _id)
   if request.method == 'POST': return form(finance_module, action, _id, request.form)
+
+
+from application.modules.children import children_module
+
+@app.route('/children', methods=['GET'])
+@app.route('/children/<action>', methods=['GET', 'POST'])
+@app.route('/children/<action>/<_id>', methods=['GET', 'POST'])
+def children(action = None, _id = None):
+  if _id is None and action is None: return children_module["base"]["function"](children_module)
+  form = children_module["actions"][action]["function"]
+  if request.method == 'GET': return form(children_module, action, _id)
+  if request.method == 'POST': return form(children_module, action, _id, request.form)

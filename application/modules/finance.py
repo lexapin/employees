@@ -12,6 +12,33 @@ WHERE month_pay.id=month_pay_id AND month_pay.month=d_m.month AND month_pay.year
 GROUP BY employee_id;
 """
 
+salary_query = """
+SELECT month_pay_id, CONCAT(first_name, " ", last_name), month, year, salary, bonus
+FROM employee
+INNER JOIN employee_month_pay_association
+INNER JOIN month_pay 
+WHERE employee.id=employee_id AND month_pay.id=month_pay_id
+ORDER BY (year*100+month) DESC;
+"""
+
+add_finance_information_query = """
+INSERT INTO month_pay (month, year, salary, bonus)
+SELECT * FROM (SELECT %s AS month, %s AS year, %s AS salary, %s AS bonus) AS tmp
+WHERE NOT EXISTS (
+SELECT employee_id, month, year
+FROM employee_month_pay_association
+INNER JOIN month_pay
+WHERE month_pay.id=month_pay_id AND month=%s AND year=%s AND employee_id=%s
+) LIMIT 1;
+"""
+
+get_form_to_update_finance_info_query = """
+SELECT month_pay.id, employee_id, month, year, salary, bonus
+FROM employee_month_pay_association
+INNER JOIN month_pay 
+WHERE month_pay_id = %s AND month_pay.id=month_pay_id;
+"""
+
 
 finance_report_module = {
   "base": {
@@ -72,14 +99,7 @@ finance_module = {
     "table_caption": u"Бухгалтерская ведомость по зарплате",
     "form_caption": u"Информация о зарплате сотрудника",
     "function": table_view,
-    "query": """
-SELECT month_pay_id, CONCAT(first_name, " ", last_name), month, year, salary, bonus
-FROM employee
-INNER JOIN employee_month_pay_association
-INNER JOIN month_pay 
-WHERE employee.id=employee_id AND month_pay.id=month_pay_id
-ORDER BY (year*100+month) DESC;
-""",
+    "query": salary_query,
   },
   "contextmenu_actions": ["edit"],
   "buttonsmenu_actions": ["add"],
@@ -87,16 +107,7 @@ ORDER BY (year*100+month) DESC;
     "add": {
       "caption": u"Добавить",
       "function": update_function,
-      "set_query": """
-INSERT INTO month_pay (month, year, salary, bonus)
-SELECT * FROM (SELECT %s AS month, %s AS year, %s AS salary, %s AS bonus) AS tmp
-WHERE NOT EXISTS (
-SELECT employee_id, month, year
-FROM employee_month_pay_association
-INNER JOIN month_pay
-WHERE month_pay.id=month_pay_id AND month=%s AND year=%s AND employee_id=%s
-) LIMIT 1;
-      """,
+      "set_query": add_finance_information_query,
       "attrs": ["month", "year", "salary", "bonus", "month", "year", "name"],
       "trigger": add_employee_month_pay_association,
       "vars_to_trigger": ["name"],
@@ -105,12 +116,7 @@ WHERE month_pay.id=month_pay_id AND month=%s AND year=%s AND employee_id=%s
     "edit": {
       "caption": u"Редактировать",
       "function": update_function,
-      "get_query": """
-SELECT month_pay.id, employee_id, month, year, salary, bonus
-FROM employee_month_pay_association
-INNER JOIN month_pay 
-WHERE month_pay_id = %s AND month_pay.id=month_pay_id;
-      """,
+      "get_query": get_form_to_update_finance_info_query,
       "set_query": "UPDATE month_pay SET salary='%s', bonus='%s' WHERE id = %s;",
       "attrs": ["salary", "bonus", "_id"],
     },
