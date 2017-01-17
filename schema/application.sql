@@ -28,7 +28,7 @@ CREATE TABLE `user` (
   `id` int NOT NULL AUTO_INCREMENT primary key,
   `username` varchar(20) unique,
   `password` varchar(20),
-  `role_id`  int NOT NULL,
+  `role_id`  int DEFAULT NULL,
   FOREIGN KEY (role_id)
         REFERENCES role(id)
 );
