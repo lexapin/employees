@@ -28,7 +28,7 @@ def add_employee_place_association(data):
   return
 
 get_form_to_update_place_info_query = """
-SELECT place.id, place_name, assign_date, employee_id
+SELECT place.id, employee_id, place_name, assign_date
 FROM employee_place_association
 INNER JOIN place 
 WHERE place_id=%s AND place.id=place_id;
