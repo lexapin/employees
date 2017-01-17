@@ -5,13 +5,13 @@ DROP TABLE IF EXISTS view;
 
 CREATE TABLE `role` (
   `id` int NOT NULL AUTO_INCREMENT primary key,
-  `name` varchar(20) unique,
+  `name` varchar(20) unique
 );
 
 CREATE TABLE `view` (
   `id` int NOT NULL AUTO_INCREMENT primary key,
   `name` varchar(20) unique,
-  `caption` varchar(20),
+  `caption` varchar(20)
 );
 
 CREATE TABLE `role_view_association` (
