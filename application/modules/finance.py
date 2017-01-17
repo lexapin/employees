@@ -7,7 +7,7 @@ SELECT employee_id, first_name, last_name, SUM(salary), SUM(bonus)
 FROM employee
 INNER JOIN employee_month_pay_association
 INNER JOIN month_pay
-INNER JOIN (SELECT month, year FROM month_pay GROUP BY (year*100+month) ORDER BY (year*100+month) DESC LIMIT 2) d_m
+INNER JOIN (SELECT month, year FROM month_pay GROUP BY (year*100+month) ORDER BY (year*100+month) DESC LIMIT 6) d_m
 WHERE month_pay.id=month_pay_id AND month_pay.month=d_m.month AND month_pay.year=d_m.year AND employee_id = employee.id
 GROUP BY employee_id;
 """
