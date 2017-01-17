@@ -73,7 +73,7 @@ card_module = {
     "table_caption": u"Личные карточки учета кадров предприятия",
     "form_caption": u"Имя, Фамилия сотрудника",
     "function": table_view,
-    "query": "SELECT employee_id, first_name, last_name, personnel_number, nature_of_work, type_of_work, date_of_birth, place_of_birth, education, foreign_language FROM employee JOIN card WHERE employee.id=employee_id;"
+    "query": "SELECT employee_id, first_name, last_name, personnel_number, nature_of_work, type_of_work, date_of_birth, place_of_birth, education, foreign_language, residence FROM employee JOIN card WHERE employee.id=employee_id;"
   },
   "contextmenu_actions": ["edit", "delete",],
   "buttonsmenu_actions": [],
@@ -87,9 +87,9 @@ card_module = {
     "edit": {
       "caption": u"Редактировать",
       "function": update_function,
-      "get_query": "SELECT employee_id, first_name, last_name, personnel_number, nature_of_work, type_of_work, date_of_birth, place_of_birth, education, foreign_language FROM employee JOIN card WHERE employee.id=employee_id and employee_id=%s;",
-      "set_query": "UPDATE card SET personnel_number = '%s', nature_of_work = '%s', type_of_work = '%s', date_of_birth = '%s', place_of_birth = '%s', education = '%s', foreign_language = '%s' WHERE employee_id = %s;",
-      "attrs": ["personnel_number", "nature_of_work", "type_of_work", "date_of_birth", "place_of_birth", "education", "foreign_language", "_id"],
+      "get_query": "SELECT employee_id, first_name, last_name, personnel_number, nature_of_work, type_of_work, date_of_birth, place_of_birth, education, foreign_language, residence FROM employee JOIN card WHERE employee.id=employee_id and employee_id=%s;",
+      "set_query": "UPDATE card SET personnel_number = '%s', nature_of_work = '%s', type_of_work = '%s', date_of_birth = '%s', place_of_birth = '%s', education = '%s', foreign_language = '%s', residence = '%s' WHERE employee_id = %s;",
+      "attrs": ["personnel_number", "nature_of_work", "type_of_work", "date_of_birth", "place_of_birth", "education", "foreign_language", "residence", "_id"],
     },
     "delete": {
       "caption": u"Удалить",
@@ -159,5 +159,11 @@ card_module = {
       "decode_function": lambda value: value.decode("utf-8"),
       "type": basestring,
     },
+    "residence": {
+      "position": 10,
+      "caption": u"Местожительство",
+      "decode_function": lambda value: value.decode("utf-8"),
+      "type": basestring,  
+    }
   },
 }

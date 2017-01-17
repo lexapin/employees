@@ -15,13 +15,14 @@ CREATE TABLE `employee` (
 
 CREATE TABLE `card` (
   `id` int NOT NULL AUTO_INCREMENT primary key,
-  `personnel_number` varchar(20),
-  `nature_of_work`   varchar(20),
-  `type_of_work`     varchar(20),
+  `personnel_number` varchar(10),
+  `nature_of_work`   varchar(30),
+  `type_of_work`     varchar(30),
   `date_of_birth`    int(11),
-  `place_of_birth`   varchar(20),
-  `education`        varchar(20),
-  `foreign_language` varchar(20),
+  `place_of_birth`   varchar(50),
+  `education`        varchar(50),
+  `foreign_language` varchar(50),
+  `residence`        varchar(90),
   `employee_id` int NOT NULL,
   FOREIGN KEY (employee_id)
         REFERENCES employee(id)
