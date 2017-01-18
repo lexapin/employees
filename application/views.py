@@ -83,10 +83,10 @@ def closed():
 # Основная часть приложения
 
 
-@check_module_access
 @app.route('/employees', methods=['GET'])
 @app.route('/employees/<action>', methods=['GET', 'POST'])
 @app.route('/employees/<action>/<_id>', methods=['GET', 'POST'])
+@check_module_access
 def employees(action = None, _id = None):
   if _id is None and action is None: return employee_module["base"]["function"](employee_module)
   form = employee_module["actions"][action]["function"]
@@ -94,10 +94,10 @@ def employees(action = None, _id = None):
   if request.method == 'POST': return form(employee_module, action, _id, request.form)
 
 
-@check_module_access
 @app.route('/cards', methods=['GET'])
 @app.route('/cards/<action>', methods=['GET', 'POST'])
 @app.route('/cards/<action>/<_id>', methods=['GET', 'POST'])
+@check_module_access
 def cards(action = None, _id = None):
   if _id is None and action is None: return card_module["base"]["function"](card_module)
   form = card_module["actions"][action]["function"]
@@ -111,10 +111,10 @@ def halfyearreport():
   return finance_report_module["base"]["function"](finance_report_module)
 
 
-@check_module_access
 @app.route('/finance', methods=['GET'])
 @app.route('/finance/<action>', methods=['GET', 'POST'])
 @app.route('/finance/<action>/<_id>', methods=['GET', 'POST'])
+@check_module_access
 def finance(action = None, _id = None):
   if _id is None and action is None: return finance_module["base"]["function"](finance_module)
   form = finance_module["actions"][action]["function"]
@@ -122,10 +122,10 @@ def finance(action = None, _id = None):
   if request.method == 'POST': return form(finance_module, action, _id, request.form)
 
 
-@check_module_access
 @app.route('/children', methods=['GET'])
 @app.route('/children/<action>', methods=['GET', 'POST'])
 @app.route('/children/<action>/<_id>', methods=['GET', 'POST'])
+@check_module_access
 def children(action = None, _id = None):
   if _id is None and action is None: return children_module["base"]["function"](children_module)
   form = children_module["actions"][action]["function"]
@@ -133,10 +133,10 @@ def children(action = None, _id = None):
   if request.method == 'POST': return form(children_module, action, _id, request.form)
 
 
-@check_module_access
 @app.route('/places', methods=['GET'])
 @app.route('/places/<action>', methods=['GET', 'POST'])
 @app.route('/places/<action>/<_id>', methods=['GET', 'POST'])
+@check_module_access
 def places(action = None, _id = None):
   if _id is None and action is None: return place_module["base"]["function"](place_module)
   form = place_module["actions"][action]["function"]
@@ -144,10 +144,10 @@ def places(action = None, _id = None):
   if request.method == 'POST': return form(place_module, action, _id, request.form)
 
 
-@check_module_access
 @app.route('/roles', methods=['GET'])
 @app.route('/roles/<action>', methods=['GET', 'POST'])
 @app.route('/roles/<action>/<_id>', methods=['GET', 'POST'])
+@check_module_access
 def roles(action = None, _id = None):
   if _id is None and action is None: return role_module["base"]["function"](role_module)
   form = role_module["actions"][action]["function"]
@@ -155,10 +155,10 @@ def roles(action = None, _id = None):
   if request.method == 'POST': return form(role_module, action, _id, request.form)
 
 
-@check_module_access
 @app.route('/users', methods=['GET'])
 @app.route('/users/<action>', methods=['GET', 'POST'])
 @app.route('/users/<action>/<_id>', methods=['GET', 'POST'])
+@check_module_access
 def users(action = None, _id = None):
   if _id is None and action is None: return user_module["base"]["function"](user_module)
   form = user_module["actions"][action]["function"]
@@ -166,10 +166,10 @@ def users(action = None, _id = None):
   if request.method == 'POST': return form(user_module, action, _id, request.form)
 
 
-@check_module_access
 @app.route('/apps', methods=['GET'])
 @app.route('/apps/<action>', methods=['GET', 'POST'])
 @app.route('/apps/<action>/<_id>', methods=['GET', 'POST'])
+@check_module_access
 def apps(action = None, _id = None):
   if _id is None and action is None: return app_module["base"]["function"](app_module)
   form = app_module["actions"][action]["function"]
