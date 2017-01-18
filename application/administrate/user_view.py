@@ -27,7 +27,7 @@ user_module = {
       "caption": u"Редактировать",
       "function": update_function,
       "get_query": "SELECT id, username, password, role_id FROM user WHERE id=%s;",
-      "set_query": "UPDATE user SET username='%s', role_id=%s WHERE id = %s;",
+      "set_query": "UPDATE user SET username='%s', password='%s', role_id=%s WHERE id = %s;",
       "attrs": ["username", "password", "rolename", "_id"],
     },
     "delete": {
