@@ -20,7 +20,7 @@ user_module = {
       "caption": u"Добавить",
       "function": update_function,
       "set_query": "INSERT INTO user (username, role_id) VALUES ('%s', %s);",
-      "attrs": ["username", "role_id"],
+      "attrs": ["username", "rolename"],
       "disabled": ["_id"]
     },
     "edit": {
@@ -28,7 +28,7 @@ user_module = {
       "function": update_function,
       "get_query": "SELECT id, username, role_id FROM user WHERE id=%s;",
       "set_query": "UPDATE user SET username='%s', role_id=%s WHERE id = %s;",
-      "attrs": ["username", "role_id", "_id"],
+      "attrs": ["username", "rolename", "_id"],
     },
     "delete": {
       "caption": u"Удалить",
