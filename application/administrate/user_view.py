@@ -19,8 +19,8 @@ user_module = {
     "add": {
       "caption": u"Добавить",
       "function": update_function,
-      "set_query": "INSERT INTO user (username, role_id) VALUES ('%s', %s);",
-      "attrs": ["username", "rolename"],
+      "set_query": "INSERT INTO user (username, password, role_id) VALUES ('%s', '%s', %s);",
+      "attrs": ["username", "password", "rolename"],
       "disabled": ["_id"]
     },
     "edit": {
@@ -28,7 +28,7 @@ user_module = {
       "function": update_function,
       "get_query": "SELECT id, username, role_id FROM user WHERE id=%s;",
       "set_query": "UPDATE user SET username='%s', role_id=%s WHERE id = %s;",
-      "attrs": ["username", "rolename", "_id"],
+      "attrs": ["username", "password", "rolename", "_id"],
     },
     "delete": {
       "caption": u"Удалить",
@@ -49,8 +49,14 @@ user_module = {
       "decode_function": lambda value: value.decode("utf-8"),
       "type": basestring,
     },
-    "rolename": {
+    "password": {
       "position": 2,
+      "caption": u"Пароль пользователя",
+      "decode_function": lambda value: value.decode("utf-8"),
+      "type": basestring,
+    },
+    "rolename": {
+      "position": 3,
       "caption": u"Идентификатор роли",
       "decode_function": lambda value: value.decode("utf-8"),
       "type": list,
