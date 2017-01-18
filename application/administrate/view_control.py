@@ -36,50 +36,10 @@ def check_module_access(func):
   @wraps(func)
   def decorated_view(*args, **kwargs):
     view_name = str(request.url_rule).split("/")[1]
-    user_name = u"%s"%current_user
     _id = current_user.get_id()
     access_OK = get_data_from_db(get_access_query%(_id, view_name))
-    flash(u"%s, Вы авторизованы в модуле %s?"%(user_name, view_name))
     if access_OK:
       return func(*args, **kwargs)
     else:
       return redirect(url_for("closed"))
   return decorated_view
-
-"""
-INSERT INTO view (name, caption)
-SELECT * FROM (SELECT %s AS name, %s AS caption) AS tmp
-WHERE NOT EXISTS (
-SELECT name
-FROM view
-WHERE view.name = tmp.name
-) LIMIT 1;
-"""
-
-
-# sample
-"""
-INSERT INTO view (name, caption)
-SELECT * FROM (SELECT "places" AS name, "Должности сотрудников" AS caption) AS tmp
-WHERE NOT EXISTS (
-SELECT name
-FROM view
-WHERE view.name = tmp.name
-) LIMIT 1;
-"""
-
-"""
-INSERT INTO role (name) values ("Администратор");
-"""
-
-"""
-INSERT INTO role_view_association (role_id, view_id) values (1, 1);
-"""
-
-"""
-SELECT role.name, view.caption
-FROM role
-INNER JOIN role_view_association
-INNER JOIN view
-WHERE role_id=role.id AND view_id=view.id;
-"""
