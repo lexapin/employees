@@ -62,6 +62,9 @@ def index():
   return redirect(url_for('employees'))
 
 
+# Основная часть приложения
+
+
 @app.route('/employees', methods=['GET'])
 @app.route('/employees/<action>', methods=['GET', 'POST'])
 @app.route('/employees/<action>/<_id>', methods=['GET', 'POST'])

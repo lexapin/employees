@@ -89,7 +89,7 @@ children_module = {
       "caption": u"Имя, Фамилия сотрудника",
       "decode_function": lambda value: value.decode("utf-8"),
       "type": list,
-      "values_query": "SELECT id, first_name, last_name FROM employee;",
+      "values_query": "SELECT id, CONCAT(first_name, ' ', last_name) FROM employee;",
     },
   },
 }

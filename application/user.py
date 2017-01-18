@@ -28,7 +28,7 @@ class User(object):
     return unicode(self.id)
 
   def __repr__(self):
-    return self.username
+    return self.username.encode("utf-8")
 
   @classmethod
   def get(cls, _id):
