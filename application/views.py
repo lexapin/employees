@@ -14,6 +14,7 @@ from application.administrate.view_control import registrate_view
 # вьюхи панели администрирования
 from application.administrate.role_view import role_module
 from application.administrate.user_view import user_module
+from application.administrate.module_view import app_module
 
 # вьюхи приложения
 from application.modules.cards import employee_module, card_module
@@ -31,6 +32,7 @@ for module in [
                 place_module,
                 role_module,
                 user_module,
+                app_module,
               ]:
   registrate_view(module)
 
@@ -150,3 +152,13 @@ def users(action = None, _id = None):
   form = user_module["actions"][action]["function"]
   if request.method == 'GET': return form(user_module, action, _id)
   if request.method == 'POST': return form(user_module, action, _id, request.form)
+
+
+@app.route('/apps', methods=['GET'])
+@app.route('/apps/<action>', methods=['GET', 'POST'])
+@app.route('/apps/<action>/<_id>', methods=['GET', 'POST'])
+def apps(action = None, _id = None):
+  if _id is None and action is None: return app_module["base"]["function"](app_module)
+  form = app_module["actions"][action]["function"]
+  if request.method == 'GET': return form(app_module, action, _id)
+  if request.method == 'POST': return form(app_module, action, _id, request.form)
