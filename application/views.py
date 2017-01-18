@@ -13,6 +13,7 @@ from config import get_db
 from application.administrate.view_control import registrate_view
 # вьюхи панели администрирования
 from application.administrate.role_view import role_module
+from application.administrate.user_view import user_module
 
 # вьюхи приложения
 from application.modules.cards import employee_module, card_module
@@ -28,7 +29,8 @@ for module in [
                 finance_report_module,
                 children_module,
                 place_module,
-                role_module
+                role_module,
+                user_module,
               ]:
   registrate_view(module)
 
@@ -138,3 +140,13 @@ def roles(action = None, _id = None):
   form = role_module["actions"][action]["function"]
   if request.method == 'GET': return form(role_module, action, _id)
   if request.method == 'POST': return form(role_module, action, _id, request.form)
+
+
+@app.route('/users', methods=['GET'])
+@app.route('/users/<action>', methods=['GET', 'POST'])
+@app.route('/users/<action>/<_id>', methods=['GET', 'POST'])
+def users(action = None, _id = None):
+  if _id is None and action is None: return user_module["base"]["function"](user_module)
+  form = user_module["actions"][action]["function"]
+  if request.method == 'GET': return form(user_module, action, _id)
+  if request.method == 'POST': return form(user_module, action, _id, request.form)
