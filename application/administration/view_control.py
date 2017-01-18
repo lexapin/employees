@@ -21,7 +21,19 @@ place_module = {
 INSERT INTO view (name, caption)
 SELECT * FROM (SELECT %s AS name, %s AS caption) AS tmp
 WHERE NOT EXISTS (
-SELECT name, caption
+SELECT name
+FROM view
+WHERE view.name = tmp.name
+) LIMIT 1;
+"""
+
+
+# sample
+"""
+INSERT INTO view (name, caption)
+SELECT * FROM (SELECT "places" AS name, "Должности сотрудников" AS caption) AS tmp
+WHERE NOT EXISTS (
+SELECT name
 FROM view
 WHERE view.name = tmp.name
 ) LIMIT 1;

@@ -11,7 +11,7 @@ CREATE TABLE `role` (
 CREATE TABLE `view` (
   `id` int NOT NULL AUTO_INCREMENT primary key,
   `name` varchar(20) unique,
-  `caption` varchar(20)
+  `caption` varchar(90)
 );
 
 CREATE TABLE `role_view_association` (
