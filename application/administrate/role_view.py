@@ -20,7 +20,7 @@ role_module = {
       "caption": u"Добавить",
       "function": update_function,
       "set_query": "INSERT INTO role (name) VALUES ('%s');",
-      "attrs": ["first_name", "last_name"],
+      "attrs": ["name"],
       "disabled": ["_id"]
     },
     "edit": {
