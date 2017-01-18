@@ -26,7 +26,7 @@ def registrate_view(module):
 def check_module_access(func):
   @wraps(func)
   def decorated_view(*args, **kwargs):
-    view_name = request.url_rule
+    view_name = str(request.url_rule).split("/")[1]
     user_name = u"%s"%current_user
     access_OK = True
     flash(u"%s, Вы авторизованы в модуле %s?"%(user_name, view_name))
