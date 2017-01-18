@@ -4,7 +4,7 @@ from application.modules.utilites import *
 def registrate_view(module):
   name = module["base"]["name"]
   caption = module["base"]["title"]
-  registrate_view_query = "INSERT INTO view (name, caption) VALUES %s, %s"
+  registrate_view_query = "INSERT INTO view (name, caption) VALUES %s, %s;"
   response_data = set_data_to_db(registrate_view_query%(name, caption))
   if response_data:
     append_view_to_admin_role_query = "INSERT INTO role_view_association (role_id, view_id) values (1, %s);"%(response_data,)
