@@ -11,7 +11,7 @@ user_module = {
     "table_caption": u"Пользователи приложения",
     "form_caption": u"Пользователь и его роль в приложении",
     "function": table_view,
-    "query": "SELECT user.id, username, role.name FROM user INNER JOIN role WHERE role_id=role.id ORDER BY user.id;"
+    "query": "SELECT user.id, username, password, role.name FROM user INNER JOIN role WHERE role_id=role.id ORDER BY user.id;"
   },
   "contextmenu_actions": ["edit", "delete",],
   "buttonsmenu_actions": ["add",],
@@ -26,7 +26,7 @@ user_module = {
     "edit": {
       "caption": u"Редактировать",
       "function": update_function,
-      "get_query": "SELECT id, username, role_id FROM user WHERE id=%s;",
+      "get_query": "SELECT id, username, password, role_id FROM user WHERE id=%s;",
       "set_query": "UPDATE user SET username='%s', role_id=%s WHERE id = %s;",
       "attrs": ["username", "password", "rolename", "_id"],
     },
