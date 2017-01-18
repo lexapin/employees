@@ -28,8 +28,9 @@ def check_module_access(func):
   def decorated_view(*args, **kwargs):
     view_name = str(request.url_rule).split("/")[1]
     user_name = u"%s"%current_user
+    _id = current_user.get_id()
     access_OK = True
-    flash(u"%s, Вы авторизованы в модуле %s?"%(user_name, view_name))
+    flash(u"%s, Вы авторизованы в модуле %s?%s"%(user_name, view_name, _id))
     if access_OK:
       return func(*args, **kwargs)
     else:
