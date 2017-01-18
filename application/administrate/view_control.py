@@ -11,15 +11,6 @@ def registrate_view(module):
     response_data = set_data_to_db(append_view_to_admin_role_query)
   return True
 
-place_module = {
-  "base": {
-    "name": "places",
-    "title": u"Должности сотрудников",
-    "table_caption": u"Должности сотрудников",
-    "form_caption": u"Информация о должности сотрудника",
-    "function": table_view,
-    "query": place_query,
-  },}
 
 """
 INSERT INTO view (name, caption)
