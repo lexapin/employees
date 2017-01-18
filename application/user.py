@@ -2,33 +2,55 @@
 from flask.ext.login import UserMixin
 from config import get_db
 
+categories = [
+  {
+    "type": "menu",
+    "name": u"Общая информация",
+    "buttons":
+        [
+          "employees",
+          "cards",
+        ]
+  },
+  {
+    "type": "menu",
+    "name": u"Зарплата",
+    "buttons":
+        [
+          "finance",
+          "halfyearreport",
+        ]
+  },
+  {
+    "type": "menu",
+    "name": u"Профсоюз",
+    "buttons":
+        [
+          "children",
+          "places",
+        ]
+  },
+  {
+    "type": "menu",
+    "name": u"Администрирование",
+    "buttons":
+        [
+          "roles",
+          "users",
+          "apps",
+        ]
+  },
+]
+
 class User(object):
   __slots__ = 'id', 'username', 'password', 'buttons'
 
   def __init__(self, username, password):
     self.username = username
     self.password = password
-    self.buttons = [{"func": "logout", "name": u"Выйти"},
-                    {"func": "logout", "name": u"Выйти"},
-                    {"func": "logout", "name": u"Выйти"},
-                    {"func": "logout", "name": u"Выйти"},
-                    {"func": "logout", "name": u"Выйти"},
-                    {"func": "logout", "name": u"Выйти"},
-                    {"func": "logout", "name": u"Выйти"},
-                    {"func": "logout", "name": u"Выйти"},
-                    {"func": "logout", "name": u"Выйти"},
-                    {"func": "logout", "name": u"Выйти"},
-                    {"func": "logout", "name": u"Выйти"},
-                    {"func": "logout", "name": u"Выйти"},
-                    {"func": "logout", "name": u"Выйти"},
-                    {"func": "logout", "name": u"Выйти"},
-                    {"func": "logout", "name": u"Выйти"},
-                    {"func": "logout", "name": u"Выйти"},
-                    {"func": "logout", "name": u"Выйти"},
-                    {"func": "logout", "name": u"Выйти"},
-                    {"func": "logout", "name": u"Выйти"},
-                    {"func": "logout", "name": u"Выйти"},
-    ]
+    self.buttons =  [
+                      {"type": "button", "name": u"Выйти", "func": "logout"},
+                    ]
 
   def is_authenticated(self):
     return True

@@ -105,7 +105,7 @@ def cards(action = None, _id = None):
   if request.method == 'POST': return form(card_module, action, _id, request.form)
 
 
-@app.route('/report/finance', methods=['GET'])
+@app.route('/halfyearreport', methods=['GET'])
 @check_module_access
 def halfyearreport():
   return finance_report_module["base"]["function"](finance_report_module)
