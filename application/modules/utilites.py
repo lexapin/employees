@@ -95,7 +95,8 @@ def create_input_field(item):
     })
   else: field.update({"readonly": False, "hidden": False,})
   if field["type"] == "select":
-    field["values"] = [{"id": data[0], "name": data[1]} for data in get_data_from_db("SELECT id, CONCAT(first_name, ' ', last_name) FROM employee;")]
+    field_query = item["values_query"]
+    field["values"] = [{"id": data[0], "name": data[1]} for data in get_data_from_db(field_query)]
   if "value" in item: field["value"] = item["value"]
   return field
 
