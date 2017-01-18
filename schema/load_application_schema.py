@@ -18,6 +18,7 @@ conf = {
 
 import MySQLdb as mysql
 db = mysql.connect(conf["host"], conf["username"], conf["password"], conf["database"])
+db.set_character_set('utf8')
 
 cursor = db.cursor()
 cursor.execute(script)
