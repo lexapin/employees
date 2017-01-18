@@ -80,6 +80,7 @@ def set_field(attr):
           readonly = False,
           hidden = False,
         ),
+      query = attr[1].get("values_query", None),
     )
 
 
@@ -95,8 +96,10 @@ def create_input_field(item):
     })
   else: field.update({"readonly": False, "hidden": False,})
   if field["type"] == "select":
-    field_query = item["values_query"]
-    field["values"] = [{"id": data[0], "name": data[1]} for data in get_data_from_db(field_query)]
+    field_query = item["query"]
+    field["values"] = [{"id": 0, "name": u"Ошибка выбора значений"}]
+    if field_query is not None:
+      field["values"] = [{"id": data[0], "name": data[1]} for data in get_data_from_db(field_query)]
   if "value" in item: field["value"] = item["value"]
   return field
 
