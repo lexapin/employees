@@ -2,6 +2,7 @@
 from application.modules.utilites import *
 from flask import redirect, url_for, flash, request
 from flask.ext.login import current_user
+from functools import wraps
 
 def registrate_view(module):
   name = module["base"]["name"]
@@ -23,6 +24,7 @@ def registrate_view(module):
 
 
 def check_module_access(func):
+  @wraps(func)
   def decorated_view(*args, **kwargs):
     view_name = request.script_root
     user_name = u"%s"%current_user
