@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from application.modules.utilites import *
-from flask import redirect, url_for, flash
+from flask import redirect, url_for, flash, request
 from flask.ext.login import current_user
 
 def registrate_view(module):
@@ -24,7 +24,7 @@ def registrate_view(module):
 
 def check_module_access(func):
   def decorated_view(*args, **kwargs):
-    view_name = func.__name__
+    view_name = request.script_root
     user_name = u"%s"%current_user
     access_OK = True
     flash(u"%s, Вы авторизованы в модуле %s?"%(user_name, view_name))
