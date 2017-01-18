@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from application.modules.utilites import *
+from flask import redirect, url_for, flash
 
 def registrate_view(module):
   name = module["base"]["name"]
@@ -19,6 +20,18 @@ def registrate_view(module):
     response_data = set_data_to_db(append_view_to_admin_role_query)
   return True
 
+
+def check_module_access(func):
+  view_name = func.__name__
+  user_name = repr(current_user)
+  access_OK = True
+  flash(u"%s, Вы авторизованы в модуле %s?"%(user_name, view_name))
+  def decorated_view(*args, **kwargs):
+    if access_OK:
+      return func(*args, **kwargs)
+    else:
+      return redirect(url_for("closed"))
+  return decorated_view
 
 """
 INSERT INTO view (name, caption)
