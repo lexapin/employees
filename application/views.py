@@ -128,3 +128,13 @@ def places(action = None, _id = None):
   form = place_module["actions"][action]["function"]
   if request.method == 'GET': return form(place_module, action, _id)
   if request.method == 'POST': return form(place_module, action, _id, request.form)
+
+
+@app.route('/roles', methods=['GET'])
+@app.route('/roles/<action>', methods=['GET', 'POST'])
+@app.route('/roles/<action>/<_id>', methods=['GET', 'POST'])
+def roles(action = None, _id = None):
+  if _id is None and action is None: return role_module["base"]["function"](role_module)
+  form = role_module["actions"][action]["function"]
+  if request.method == 'GET': return form(role_module, action, _id)
+  if request.method == 'POST': return form(role_module, action, _id, request.form)
