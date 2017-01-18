@@ -23,11 +23,11 @@ def registrate_view(module):
 
 
 def check_module_access(func):
-  view_name = func.__name__
-  user_name = repr(current_user)
-  access_OK = True
-  flash(u"%s, Вы авторизованы в модуле %s?"%(user_name, view_name))
   def decorated_view(*args, **kwargs):
+    view_name = func.__name__
+    user_name = current_user.__repr__()
+    access_OK = True
+    flash(u"%s, Вы авторизованы в модуле %s?"%(user_name, view_name))
     if access_OK:
       return func(*args, **kwargs)
     else:
