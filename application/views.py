@@ -11,6 +11,8 @@ from config import admin as admin_password
 from config import get_db
 
 from application.administrate.view_control import registrate_view
+# вьюхи панели администрирования
+from application.administrate.role_view import role_module
 
 # вьюхи приложения
 from application.modules.cards import employee_module, card_module
@@ -19,7 +21,15 @@ from application.modules.children import children_module
 from application.modules.career import place_module
 
 
-for module in [employee_module, card_module, finance_module, finance_report_module, children_module, place_module]:
+for module in [
+                employee_module,
+                card_module,
+                finance_module,
+                finance_report_module,
+                children_module,
+                place_module,
+                role_module
+              ]:
   registrate_view(module)
 
 
