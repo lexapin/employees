@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from application.modules.utilites import *
-from flask import redirect, url_for, flash, current_user
+from flask import redirect, url_for, flash
+from flask.ext.login import current_user
 
 def registrate_view(module):
   name = module["base"]["name"]
