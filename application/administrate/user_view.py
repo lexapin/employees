@@ -53,7 +53,7 @@ user_module = {
       "position": 2,
       "caption": u"Пароль пользователя",
       "decode_function": lambda value: value.decode("utf-8"),
-      "type": basestring,
+      "type": Password,
     },
     "rolename": {
       "position": 3,

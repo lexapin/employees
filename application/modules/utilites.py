@@ -115,9 +115,13 @@ def set_date(value):
   return int(time.mktime(_date.timetuple()))
 
 
+class Password(object):
+  pass
+
 type_table = {
   int.__name__: "text",
   basestring.__name__: "text",
   datetime.date.__name__: "date",
   list.__name__: "select",
+  Password.__name__: "password", 
 }
