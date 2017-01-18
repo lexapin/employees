@@ -23,14 +23,23 @@ def registrate_view(module):
   return True
 
 
+get_access_query = """
+SELECT user.id
+FROM user
+INNER JOIN role
+INNER JOIN role_view_association
+INNER JOIN view
+WHERE user.id = %s AND user.role_id = role.id AND role.id = role_view_association.role_id AND view_id = view.id AND view.name = '%s';
+"""
+
 def check_module_access(func):
   @wraps(func)
   def decorated_view(*args, **kwargs):
     view_name = str(request.url_rule).split("/")[1]
     user_name = u"%s"%current_user
     _id = current_user.get_id()
-    access_OK = True
-    flash(u"%s, Вы авторизованы в модуле %s?%s"%(user_name, view_name, _id))
+    access_OK = get_data_from_db(get_access_query%(_id, view_name))
+    flash(u"%s, Вы авторизованы в модуле %s?"%(user_name, view_name))
     if access_OK:
       return func(*args, **kwargs)
     else:
