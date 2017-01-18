@@ -24,6 +24,7 @@ cursor.execute(script)
 cursor.close()
 
 cursor = db.cursor()
-cursor.execute("""INSERT INTO user (username, password) VALUES ("admin", "admin");""")
+cursor.execute("""INSERT INTO role (name) values ("Администратор");""")
+cursor.execute("""INSERT INTO user (username, password, role_id) VALUES ("admin", "admin", 1);""")
 db.commit()
 cursor.close()

@@ -10,6 +10,19 @@ import StringIO
 from config import admin as admin_password
 from config import get_db
 
+from application.administrate.view_control import registrate_view
+
+# вьюхи приложения
+from application.modules.cards import employee_module, card_module
+from application.modules.finance import finance_module, finance_report_module
+from application.modules.children import children_module
+from application.modules.career import place_module
+
+
+for module in [employee_module, card_module, finance_module, finance_report_module, children_module, place_module]:
+  registrate_view(module)
+
+
 @app.before_request
 def before_request():
   g.user = current_user
@@ -48,7 +61,6 @@ def index():
   if current_user.is_anonymous(): return redirect(url_for('login'))
   return redirect(url_for('employees'))
 
-from application.modules.cards import employee_module, card_module
 
 @app.route('/employees', methods=['GET'])
 @app.route('/employees/<action>', methods=['GET', 'POST'])
@@ -70,11 +82,10 @@ def cards(action = None, _id = None):
   if request.method == 'POST': return form(card_module, action, _id, request.form)
 
 
-from application.modules.finance import finance_module, finance_report_module
-
 @app.route('/report/finance', methods=['GET'])
 def halfyearreport():
   return finance_report_module["base"]["function"](finance_report_module)
+
 
 @app.route('/finance', methods=['GET'])
 @app.route('/finance/<action>', methods=['GET', 'POST'])
@@ -86,8 +97,6 @@ def finance(action = None, _id = None):
   if request.method == 'POST': return form(finance_module, action, _id, request.form)
 
 
-from application.modules.children import children_module
-
 @app.route('/children', methods=['GET'])
 @app.route('/children/<action>', methods=['GET', 'POST'])
 @app.route('/children/<action>/<_id>', methods=['GET', 'POST'])
@@ -97,8 +106,6 @@ def children(action = None, _id = None):
   if request.method == 'GET': return form(children_module, action, _id)
   if request.method == 'POST': return form(children_module, action, _id, request.form)
 
-
-from application.modules.career import place_module
 
 @app.route('/places', methods=['GET'])
 @app.route('/places/<action>', methods=['GET', 'POST'])
