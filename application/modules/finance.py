@@ -33,7 +33,7 @@ WHERE month_pay.id=month_pay_id AND month=%s AND year=%s AND employee_id=%s
 """
 
 get_form_to_update_finance_info_query = """
-SELECT month_pay.id, employee_id, month, year, salary, bonus
+SELECT month_pay.id, employee_id, month, year, salary, bonus, (salary+bonus) as itog, (itog*0.13) as tax
 FROM employee_month_pay_association
 INNER JOIN month_pay 
 WHERE month_pay_id = %s AND month_pay.id=month_pay_id;
@@ -79,6 +79,18 @@ finance_report_module = {
     "bonus": {
       "position": 4,
       "caption": u"Премия",
+      "decode_function": lambda value: str(value),
+      "type": basestring,
+    },
+    "sum": {
+      "position": 5,
+      "caption": u"Всего выплат",
+      "decode_function": lambda value: str(value),
+      "type": basestring,
+    },
+    "tax": {
+      "position": 6,
+      "caption": u"НДФЛ",
       "decode_function": lambda value: str(value),
       "type": basestring,
     },
