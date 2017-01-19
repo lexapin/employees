@@ -38,6 +38,7 @@ def check_module_access(func):
     view_name = str(request.url_rule).split("/")[1]
     _id = current_user.get_id()
     access_OK = get_data_from_db(get_access_query%(_id, view_name))
+    flash(u"%s - это функция"%func.__name__)
     if access_OK:
       return func(*args, **kwargs)
     else:
