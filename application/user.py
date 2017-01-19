@@ -1,8 +1,45 @@
 # -*- coding: utf-8 -*-
 from flask.ext.login import UserMixin
-from config import get_db
+from application.modules.utilites import *
 
-categories = [
+class User(object):
+  __slots__ = 'id', 'username', 'password', 'buttons'
+
+  def __init__(self, username, password):
+    self.username = username
+    self.password = password
+    self.user_auth()
+
+  def is_authenticated(self):
+    return True
+
+  def is_active(self):
+    return True
+
+  def is_anonymous(self):
+    return False
+
+  def get_id(self):
+    self.id = get_data_from_db("SELECT id FROM user WHERE username = %s"%(self.username,))[0]
+    return unicode(self.id)
+
+  def __repr__(self):
+    return self.username.decode("utf-8")
+
+  def user_auth(self):
+    user_id = self.get_id()
+    self.buttons =  [
+                      {"type": "button", "name": u"Выйти", "func": "logout"},
+                    ]
+    pass
+
+  @classmethod
+  def get(cls, _id):
+    data = get_data_from_db("SELECT username, password FROM user WHERE id = %s;"%(_id,))
+    return User(data[0], data[1]) if data else None
+
+
+CATEGORIES = [
   {
     "type": "menu",
     "name": u"Общая информация",
@@ -42,41 +79,6 @@ categories = [
   },
 ]
 
-class User(object):
-  __slots__ = 'id', 'username', 'password', 'buttons'
-
-  def __init__(self, username, password):
-    self.username = username
-    self.password = password
-    self.buttons =  [
-                      {"type": "button", "name": u"Выйти", "func": "logout"},
-                    ]
-
-  def is_authenticated(self):
-    return True
-
-  def is_active(self):
-    return True
-
-  def is_anonymous(self):
-    return False
-
-  def get_id(self):
-    db = get_db()
-    cursor = db.cursor()
-    cursor.execute("SELECT id FROM user WHERE username = %s", (self.username,))
-    self.id = cursor.fetchone()[0]
-    cursor.close()
-    return unicode(self.id)
-
-  def __repr__(self):
-    return self.username.decode("utf-8")
-
-  @classmethod
-  def get(cls, _id):
-    db = get_db()
-    cursor = db.cursor()
-    cursor.execute("SELECT username, password FROM user WHERE id = %s;", (_id,))
-    data = cursor.fetchone()
-    cursor.close()
-    return User(data[0], data[1]) if data else None
+GET_USER_MODULES_QUERY = """
+SELECT
+"""

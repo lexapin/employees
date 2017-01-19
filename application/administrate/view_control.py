@@ -35,6 +35,7 @@ WHERE user.id = %s AND user.role_id = role.id AND role.id = role_view_associatio
 def check_module_access(func):
   @wraps(func)
   def decorated_view(*args, **kwargs):
+    if current_user.is_anonymous(): return redirect(url_for("login"))
     view_name = func.__name__
     _id = current_user.get_id()
     access_OK = get_data_from_db(get_access_query%(_id, view_name))
