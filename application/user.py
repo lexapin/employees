@@ -20,7 +20,7 @@ class User(object):
     return False
 
   def get_id(self):
-    self.id = get_data_from_db("SELECT id FROM user WHERE username = %s"%(self.username,))[0][0]
+    self.id = get_data_from_db("SELECT id FROM user WHERE username = %s;"%(self.username,))[0][0]
     return unicode(self.id)
 
   def __repr__(self):
