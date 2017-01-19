@@ -34,7 +34,7 @@ class User(object):
     buttons = copy.deepcopy(CATEGORIES)
     for category in buttons:
       category["buttons"] = sorted( list( set(category["buttons"])&set(actions.keys()) ) )
-      category["buttons"] = [{"name": actions[button], "func": button} for button in category["buttons"]]
+      category["buttons"] = [{"name": actions[button].decode("utf-8"), "func": button} for button in category["buttons"]]
     buttons.append({"type": "button", "name": u"Выйти", "func": "logout"})
     self.buttons = buttons
 
