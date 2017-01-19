@@ -29,6 +29,7 @@ for module in [
                 finance_module,
                 finance_report_module,
                 children_module,
+                children_report_module,
                 place_module,
                 role_module,
                 user_module,
