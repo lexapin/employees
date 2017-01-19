@@ -3,13 +3,14 @@ from base import *
 
 
 six_month_query = """
-SELECT employee_id, first_name, last_name, SUM(salary) as sum_salary, SUM(bonus) as sum_bonus, (sum_salary+sum_bonus) as itog, (itog*0.13) as tax
+SELECT employee_id, first_name, last_name, sum_salary, sum_bonus, (sum_salary+sum_bonus) AS itog, ((sum_salary+sum_bonus)*0.13) AS tax
+FROM (SELECT employee_id, first_name, last_name, SUM(salary) AS sum_salary, SUM(bonus) AS sum_bonus
 FROM employee
 INNER JOIN employee_month_pay_association
 INNER JOIN month_pay
 INNER JOIN (SELECT month, year FROM month_pay GROUP BY (year*100+month) ORDER BY (year*100+month) DESC LIMIT 6) d_m
 WHERE month_pay.id=month_pay_id AND month_pay.month=d_m.month AND month_pay.year=d_m.year AND employee_id = employee.id
-GROUP BY employee_id;
+GROUP BY employee_id) as report;
 """
 
 salary_query = """
