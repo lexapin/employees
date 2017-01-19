@@ -3,7 +3,7 @@ from base import *
 
 
 six_month_query = """
-SELECT employee_id, first_name, last_name, SUM(salary), SUM(bonus)
+SELECT employee_id, first_name, last_name, SUM(salary) as sum_salary, SUM(bonus) as sum_bonus, (sum_salary+sum_bonus) as itog, (itog*0.13) as tax
 FROM employee
 INNER JOIN employee_month_pay_association
 INNER JOIN month_pay
@@ -33,7 +33,7 @@ WHERE month_pay.id=month_pay_id AND month=%s AND year=%s AND employee_id=%s
 """
 
 get_form_to_update_finance_info_query = """
-SELECT month_pay.id, employee_id, month, year, salary, bonus, (salary+bonus) as itog, (itog*0.13) as tax
+SELECT month_pay.id, employee_id, month, year, salary, bonus
 FROM employee_month_pay_association
 INNER JOIN month_pay 
 WHERE month_pay_id = %s AND month_pay.id=month_pay_id;
