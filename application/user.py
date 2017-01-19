@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from flask.ext.login import UserMixin
 from application.modules.utilites import *
+import copy
 
 class User(object):
   __slots__ = 'id', 'username', 'password', 'buttons'
@@ -29,10 +30,13 @@ class User(object):
 
   def user_auth(self):
     user_id = self.get_id()
-    self.buttons =  [
-                      {"type": "button", "name": u"Выйти", "func": "logout"},
-                    ]
-    pass
+    actions = {data[0]: data[1] for data in get_data_from_db(GET_USER_MODULES_QUERY%user_id)}
+    buttons = copy.deepcopy(CATEGORIES)
+    for category in buttons:
+      category["buttons"] = sorted( list( set(category["buttons"])&set(actions.keys()) ) )
+      category["buttons"] = [{"name": actions[button], "func": button} for button in category["buttons"]]
+    buttons.append({"type": "button", "name": u"Выйти", "func": "logout"})
+    self.buttons = buttons
 
   @classmethod
   def get(cls, _id):
@@ -81,5 +85,10 @@ CATEGORIES = [
 ]
 
 GET_USER_MODULES_QUERY = """
-SELECT
+SELECT view.name, view.caption
+FROM user
+INNER JOIN role
+INNER JOIN role_view_association
+INNER JOIN view
+WHERE user.id = %s AND user.role_id = role.id AND role.id = role_view_association.role_id AND view_id = view.id;
 """

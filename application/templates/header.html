@@ -19,9 +19,19 @@
       <ul class="nav navbar-nav">
           {% if not current_user.is_anonymous() %}
               {% for button in current_user.buttons %}
-                  <li><a href="{{ url_for(button["func"]) }}">{{ button["name"] }}</a></li>
+                  {% if button["type"] == "button" %}
+                    <li><a href="{{ url_for(button["func"]) }}">{{ button["name"] }}</a></li>
+                  {% else %}
+                    <li class="dropdown">
+                      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ button["name"] }}<span class="caret"></span></a>
+                      <ul class="dropdown-menu">
+                        {% for sub_button in button["buttons"] %}
+                        <li><a href="{{ url_for(sub_button["func"]) }}">{{ sub_button["name"] }}</a></li>
+                        {% endfor %}
+                      </ul>
+                    </li>
+                  {% endif %}
               {% endfor %}
-                  <li><a href="{{ request.url_root+"foma" }}">FOMA</a></li>
           {% endif %}
       </ul>
     </div>
