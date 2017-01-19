@@ -19,7 +19,7 @@ from application.administrate.module_view import app_module
 # вьюхи приложения
 from application.modules.cards import employee_module, card_module
 from application.modules.finance import finance_module, finance_report_module
-from application.modules.children import children_module
+from application.modules.children import children_module, children_report_module
 from application.modules.career import place_module
 
 
@@ -125,6 +125,12 @@ def finance(action = None, _id = None):
   form = finance_module["actions"][action]["function"]
   if request.method == 'GET': return form(finance_module, action, _id)
   if request.method == 'POST': return form(finance_module, action, _id, request.form)
+
+
+@app.route('/children15yearold', methods=['GET'])
+@check_module_access
+def children15yearold():
+  return children_report_module["base"]["function"](children_report_module)
 
 
 @app.route('/children', methods=['GET'])

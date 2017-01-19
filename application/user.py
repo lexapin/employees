@@ -52,6 +52,7 @@ CATEGORIES = [
         [
           "employees",
           "cards",
+          "children",
         ]
   },
   {
@@ -68,8 +69,8 @@ CATEGORIES = [
     "name": u"Профсоюз",
     "buttons":
         [
-          "children",
           "places",
+          "children15yearold",
         ]
   },
   {

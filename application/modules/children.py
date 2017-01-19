@@ -95,6 +95,46 @@ children_module = {
 }
 
 
+children_report_module = {
+  "base": {
+    "name": "children15yearold",
+    "title": u"Дети сотрудников не достигших 15 летнего возраста на 1 января следующего года",
+    "table_caption": u"Дети сотрудников не достигших 15 летнего возраста на 1 января следующего года",
+    "form_caption": u"Информация о ребенке сотрудника",
+    "function": table_view,
+    "query": children_query,
+  },
+  "contextmenu_actions": [],
+  "buttonsmenu_actions": [],
+  "actions": {},
+  "attributes": {
+    "_id": {
+      "position": 0,
+      "caption": u"#",
+      "type": int,
+    },
+    "name": {
+      "position": 1,
+      "caption": u"Имя",
+      "decode_function": lambda value: value.decode("utf-8"),
+      "type": basestring,
+    },
+    "date_of_birth": {
+      "position": 2,
+      "caption": u"Дата рождения ребенка",
+      "decode_function": lambda value: get_date(value),
+      "encode_function": lambda value: set_date(value),
+      "type": date,
+    },
+    "employee": {
+      "position": 3,
+      "caption": u"Имя, Фамилия сотрудника",
+      "decode_function": lambda value: value.decode("utf-8"),
+      "type": list,
+      "values_query": "SELECT id, CONCAT(first_name, ' ', last_name) FROM employee;",
+    },
+  },
+}
 
 
 """
