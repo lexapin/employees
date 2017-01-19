@@ -148,8 +148,7 @@ children_report_module = {
       "position": 4,
       "caption": u"Имя, Фамилия сотрудника",
       "decode_function": lambda value: value.decode("utf-8"),
-      "type": list,
-      "values_query": "SELECT id, CONCAT(first_name, ' ', last_name) FROM employee;",
+      "type": basestring,
     },
   },
 }
