@@ -21,7 +21,7 @@ class User(object):
 
   def get_id(self):
     username = self.username.decode("utf-8")
-    self.id = get_data_from_db("SELECT id FROM user WHERE username = %s;"%(username))[0][0]
+    self.id = get_data_from_db("SELECT id FROM user WHERE username='%s';"%(username))[0][0]
     return unicode(self.id)
 
   def __repr__(self):
