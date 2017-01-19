@@ -12,6 +12,19 @@ WHERE employee.id=employee_id AND child.id=child_id
 ORDER BY employee_id;
 """
 
+
+report_children_query = """
+SELECT *
+FROM (SELECT child_id, name, child.date_of_birth, FLOOR(year(curdate())-1969-date_of_birth/31556926) as age, CONCAT(first_name, " ", last_name) as employee_name
+FROM employee
+INNER JOIN employee_children_association
+INNER JOIN child
+WHERE employee.id=employee_id AND child.id=child_id) tmp
+WHERE age<15
+ORDER BY employee_name;
+"""
+
+
 add_child_query = """
 INSERT INTO child (name, date_of_birth) VALUES ('%s', %s);
 """
@@ -126,8 +139,13 @@ children_report_module = {
       "encode_function": lambda value: set_date(value),
       "type": date,
     },
-    "employee": {
+    "age": {
       "position": 3,
+      "caption": u"Полных лет",
+      "type": int,
+    },
+    "employee": {
+      "position": 4,
       "caption": u"Имя, Фамилия сотрудника",
       "decode_function": lambda value: value.decode("utf-8"),
       "type": list,
