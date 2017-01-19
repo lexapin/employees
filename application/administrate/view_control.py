@@ -35,10 +35,9 @@ WHERE user.id = %s AND user.role_id = role.id AND role.id = role_view_associatio
 def check_module_access(func):
   @wraps(func)
   def decorated_view(*args, **kwargs):
-    view_name = str(request.url_rule).split("/")[1]
+    view_name = func.__name__
     _id = current_user.get_id()
     access_OK = get_data_from_db(get_access_query%(_id, view_name))
-    flash(u"%s - это функция"%func.__name__)
     if access_OK:
       return func(*args, **kwargs)
     else:
