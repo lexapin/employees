@@ -1,0 +1,61 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script src="http://getbootstrap.com/dist/js/bootstrap.min.js"></script>
+<script type="text/javascript" charset="utf-8">
+    $('li')
+    .mouseenter(function(e){
+        className = $(this).context.parentElement.className
+        console.log(className);
+        if (className.search("nav")>=0)
+        {
+            console.log("True");
+            $(this).addClass("active");
+        }
+
+    })
+    .mouseout(function(e){
+        className = $(this).context.parentElement.className
+        console.log(className);
+        if (className.search("nav")>=0)
+        {
+            console.log("True");
+            $(this).removeClass("active");
+        }
+    })
+    $(window).resize(function(e){
+        console.log("resize");
+        console.log($("#bs-example-navbar-collapse-1")[0].clientWidth)
+        console.log(e)
+    })
+    $('tr')
+    .mouseenter(function(e){
+        obj = $(this).closest('tr');
+        if(obj.attr('id')){obj.closest('tr').addClass("active");}
+    })
+    .mouseout(function(e){
+        obj = $(this).closest('tr');
+        if(obj.attr('id')){obj.closest('tr').removeClass("active");}
+    })
+</script>
+<script src="{{ request.url_root }}static/contextmenu/jquery.contextMenu.js"></script>
+<script src="{{ request.url_root }}static/contextmenu/jquery.ui.position.js"></script>
+{% if contextmenu %}
+<script type="text/javascript"  charset="utf-8">
+    $(function() {
+        $.contextMenu({
+            selector: '.table-context-menu', 
+            callback: function(key, options) {
+                var item = $(this).closest('tr').attr('id');
+                location.replace("{{ base['name'] }}/" + key + "/" + item);
+            },
+            items: {
+                {% for action in contextmenu["actions"] %}
+                "{{ action['name'] }}": {name: "{{ action['caption'] }}"},
+                {% endfor %}
+            }
+        });
+        $('.table-context-menu').on('click', function(e){
+            console.log('clicked', this);
+        })    
+    });
+</script>
+{% endif %}

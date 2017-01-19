@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block title %}
+  <h1>
+    {% if base %}
+      {{ base["table_caption"] }}
+    {% endif %}
+  </h1>
+{% endblock %}
+{% block content %}
+<br>
+{% if buttonsmenu %}
+<div style = "margin-left: 1%; margin-right: 1%">
+  <!-- кнопки -->
+  {% for action in buttonsmenu["actions"] %}
+    <a class="btn btn-default" href="{{ request.url_root }}{{ base['name'] }}/{{ action['name'] }}" role="button">{{ action['caption'] }}</a>
+  {% endfor %}
+</div>
+<br>
+{% endif %}
+<div id="data_table" style = "margin-left: 1%; margin-right: 1%">
+{% if data %}
+  <table class="table">
+    {% if header %}
+      <tr>
+      {% for col_name in header %}
+        <th>{{ col_name }}</th>
+      {% endfor %}
+      </tr>
+    {% endif %}
+    {% for row in data %}
+    <tr id="{{row[0]}}" class="table-context-menu">
+      {% for item in row %}
+      <td>{{ decode[loop.index0](item) if item is not none }}</td>
+      {% endfor %}
+    </tr>
+    {% endfor %}
+  </table>
+{% endif %}
+</div>
+{% endblock %}

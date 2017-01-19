@@ -71,4 +71,30 @@ information model ontology (онтология информационной мо
           |1         /1  \1
           |         /     \
           |∞        |∞    |∞
-    month_pay  position  children
+    month_pay     place  child
+
+    employee (сотрудник)
+      first_name
+      last_name
+      owner_card
+      pays
+
+    month_pay (начисленная зарплата)
+      month
+      year
+      salary
+      bonus
+
+    card (личная карточка учета кадров)
+      info
+      birth_day
+      children
+      positions
+
+    place (должность)
+      place_name
+      assign_date
+
+    child (ребенок)
+      first_name
+      birth_day
