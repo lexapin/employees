@@ -142,7 +142,8 @@ children_report_module = {
     "age": {
       "position": 3,
       "caption": u"Полных лет",
-      "type": int,
+      "type": basestring,
+      "decode_function": lambda value: str(value),
     },
     "employee": {
       "position": 4,
