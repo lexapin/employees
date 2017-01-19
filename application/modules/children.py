@@ -115,7 +115,7 @@ children_report_module = {
     "table_caption": u"Дети сотрудников не достигших 15 летнего возраста на 1 января следующего года",
     "form_caption": u"Информация о ребенке сотрудника",
     "function": table_view,
-    "query": children_query,
+    "query": report_children_query,
   },
   "contextmenu_actions": [],
   "buttonsmenu_actions": [],
@@ -142,8 +142,7 @@ children_report_module = {
     "age": {
       "position": 3,
       "caption": u"Полных лет",
-      "type": basestring,
-      "decode_function": lambda value: str(value),
+      "type": int,
     },
     "employee": {
       "position": 4,
