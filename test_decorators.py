@@ -19,7 +19,10 @@ class Function(object):
     return "<Function: %s>"%self.name
 
 
-data = [{"name":"russian_hello", "caption": "ПРИВЕТ, %s", "default": "Русский Ваня"}, {"name":"english_hello", "caption": "HELLO, %s", "default": "Anonymous"},]
+data = [
+          {"name":"russian_hello", "caption": "ПРИВЕТ, %s", "default": "Русский Ваня"},
+          {"name":"english_hello", "caption": "HELLO, %s", "default": "Anonymous"},
+        ]
 functions = {}
 for obj in data:
   name = obj["name"]
