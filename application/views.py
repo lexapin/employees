@@ -87,17 +87,36 @@ def closed():
 
 
 # Основная часть приложения
+class Function(object):
+  """docstring for Function"""
+  def __init__(self, app, module):
+    super(Function, self).__init__()
+    self.name = module["base"]["name"]
+    app.add_url_rule('/%s'%self.name, view_func = self, methods=['GET'])
+    app.add_url_rule('/%s/<action>'%self.name, view_func = self, methods=['GET', 'POST'])
+    app.add_url_rule('/%s/<action>/<_id>'%self.name, view_func = self, methods=['GET', 'POST'])
+    
+  @check_module_access
+  def __call__(self, action = None, _id = None):
+    if _id is None and action is None: return employee_module["base"]["function"](employee_module)
+    form = employee_module["actions"][action]["function"]
+    if request.method == 'GET': return form(employee_module, action, _id)
+    if request.method == 'POST': return form(employee_module, action, _id, request.form)
 
+  def __repr__(self):
+    return "<Function: %s>"%self.name
 
-@app.route('/employees', methods=['GET'])
-@app.route('/employees/<action>', methods=['GET', 'POST'])
-@app.route('/employees/<action>/<_id>', methods=['GET', 'POST'])
-@check_module_access
-def employees(action = None, _id = None):
-  if _id is None and action is None: return employee_module["base"]["function"](employee_module)
-  form = employee_module["actions"][action]["function"]
-  if request.method == 'GET': return form(employee_module, action, _id)
-  if request.method == 'POST': return form(employee_module, action, _id, request.form)
+Function(employee_module)
+
+# @app.route('/employees', methods=['GET'])
+# @app.route('/employees/<action>', methods=['GET', 'POST'])
+# @app.route('/employees/<action>/<_id>', methods=['GET', 'POST'])
+# @check_module_access
+# def employees(action = None, _id = None):
+#   if _id is None and action is None: return employee_module["base"]["function"](employee_module)
+#   form = employee_module["actions"][action]["function"]
+#   if request.method == 'GET': return form(employee_module, action, _id)
+#   if request.method == 'POST': return form(employee_module, action, _id, request.form)
 
 
 @app.route('/cards', methods=['GET'])

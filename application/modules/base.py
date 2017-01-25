@@ -50,5 +50,7 @@ def update_function(module, action, _id = None, request_data = None):
       trigger_function(response_data)
     return redirect(url_for(module["base"]["name"]))
 
+
 def delete_function(module, action, _id):
   return redirect(url_for(module["base"]["name"]))
+    
