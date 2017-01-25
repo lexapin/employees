@@ -76,18 +76,19 @@ class TableView(object):
   """docstring for TableView"""
   def __init__(self, app, module):
     super(TableView, self).__init__()
-    self.__name__ = module["base"]["name"]
+    self.__module__ = module
+    self.__name__ = self.__module__["base"]["name"]
     app.add_url_rule('/%s'%self.__name__, view_func = self, methods=['GET'])
-    if module.get("actions", {}):
+    if self.__module__.get("actions", {}):
       app.add_url_rule('/%s/<action>'%self.__name__, view_func = self, methods=['GET', 'POST'])
       app.add_url_rule('/%s/<action>/<_id>'%self.__name__, view_func = self, methods=['GET', 'POST'])
-    
+
   @check_module_access
   def __call__(self, action = None, _id = None):
-    if _id is None and action is None: return employee_module["base"]["function"](employee_module)
-    form = employee_module["actions"][action]["function"]
-    if request.method == 'GET': return form(employee_module, action, _id)
-    if request.method == 'POST': return form(employee_module, action, _id, request.form)
+    if _id is None and action is None: return self.__module__["base"]["function"](self.__module__)
+    form = self.__module__["actions"][action]["function"]
+    if request.method == 'GET': return form(self.__module__, action, _id)
+    if request.method == 'POST': return form(self.__module__, action, _id, request.form)
 
   def __repr__(self):
     return "<TableView: %s>"%self.__name__
