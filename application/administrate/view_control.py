@@ -42,5 +42,6 @@ def check_module_access(func):
     if access_OK:
       return func(*args, **kwargs)
     else:
+      flash(u"%s"%func.__name__)
       return redirect(url_for("closed"))
   return decorated_view
