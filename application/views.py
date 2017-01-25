@@ -106,7 +106,7 @@ class Function(object):
   def __repr__(self):
     return "<Function: %s>"%self.name
 
-Function(employee_module)
+Function(app, employee_module)
 
 # @app.route('/employees', methods=['GET'])
 # @app.route('/employees/<action>', methods=['GET', 'POST'])
