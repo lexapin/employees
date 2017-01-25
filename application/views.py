@@ -91,10 +91,10 @@ class Function(object):
   """docstring for Function"""
   def __init__(self, app, module):
     super(Function, self).__init__()
-    self.name = module["base"]["name"]
-    app.add_url_rule('/%s'%self.name, view_func = self, methods=['GET'])
-    app.add_url_rule('/%s/<action>'%self.name, view_func = self, methods=['GET', 'POST'])
-    app.add_url_rule('/%s/<action>/<_id>'%self.name, view_func = self, methods=['GET', 'POST'])
+    self.__name__ = module["base"]["name"]
+    app.add_url_rule('/%s'%self.__name__, view_func = self, methods=['GET'])
+    app.add_url_rule('/%s/<action>'%self.__name__, view_func = self, methods=['GET', 'POST'])
+    app.add_url_rule('/%s/<action>/<_id>'%self.__name__, view_func = self, methods=['GET', 'POST'])
     
   @check_module_access
   def __call__(self, action = None, _id = None):
@@ -104,7 +104,7 @@ class Function(object):
     if request.method == 'POST': return form(employee_module, action, _id, request.form)
 
   def __repr__(self):
-    return "<Function: %s>"%self.name
+    return "<Function: %s>"%self.__name__
 
 Function(app, employee_module)
 
