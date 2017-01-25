@@ -37,6 +37,10 @@ def check_module_access(func):
   def decorated_view(*args, **kwargs):
     if current_user.is_anonymous(): return redirect(url_for("login"))
     view_name = func.__name__
+    try:
+      if view_name == '__call__': view_name = args[0].__name__
+    except Exception as err:
+      view_name = "blya, %s"%err
     _id = current_user.get_id()
     access_OK = get_data_from_db(get_access_query%(_id, view_name))
     if access_OK:
