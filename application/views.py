@@ -23,21 +23,6 @@ from application.modules.children import children_module, children_report_module
 from application.modules.career import place_module
 
 
-for module in [
-                employee_module,
-                card_module,
-                finance_module,
-                finance_report_module,
-                children_module,
-                children_report_module,
-                place_module,
-                role_module,
-                user_module,
-                app_module,
-              ]:
-  registrate_view(module)
-
-
 @app.before_request
 def before_request():
   g.user = current_user
@@ -87,103 +72,39 @@ def closed():
 
 
 # Основная часть приложения
+class TableView(object):
+  """docstring for TableView"""
+  def __init__(self, app, module):
+    super(TableView, self).__init__()
+    self.__module__ = module
+    self.__name__ = self.__module__["base"]["name"]
+    app.add_url_rule('/%s'%self.__name__, view_func = self, methods=['GET'])
+    if self.__module__.get("actions", {}):
+      app.add_url_rule('/%s/<action>'%self.__name__, view_func = self, methods=['GET', 'POST'])
+      app.add_url_rule('/%s/<action>/<_id>'%self.__name__, view_func = self, methods=['GET', 'POST'])
+
+  @check_module_access
+  def __call__(self, action = None, _id = None):
+    if _id is None and action is None: return self.__module__["base"]["function"](self.__module__)
+    form = self.__module__["actions"][action]["function"]
+    if request.method == 'GET': return form(self.__module__, action, _id)
+    if request.method == 'POST': return form(self.__module__, action, _id, request.form)
+
+  def __repr__(self):
+    return "<TableView: %s>"%self.__name__
 
 
-@app.route('/employees', methods=['GET'])
-@app.route('/employees/<action>', methods=['GET', 'POST'])
-@app.route('/employees/<action>/<_id>', methods=['GET', 'POST'])
-@check_module_access
-def employees(action = None, _id = None):
-  if _id is None and action is None: return employee_module["base"]["function"](employee_module)
-  form = employee_module["actions"][action]["function"]
-  if request.method == 'GET': return form(employee_module, action, _id)
-  if request.method == 'POST': return form(employee_module, action, _id, request.form)
-
-
-@app.route('/cards', methods=['GET'])
-@app.route('/cards/<action>', methods=['GET', 'POST'])
-@app.route('/cards/<action>/<_id>', methods=['GET', 'POST'])
-@check_module_access
-def cards(action = None, _id = None):
-  if _id is None and action is None: return card_module["base"]["function"](card_module)
-  form = card_module["actions"][action]["function"]
-  if request.method == 'GET': return form(card_module, action, _id)
-  if request.method == 'POST': return form(card_module, action, _id, request.form)
-
-
-@app.route('/halfyearreport', methods=['GET'])
-@check_module_access
-def halfyearreport():
-  return finance_report_module["base"]["function"](finance_report_module)
-
-
-@app.route('/finance', methods=['GET'])
-@app.route('/finance/<action>', methods=['GET', 'POST'])
-@app.route('/finance/<action>/<_id>', methods=['GET', 'POST'])
-@check_module_access
-def finance(action = None, _id = None):
-  if _id is None and action is None: return finance_module["base"]["function"](finance_module)
-  form = finance_module["actions"][action]["function"]
-  if request.method == 'GET': return form(finance_module, action, _id)
-  if request.method == 'POST': return form(finance_module, action, _id, request.form)
-
-
-@app.route('/children15yearold', methods=['GET'])
-@check_module_access
-def children15yearold():
-  return children_report_module["base"]["function"](children_report_module)
-
-
-@app.route('/children', methods=['GET'])
-@app.route('/children/<action>', methods=['GET', 'POST'])
-@app.route('/children/<action>/<_id>', methods=['GET', 'POST'])
-@check_module_access
-def children(action = None, _id = None):
-  if _id is None and action is None: return children_module["base"]["function"](children_module)
-  form = children_module["actions"][action]["function"]
-  if request.method == 'GET': return form(children_module, action, _id)
-  if request.method == 'POST': return form(children_module, action, _id, request.form)
-
-
-@app.route('/places', methods=['GET'])
-@app.route('/places/<action>', methods=['GET', 'POST'])
-@app.route('/places/<action>/<_id>', methods=['GET', 'POST'])
-@check_module_access
-def places(action = None, _id = None):
-  if _id is None and action is None: return place_module["base"]["function"](place_module)
-  form = place_module["actions"][action]["function"]
-  if request.method == 'GET': return form(place_module, action, _id)
-  if request.method == 'POST': return form(place_module, action, _id, request.form)
-
-
-@app.route('/roles', methods=['GET'])
-@app.route('/roles/<action>', methods=['GET', 'POST'])
-@app.route('/roles/<action>/<_id>', methods=['GET', 'POST'])
-@check_module_access
-def roles(action = None, _id = None):
-  if _id is None and action is None: return role_module["base"]["function"](role_module)
-  form = role_module["actions"][action]["function"]
-  if request.method == 'GET': return form(role_module, action, _id)
-  if request.method == 'POST': return form(role_module, action, _id, request.form)
-
-
-@app.route('/users', methods=['GET'])
-@app.route('/users/<action>', methods=['GET', 'POST'])
-@app.route('/users/<action>/<_id>', methods=['GET', 'POST'])
-@check_module_access
-def users(action = None, _id = None):
-  if _id is None and action is None: return user_module["base"]["function"](user_module)
-  form = user_module["actions"][action]["function"]
-  if request.method == 'GET': return form(user_module, action, _id)
-  if request.method == 'POST': return form(user_module, action, _id, request.form)
-
-
-@app.route('/apps', methods=['GET'])
-@app.route('/apps/<action>', methods=['GET', 'POST'])
-@app.route('/apps/<action>/<_id>', methods=['GET', 'POST'])
-@check_module_access
-def apps(action = None, _id = None):
-  if _id is None and action is None: return app_module["base"]["function"](app_module)
-  form = app_module["actions"][action]["function"]
-  if request.method == 'GET': return form(app_module, action, _id)
-  if request.method == 'POST': return form(app_module, action, _id, request.form)
+for module in [
+                employee_module,
+                card_module,
+                finance_module,
+                finance_report_module,
+                children_module,
+                children_report_module,
+                place_module,
+                role_module,
+                user_module,
+                app_module,
+              ]:
+  registrate_view(module)
+  TableView(app, module)
