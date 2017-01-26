@@ -46,6 +46,6 @@ def check_module_access(func):
     if access_OK:
       return func(*args, **kwargs)
     else:
-      flash(u"%s"%func.__name__)
+      flash(u"Доступ к <url:%s> запрещен."%view_name)
       return redirect(url_for("closed"))
   return decorated_view
