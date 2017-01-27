@@ -66,9 +66,15 @@ def index():
   if current_user.is_anonymous(): return redirect(url_for('login'))
   return redirect(url_for('employees'))
 
+
 @app.route('/closed')
 def closed():
   return render_template("closed.html")
+
+
+@app.route('/form')
+def form():
+  return render_template("modalforms.html")
 
 
 # Основная часть приложения
