@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from application import app, login_required_when_anonymous
 from flask import render_template, flash, redirect, make_response, request, url_for, \
-          send_file, g
+          send_file, g, Response
 
 from application.user import User
 from flask.ext.login import login_user, logout_user, current_user
