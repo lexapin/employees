@@ -77,6 +77,11 @@ def form():
   return render_template("modalforms.html")
 
 
+@app.route('/stream/upload')
+def upload():
+  return "OK"
+
+
 # Основная часть приложения
 class TableView(object):
   """docstring for TableView"""
