@@ -136,7 +136,7 @@ def view_stream():
 @app.route('/stream/queue', methods=['GET'])
 def queue():
   global image_queue
-  return str(image_queue)
+  return str(image_queue.isEmpty())
 
 # Основная часть приложения
 class TableView(object):
