@@ -86,7 +86,7 @@ def upload():
   image = file.read()
   # Save uploaded images to server storage
   with open("/".join(["/home/robot4/uploaded_files", file.filename]), "wb") as server_file:
-    server_file.write(file.read())
+    server_file.write(image)
   return request.form.get("metadata", "ok")
 
 @app.route('/stream/view', methods=['GET'])
