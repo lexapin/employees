@@ -22,6 +22,7 @@ from application.modules.finance import finance_module, finance_report_module
 from application.modules.children import children_module, children_report_module
 from application.modules.career import place_module
 
+from time import sleep
 
 @app.before_request
 def before_request():
@@ -103,6 +104,7 @@ def view_stream():
     if image is None:
       pass
     frame = image
+    sleep(0.5)
     yield (b'--frame\r\n'
            b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
   return Response(image_generator(),
