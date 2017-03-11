@@ -126,12 +126,13 @@ def page():
 @app.route('/stream/data', methods=['GET'])
 def view_stream():
   def image_generator(queue):
-    frame = queue.pop()
-    if frame is None:
-      pass
-    sleep(1)
-    yield (b'--frame\r\n'
-           b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
+    while True:
+      frame = queue.pop()
+      if frame is None:
+        break
+      sleep(1)
+      yield (b'--frame\r\n'
+             b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
   global image_queue
   return Response(image_generator(image_queue),
                     mimetype='multipart/x-mixed-replace; boundary=frame')
