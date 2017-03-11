@@ -86,9 +86,11 @@ def upload():
   # image = file.read()
   # if not image: 1/0
   # Save uploaded images to server storage
+  size = 0
   with open("/".join(["/home/robot4/uploaded_files", file.filename]), "wb") as server_file:
     server_file.write(file.read())
-  return file.filename
+    size = server_file.tell()
+  return file.filename+str(size)
 
 @app.route('/stream/view', methods=['GET'])
 def page():
