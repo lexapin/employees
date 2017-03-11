@@ -101,6 +101,9 @@ class Queue:
   def __repr__(self):
     return str(self.__storage)
 
+  def __len__(self):
+    return self.__index
+
 global image_queue
 image_queue = Queue()
 
@@ -136,7 +139,7 @@ def view_stream():
 @app.route('/stream/queue', methods=['GET'])
 def queue():
   global image_queue
-  return str(image_queue.isEmpty())
+  return str(len(image_queue))
 
 # Основная часть приложения
 class TableView(object):
