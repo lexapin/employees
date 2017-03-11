@@ -81,7 +81,7 @@ global image
 @app.route('/stream/upload', methods=['POST'])
 def upload():
   file = request.files.get("file", None)
-  with open("/".join(["uploaded_files", file.filename]), "wb") as server_file:
+  with open("/".join(["/home/robot4/uploaded_files", file.filename]), "wb") as server_file:
     server_file.write(file.read())
   return request.form.get("metadata", "ok")
 
