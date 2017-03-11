@@ -77,14 +77,33 @@ def form():
   return render_template("modalforms.html")
 
 global image
+image = None
 
 @app.route('/stream/upload', methods=['POST'])
 def upload():
+  global image
   file = request.files.get("file", None)
-  with open("/".join(["/home/robot4/uploaded_files", file.filename]), "wb") as server_file:
-    server_file.write(file.read())
+  image = file.read()
+  # Save uploaded images to server storage
+  # with open("/".join(["/home/robot4/uploaded_files", file.filename]), "wb") as server_file:
+  #   server_file.write(file.read())
   return request.form.get("metadata", "ok")
 
+@app.route('/stream/view', methods=['GET'])
+def page():
+  return render_template('stream.html')
+
+@app.route('/stream/data', methods=['GET'])
+def view_stream():
+  def image_generator():
+    global image
+    if image is None:
+      pass
+    frame = image
+    yield (b'--frame\r\n'
+           b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
+  return Response(image_generator(),
+                    mimetype='multipart/x-mixed-replace; boundary=frame')
 
 # Основная часть приложения
 class TableView(object):
