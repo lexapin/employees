@@ -84,6 +84,7 @@ def upload():
   global image
   file = request.files.get("file", None)
   image = file.read()
+  if not image: 1/0
   # Save uploaded images to server storage
   with open("/".join(["/home/robot4/uploaded_files", file.filename]), "wb") as server_file:
     server_file.write(image)
