@@ -77,15 +77,38 @@ def closed():
 def form():
   return render_template("modalforms.html")
 
-global image
-image = None
+
+class Queue:
+  def __init__(self, limit = float("inf")):
+    self.__storage = []
+    self.__limit = limit
+    self.__index = 0
+  
+  def isEmpty(self):
+    return self.__index == 0
+  
+  def push(self, data):
+    self.__index+=1
+    self.__storage.append(data)
+    if self.__index == self.__limit: self.pop()
+  
+  def pop(self):
+    if not self.isEmpty():
+      self.__index-=1
+      return self.__storage.pop(0)
+    return None
+
+  def __repr__(self):
+    return str(self.__storage)
+
+global image_queue
+image_queue = Queue()
 
 @app.route('/stream/upload', methods=['POST'])
 def upload():
-  global image
+  global image_queue
   file = request.files.get("file", None)
-  image = file.read()
-  if not image: 1/0
+  image_queue.push(file.read())
   # Save uploaded images to server storage
   size = 0
   # with open("/".join(["/home/robot4/uploaded_files", file.filename]), "wb") as server_file:
@@ -99,16 +122,21 @@ def page():
 
 @app.route('/stream/data', methods=['GET'])
 def view_stream():
-  def image_generator():
-    global image
-    if image is None:
+  def image_generator(queue):
+    frame = queue.pop()
+    if frame is None:
       pass
-    frame = image
-    sleep(0.5)
+    sleep(1)
     yield (b'--frame\r\n'
            b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
-  return Response(image_generator(),
+  global image_queue
+  return Response(image_generator(image_queue),
                     mimetype='multipart/x-mixed-replace; boundary=frame')
+
+@app.route('/stream/queue', methods=['GET'])
+def queue():
+  global image_queue
+  return str(image_queue)
 
 # Основная часть приложения
 class TableView(object):
