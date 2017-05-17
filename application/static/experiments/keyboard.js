@@ -21,7 +21,7 @@ $(function(){
       if (num)
         for (var key_char in num_keys)
           experiment_keys[key_char] = num_keys[key_char];
-      console.log("experiment_keys", experiment_keys.keys().length);
+      console.log("experiment_keys", _.keys(experiment_keys).length);
       start_experiment(_.keys(experiment_keys));
     }
   });
