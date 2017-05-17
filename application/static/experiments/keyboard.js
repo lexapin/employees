@@ -9,10 +9,11 @@ $(function(){
     key = $("#keyCheckbox").prop("checked");
     num = $("#numCheckbox").prop("checked");
     if (!key && !num) {
-      $("#keyboardModal").modal("hide");
+      alert("Выберите для теста хотя бы одну клавиатуру");
+
     }
     else {
-      alert("Выберите для теста хотя бы одну клавиатуру");
+      $("#keyboardModal").modal("hide");
     }
   });
 });
