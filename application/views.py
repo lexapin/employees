@@ -78,6 +78,11 @@ def form():
   return render_template("modalforms.html")
 
 
+@app.route('/keyboard')
+def form():
+  return render_template("experiment_keyboard.html")
+
+
 class Queue:
   def __init__(self, limit = float("inf")):
     self.__storage = []
