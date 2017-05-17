@@ -55,7 +55,13 @@
         });
         $('.table-context-menu').on('click', function(e){
             console.log('clicked', this);
-        })    
+        })
+
+        // keyboard form
+        var key = false;
+        var num = false;
+        $("#keyCheckbox").prop("checked", key);
+        $("#numCheckbox").prop("checked", true);
     });
 </script>
 {% endif %}
