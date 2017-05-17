@@ -126,5 +126,6 @@ $(function(){
     ];
 
     Plotly.newPlot('myDiv', data);
+    $("#reportModal").modal("show");
   }
 });
