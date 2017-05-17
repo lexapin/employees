@@ -15,6 +15,32 @@ $(function(){
       $("#keyboardModal").modal("hide");
     }
   });
+  // keyboard codes
+  var char_keys = {
+    49: "#path13",
+    50: "#path15",
+    51: "#path17",
+    52: "#path19",
+    53: "#path21",
+    54: "#path23",
+    55: "#path25",
+    56: "#path27",
+    57: "#path29",
+    48: "#path31",
+  };
+  var num_keys = {
+    97:  "#path175",
+    98:  "#path177",
+    99:  "#path179",
+    100: "#path169",
+    101: "#path171",
+    102: "#path173",
+    103: "#path163",
+    104: "#path165",
+    105: "#path167",
+    96:  "#path373",
+  };
+  var keys = char_key + num_keys;
   // svg
   var DEFAULT_FILL = "#97c5d5";
   var KEYDOWN_FILL = "#ff0000";
