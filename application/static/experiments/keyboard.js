@@ -22,6 +22,7 @@ $(function(){
         for (var key_char in num_keys)
           experiment_keys[key_char] = num_keys[key_char];
       console.log("experiment_keys", _.keys(experiment_keys).length);
+      console.log(key, num);
       start_experiment(_.keys(experiment_keys));
     }
   });
