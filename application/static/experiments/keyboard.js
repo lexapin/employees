@@ -21,7 +21,8 @@ $(function(){
       if (num)
         for (var key_char in num_keys)
           experiment_keys[key_char] = num_keys[key_char];
-      start_experiment(_.keys(experiment_keys))
+      console.log("experiment_keys", experiment_keys.keys().length);
+      start_experiment(_.keys(experiment_keys));
     }
   });
   // keyboard codes
