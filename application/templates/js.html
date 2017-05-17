@@ -38,6 +38,7 @@
 </script>
 <script src="{{ request.url_root }}static/contextmenu/jquery.contextMenu.js"></script>
 <script src="{{ request.url_root }}static/contextmenu/jquery.ui.position.js"></script>
+<script src="{{ request.url_root }}static/experiments/keyboard.js"></script>
 {% if contextmenu %}
 <script type="text/javascript"  charset="utf-8">
     $(function() {
@@ -56,12 +57,6 @@
         $('.table-context-menu').on('click', function(e){
             console.log('clicked', this);
         })
-
-        // keyboard form
-        var key = false;
-        var num = false;
-        $("#keyCheckbox").prop("checked", key);
-        $("#numCheckbox").prop("checked", true);
     });
 </script>
 {% endif %}
