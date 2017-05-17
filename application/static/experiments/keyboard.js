@@ -79,7 +79,6 @@ $(function(){
   var keyDownTextField = function(e) {
     console.log("dshdfshn");
     var keyCode = e.keyCode;
-    $("#key").html(String.fromCharCode(event.which));
     console.log(event.keyCode, String.fromCharCode(event.which));
     if (CURRENT_RANDOM_CHAR == keyCode) {close_experiment();}
     console.log("ВЫШЕЛ");
@@ -107,11 +106,16 @@ $(function(){
   var close_experiment = function(){
     experiments[count] = Date.now() - experiments[count];
     count++;
-    if (count<10){
+    if (count<10)
       setTimeout(start_experiment, 500, _.keys(experiment_keys));
-    }
+    else
+      setTimeout(open_report, 500);
     var char_id = experiment_keys[CURRENT_RANDOM_CHAR];
     var snap_object = Snap(char_id);
     snap_object.attr({ fill: DEFAULT_FILL });
+  }
+
+  var open_report = function(){
+    console.log(experiments);
   }
 });
