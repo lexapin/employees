@@ -4,5 +4,6 @@ $(function(){
   var num = false;
   $("#keyCheckbox").prop("checked", key);
   $("#numCheckbox").prop("checked", true);
-  console.log($("#numCheckbox").prop("checked"));
+  var test = $("#numCheckbox").prop("checked");
+  console.log(test);
 });
