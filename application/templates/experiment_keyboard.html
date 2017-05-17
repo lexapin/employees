@@ -1,20 +1,20 @@
 {% extends "base.html" %}
 {% block title %}
   <h1>
-    Страница с формами BootStrap
+    Исследование времени реакции пользователя на клавиаторе на события экрана
   </h1>
 {% endblock %}
 {% block content %}
 <svg id="svg" width=799 height=265></svg>
-<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+<!-- <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
   Launch demo modal
-</button>
+</button> -->
 <div class="modal fade" tabindex="-1" role="dialog" id="keyboardModal">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title">Время реакции пользователя на действия с экрана монитора с помощью цифровой клавиатуры</h4>
+        <h4 class="modal-title">Параметры эксперимента</h4>
       </div>
       <div class="modal-body">
         <p>Выберите диапозон цифровых клавиш клавиатуры&hellip;</p>
@@ -24,6 +24,25 @@
         <label class="checkbox-inline">
           <input type="checkbox" id="numCheckbox" value="option2"> Цифровая
         </label>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
+        <button type="button" class="btn btn-primary">Начать эксперимент</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" tabindex="-1" role="dialog" id="reportModal">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Результаты эксперимента</h4>
+      </div>
+      <div class="modal-body">
+        <p>Вы получили следующие результаты&hellip;</p>
+        <div id="myDiv" style="width: 480px; height: 400px;"></div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>

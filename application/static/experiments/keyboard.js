@@ -117,5 +117,14 @@ $(function(){
 
   var open_report = function(){
     console.log(experiments);
+    var data = [
+      {
+        x: _.keys(experiments),
+        y: _.values(experiments),
+        type: 'scatter'
+      }
+    ];
+
+    Plotly.newPlot('myDiv', data);
   }
 });
