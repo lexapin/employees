@@ -50,6 +50,7 @@ $(function(){
     s.append( data );
     for (var key in keys) {
       var path_id = keys[key];
+      console.log(path_id);
       Snap(path_id).attr({fill:DEFAULT_FILL})
     }
   }
