@@ -40,7 +40,7 @@ $(function(){
     105: "#path167",
     96:  "#path373",
   };
-  var keys = char_keys + num_keys;
+  var keys = Object.assign(char_keys, num_keys);
   // svg
   var DEFAULT_FILL = "#97c5d5";
   var KEYDOWN_FILL = "#ff0000";
