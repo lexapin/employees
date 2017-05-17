@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block title %}
+  <h1>
+    Страница с формами BootStrap
+  </h1>
+{% endblock %}
+{% block content %}
+<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+  Launch demo modal
+</button>
+<div class="modal fade" tabindex="-1" role="dialog" id="myModal">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Время реакции пользователя на действия с экрана монитора с помощью цифровой клавиатуры</h4>
+      </div>
+      <div class="modal-body">
+        <p>Выберите диапозон цифровых клавиш клавиатуры&hellip;</p>
+        <label class="checkbox-inline">
+          <input type="checkbox" id="inlineCheckbox1" value="option1"> Символьная
+        </label>
+        <label class="checkbox-inline">
+          <input type="checkbox" id="inlineCheckbox2" value="option2"> Цифровая
+        </label>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
