@@ -21,8 +21,8 @@ $(function(){
       if (num)
         for (var key_char in num_keys)
           experiment_keys[key_char] = num_keys[key_char];
-      console.log("experiment_keys", _.keys(experiment_keys).length);
-      console.log(key, num);
+      // console.log("experiment_keys", _.keys(experiment_keys).length);
+      // console.log(key, num);
       start_experiment(_.keys(experiment_keys));
     }
   });
@@ -63,7 +63,7 @@ $(function(){
     s.append( data );
     for (var key in keys) {
       var path_id = keys[key];
-      console.log(path_id);
+      // console.log(path_id);
       Snap(path_id).attr({fill:DEFAULT_FILL})
     }
   }
@@ -77,11 +77,11 @@ $(function(){
     return DEFAULT_FILL
   }
   var keyDownTextField = function(e) {
-    console.log("dshdfshn");
+    // console.log("dshdfshn");
     var keyCode = e.keyCode;
-    console.log(event.keyCode, String.fromCharCode(event.which));
+    // console.log(event.keyCode, String.fromCharCode(event.which));
     if (CURRENT_RANDOM_CHAR == keyCode) {close_experiment();}
-    console.log("ВЫШЕЛ");
+    // console.log("ВЫШЕЛ");
   }
 
   document.addEventListener("keyup", keyDownTextField, false);
