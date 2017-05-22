@@ -5,6 +5,7 @@
   </h1>
 {% endblock %}
 {% block content %}
+<script src="{{ request.url_root }}static/experiments/keyboard.js"></script>
 <svg id="svg" width=799 height=265></svg>
 <!-- <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
   Launch demo modal
@@ -50,5 +51,4 @@
     </div>
   </div>
 </div>
-<script src="{{ request.url_root }}static/experiments/keyboard.js"></script>
 {% endblock %}
