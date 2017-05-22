@@ -69,14 +69,6 @@ $(function() {
   menu.items.forEach(function(item){
     insert_main_item(html_menu, item);
   });
-  // Добавляем событие клавиши
-  $('li.hello').click(function(){
-    console.log($(this).attr("id"));
-    if($(this).attr("id") == command.name)
-      console.log("YES");
-    else
-      console.log("NO");
-  });
   var get_command_path = function(command){
     var command_name = "Меню " + command.name.slice(2);
     console.log("=>", command_name);
@@ -97,4 +89,53 @@ $(function() {
     return command;
   }
   var command = rand_command();
+  // experiment vars
+  var max_experiments = 10;
+  var count = 0;
+  var CURRENT_RANDOM_COMMAND = null;
+  var experiments = {};
+  // Добавляем событие клавиши
+  $('li.hello').click(function(){
+    console.log($(this).attr("id"));
+    if($(this).attr("id") == CURRENT_RANDOM_COMMAND.name)
+      close_experiment();
+    else
+      console.log("NO");
+  });
+  // experiment management functions
+  var start_experiment = function(){
+    var command = rand_command();
+    CURRENT_RANDOM_COMMAND = command;
+    experiments[count] = Date.now();
+  }
+
+  var close_experiment = function(){
+    experiments[count] = Date.now() - experiments[count];
+    count++;
+    if (count<10)
+      setTimeout(start_experiment, 500);
+    else
+      setTimeout(open_report, 500);
+  }
+
+  var open_report = function(){
+    console.log(experiments);
+    var data = [
+      {
+        x: _.keys(experiments),
+        y: _.values(experiments),
+        type: 'scatter'
+      }
+    ];
+
+    Plotly.newPlot('myDiv', data);
+    $("#reportModal").modal("show");
+  }
+
+  //Запуск эксперимента
+  $("#menuModal").modal("show");
+  $(".btn-primary").click(function(){
+    $("#menuModal").modal("hide");
+    start_experiment();
+  });
 });
