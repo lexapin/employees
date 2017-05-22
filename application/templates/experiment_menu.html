@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block title %}
   <h1>
-    Исследование времени реакции пользователя на события экрана с помощью клавиатуры
+    Исследование времени реакции пользователя на события экрана с помощью меню приложения
   </h1>
 {% endblock %}
 {% block content %}
@@ -14,16 +14,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title">Параметры эксперимента</h4>
-      </div>
-      <div class="modal-body">
-        <p>Выберите диапозон цифровых клавиш клавиатуры&hellip;</p>
-        <label class="checkbox-inline">
-          <input type="checkbox" id="keyCheckbox" value="option1"> Символьная
-        </label>
-        <label class="checkbox-inline">
-          <input type="checkbox" id="numCheckbox" value="option2"> Цифровая
-        </label>
+        <h4 class="modal-title">Запуск эксперимента</h4>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
@@ -50,5 +41,5 @@
     </div>
   </div>
 </div>
-<script src="{{ request.url_root }}static/experiments/keyboard.js"></script>
+
 {% endblock %}

@@ -82,6 +82,10 @@ def form():
 def form():
   return render_template("experiment_keyboard.html")
 
+@app.route('/menu')
+def form():
+  return render_template("experiment_menu.html")
+
 
 class Queue:
   def __init__(self, limit = float("inf")):
