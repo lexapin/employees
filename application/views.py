@@ -79,12 +79,13 @@ def form():
 
 
 @app.route('/keyboard')
-def form():
-  return render_template("experiment_keyboard.html")
+def keyboard_form():
+  return render_template("experiment_keyboard.html", keyboard_experiment = True)
+
 
 @app.route('/menu')
-def form():
-  return render_template("experiment_menu.html")
+def menu_form():
+  return render_template("experiment_menu.html", menu_experiment = True)
 
 
 class Queue:

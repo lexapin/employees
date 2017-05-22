@@ -62,4 +62,13 @@
     });
 </script>
 {% endif %}
+
+{% if keyboard_experiment %}
 <script src="{{ request.url_root }}static/experiments/keyboard.js"></script>
+{% endif %}
+{% if menu_experiment %}
+<script src="{{ request.url_root }}static/experiments/menu.js"></script>
+{% endif %}
+{% if mouse_experiment %}
+<script src="{{ request.url_root }}static/experiments/mouse.js"></script>
+{% endif %}
