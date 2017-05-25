@@ -81,6 +81,7 @@ $(function(){
     var keyCode = e.keyCode;
     // console.log(event.keyCode, String.fromCharCode(event.which));
     if (CURRENT_RANDOM_CHAR == keyCode) {close_experiment();}
+    else message_alert("Неправильно нажата кнопка!");
     // console.log("ВЫШЕЛ");
   }
 
