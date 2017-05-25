@@ -100,7 +100,7 @@ $(function() {
     if($(this).attr("id") == CURRENT_RANDOM_COMMAND.name)
       close_experiment();
     else
-      console.log("NO");
+      message_alert("Неправильно выбран пункт меню!");
   });
   // experiment management functions
   var start_experiment = function(){
