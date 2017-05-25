@@ -1,3 +1,6 @@
-var message_alert = function(text){
-  console.log(text);
+var message_alert = function(html_text){
+  dhtmlx.message({
+    type: "error",
+    text: html_text,
+  });
 }
