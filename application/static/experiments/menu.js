@@ -18,7 +18,6 @@ $(function() {
         items_count = 3;
       }
       items_count += randomINT(max_items);
-      console.log(items_count);
       if (items_count > 0)
         for (var i = 0; i < items_count; i++) {
           var menu = {
@@ -33,10 +32,8 @@ $(function() {
     }
   }
   create_menu(menu);
-  console.log(menu);
   // Рисует случайное меню
   var insert_main_item = function(html_menu, item){
-    console.log(item);
     var item_li = document.createElement('li');
     item_li.className = "dropdown";
     item_li.setAttribute("role", "presentation");
@@ -71,7 +68,6 @@ $(function() {
   });
   var get_command_path = function(command){
     var command_name = "Меню " + command.name.slice(2);
-    console.log("=>", command_name);
     if(command.parent != null){
       var path = get_command_path(command.parent);
       path.push(command_name);
@@ -96,7 +92,6 @@ $(function() {
   var experiments = {};
   // Добавляем событие клавиши
   $('li.hello').click(function(){
-    console.log($(this).attr("id"));
     if($(this).attr("id") == CURRENT_RANDOM_COMMAND.name)
       close_experiment();
     else
@@ -119,7 +114,6 @@ $(function() {
   }
 
   var open_report = function(){
-    console.log(experiments);
     var data = [
       {
         x: _.keys(experiments),
