@@ -88,7 +88,7 @@ def menu_form():
   return render_template("experiment_menu.html", menu_experiment = True)
 
 from helps import help_page
-@app.route('/menu')
+@app.route('/help')
 @app.route('/help/<page>')
 def help_html(page=None):
   return help_page[0]["title"]
