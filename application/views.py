@@ -88,15 +88,20 @@ def menu_form():
   return render_template("experiment_menu.html", menu_experiment = True)
 
 from helps import help_page
-@app.route('/help')
+@app.route('/help', methods=['GET', 'POST'])
 @app.route('/help/<page>')
 def help_html(page=None):
   text = []
+  s_text = []
   title = ""
+  if request.method == 'POST':
+    title = u"Результаты поиска"
+    s_text = [u"мир", u"прекрасен"]
+    return form(self.__module__, action, _id, request.form)
   if page is not None:
     title = help_page[page]["title"]
     text = help_page[page]["text"]
-  return render_template("help.html", help_experiment = True, help_text = text, help_title = title)
+  return render_template("help.html", help_experiment = True, help_text = text, help_title = title, search_text = s_text)
 
 
 class Queue:
