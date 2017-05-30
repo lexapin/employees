@@ -1,5 +1,7 @@
 $(function() {
   $(".menu").click(function(){
-    console.log($(this).attr("id"));
+    // var pathname = window.location.pathname; // Returns path only
+    // var url      = window.location.href;
+    window.location.replace(window.location.href+"/"+$(this).attr("id"));
   })
 })
