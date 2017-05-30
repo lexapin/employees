@@ -97,7 +97,9 @@ def help_html(page=None):
   if request.method == 'POST':
     var = request.form.get("search_value")
     title = u"Результаты поиска по '%s'"%var
-    s_text = [u"мир", u"прекрасен", var]
+    for url, help_text in help_page.items():
+      for paragraph in help_text["text"]:
+        if var in paragraph: s_text.append(paragraph)
   if page is not None:
     title = help_page[page]["title"]
     text = help_page[page]["text"]
