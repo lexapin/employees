@@ -91,7 +91,12 @@ from helps import help_page
 @app.route('/help')
 @app.route('/help/<page>')
 def help_html(page=None):
-  return render_template("help.html", help_experiment = True)
+  text = []
+  title = ""
+  if page is not None:
+    title = help_page[page]["title"]
+    text = help_page[page]["text"]
+  return render_template("help.html", help_experiment = True, help_text = text, help_title = title)
 
 
 class Queue:

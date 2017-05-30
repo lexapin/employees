@@ -5,9 +5,9 @@ from manipulation import *
 from results import *
 from errors import *
 
-help_page = [
-  INTRO,
-  TODO,
-  RES,
-  ERR,
-]
+help_page = {
+  "INTRO": INTRO, 
+  "TODO": TODO, 
+  "RES": RES, 
+  "ERR": ERR, 
+}
