@@ -98,7 +98,6 @@ def help_html(page=None):
     title = u"Результаты поиска"
     var = request.form.get("search_value")
     s_text = [u"мир", u"прекрасен", var]
-    return form(self.__module__, action, _id, request.form)
   if page is not None:
     title = help_page[page]["title"]
     text = help_page[page]["text"]
