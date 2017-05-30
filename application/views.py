@@ -95,8 +95,8 @@ def help_html(page=None):
   s_text = []
   title = ""
   if request.method == 'POST':
-    title = u"Результаты поиска"
     var = request.form.get("search_value")
+    title = u"Результаты поиска по '%s'"%var
     s_text = [u"мир", u"прекрасен", var]
   if page is not None:
     title = help_page[page]["title"]
