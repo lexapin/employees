@@ -106,6 +106,8 @@ def help_html(page=None):
             "first": words[0],
             "peaces": words[1:],
             "word": var,
+            "url": url,
+            "hint": help_text["title"],
             }
           s_text.append(data)
   if page is not None:
