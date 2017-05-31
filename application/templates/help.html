@@ -36,10 +36,7 @@
   {% endfor %}
   {% for data in search_text %}
   <p class="search" id="{{ data['url'] }}" data-toggle="tooltip" data-placement="left" title="{{ data['hint'] }}">
-    {{ data["first"] }}
-    {% for peace in data["peaces"] %}
-      <b>{{ data["word"] }}</b>{{ peace }}
-    {% endfor %}
+    {{ data["first"] }}{% for peace in data["peaces"] %}<b>{{ data["word"] }}</b>{{ peace }}{% endfor %}
   </p>
   {% endfor %}
 </div>
