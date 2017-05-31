@@ -87,6 +87,9 @@ def keyboard_form():
 def menu_form():
   return render_template("experiment_menu.html", menu_experiment = True)
 
+import HTMLParser
+html_parser = HTMLParser.HTMLParser()
+
 from helps import help_page
 @app.route('/help', methods=['GET', 'POST'])
 @app.route('/help/<page>')
@@ -100,7 +103,7 @@ def help_html(page=None):
     for url, help_text in help_page.items():
       for paragraph in help_text["text"]:
         if var in paragraph:
-          s_text.append(paragraph.replace(var, u"<b>%s</b>"%var))
+          s_text.append(html_parser.unescape(paragraph.replace(var, u"<b>%s</b>"%var)))
   if page is not None:
     title = help_page[page]["title"]
     text = help_page[page]["text"]
