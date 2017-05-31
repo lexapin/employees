@@ -15,13 +15,31 @@
         <h4 class="modal-title">Параметры эксперимента</h4>
       </div>
       <div class="modal-body">
-        <p>Выберите диапозон цифровых клавиш клавиатуры&hellip;</p>
         <label class="checkbox-inline">
           <input type="checkbox" id="keyCheckbox" value="option1"> Символьная
         </label>
         <label class="checkbox-inline">
           <input type="checkbox" id="numCheckbox" value="option2"> Цифровая
         </label>
+        ---------------------
+        <div class="checkbox">
+          <label>
+            <input type="checkbox" value="option0" id="ranom_width">
+            Изменять ширину кнопки
+          </label>
+        </div>
+        <div class="radio">
+          <label>
+            <input type="radio" name="optionsRadios" id="inLine" value="option1" checked>
+            Кнопка и мышь на одной линии экрана
+          </label>
+        </div>
+        <div class="radio">
+          <label>
+            <input type="radio" name="optionsRadios" id="inWindow" value="option2">
+            Кнопка и мышь на всей области экрана
+          </label>
+        </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
