@@ -17,7 +17,7 @@ $(function(){
   });
   // функции для проведения эксперимента
   var random_button_width = true;
-  var random_button_height = true;
+  var random_button_height = false;
   var regim_vars = null;
   var ccp = 0; //current circle position
   var cbp = 0; //current button position
