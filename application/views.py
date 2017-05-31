@@ -88,6 +88,11 @@ def menu_form():
   return render_template("experiment_menu.html", menu_experiment = True)
 
 
+@app.route('/mouse')
+def mouse_form():
+  return render_template("experiment_mouse.html", mouse_experiment = True)
+
+
 from helps import help_page
 @app.route('/help', methods=['GET', 'POST'])
 @app.route('/help/<page>')
