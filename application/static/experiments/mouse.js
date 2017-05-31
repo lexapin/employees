@@ -1,10 +1,13 @@
 $(function(){
   $("#mouseModal").modal("show");
   $(".btn-primary").click(function(){
-    console.log("random_width", $("#random_width").prop("checked"));
-    console.log("inLine", $("#inLine").prop("checked"));
-    console.log("inWindow", $("#inWindow").prop("checked"));
-    if (false) {
+    var random_width = $("#random_width").prop("checked");
+    var inLine = $("#inLine").prop("checked");
+    var inWindow = $("#inWindow").prop("checked");
+    random_button_width = random_width;
+    if (inLine) regim_vars = [0,0];
+    if (inWindow) regim_vars = [1,4];
+    if (regim_vars == null) {
       alert("Параметры выбраны неправильно");
     }
     else {
@@ -15,6 +18,7 @@ $(function(){
   // функции для проведения эксперимента
   var random_button_width = true;
   var random_button_height = true;
+  var regim_vars = null;
   var ccp = 0; //current circle position
   var cbp = 0; //current button position
   var circle_position = {
@@ -89,8 +93,8 @@ $(function(){
   // управление экспериментом
   var start_experiment = function(chars){
     // start experiment
-    ccp = get_random_position(1,4);
-    cbp = get_random_position(1,4);
+    ccp = get_random_position(regim_vars[0], regim_vars[1]);
+    cbp = get_random_position(regim_vars[0], regim_vars[1]);
     create_start_position();
     experiments[count] = Date.now();
   }
