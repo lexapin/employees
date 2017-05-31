@@ -1,6 +1,9 @@
 $(function(){
   $("#mouseModal").modal("show");
   $(".btn-primary").click(function(){
+    console.log("random_width", $("#random_width").prop("checked"));
+    console.log("inLine", $("#keyCheckbox").prop("inLine"));
+    console.log("inWindow", $("#keyCheckbox").prop("inWindow"));
     if (false) {
       alert("Параметры выбраны неправильно");
     }
