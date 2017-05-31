@@ -84,6 +84,7 @@ $(function(){
   }
   var do_when_animation_complete = function() {
     $(this).remove();
+    experiments[count] = Date.now();
     create_button();
   }
   // переменные эксперимента
@@ -96,7 +97,6 @@ $(function(){
     ccp = get_random_position(regim_vars[0], regim_vars[1]);
     cbp = get_random_position(regim_vars[0], regim_vars[1]);
     create_start_position();
-    experiments[count] = Date.now();
   }
 
   var close_experiment = function(){
