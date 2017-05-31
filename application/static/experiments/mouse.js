@@ -2,8 +2,8 @@ $(function(){
   $("#mouseModal").modal("show");
   $(".btn-primary").click(function(){
     console.log("random_width", $("#random_width").prop("checked"));
-    console.log("inLine", $("#keyCheckbox").prop("inLine"));
-    console.log("inWindow", $("#keyCheckbox").prop("inWindow"));
+    console.log("inLine", $("#inLine").prop("checked"));
+    console.log("inWindow", $("#inWindow").prop("checked"));
     if (false) {
       alert("Параметры выбраны неправильно");
     }
