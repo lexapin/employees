@@ -5,7 +5,7 @@ $(function(){
       alert("Параметры выбраны неправильно");
     }
     else {
-      $("#keyboardModal").modal("hide");
+      $("#mouseModal").modal("hide");
       start_experiment();
     }
   });
