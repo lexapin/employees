@@ -1,7 +1,7 @@
 $(function(){
   $("#mouseModal").modal("show");
   $(".btn-primary").click(function(){
-    if (true) {
+    if (false) {
       alert("Параметры выбраны неправильно");
     }
     else {
