@@ -87,8 +87,6 @@ def keyboard_form():
 def menu_form():
   return render_template("experiment_menu.html", menu_experiment = True)
 
-import HTMLParser
-html_parser = HTMLParser.HTMLParser()
 
 from helps import help_page
 @app.route('/help', methods=['GET', 'POST'])
