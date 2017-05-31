@@ -34,8 +34,14 @@
   {% for text in help_text %}
   <p>{{ text }}</p>
   {% endfor %}
-  {% for text in search_text %}
-  <p>{{ text }}</p>
+  {% for data in search_text %}
+  <p>
+    {{ data["first"] }}
+    {% for peace in data["peaces"] %}
+      <b>{{ data["word"] }}</b>
+      {{ data["peaces"][i] }}
+    {% endfor %}
+  </p>
   {% endfor %}
 </div>
 {% endblock %}

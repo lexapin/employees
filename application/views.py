@@ -103,7 +103,13 @@ def help_html(page=None):
     for url, help_text in help_page.items():
       for paragraph in help_text["text"]:
         if var in paragraph:
-          s_text.append(html_parser.unescape(paragraph.replace(var, u"<b>%s</b>"%var)))
+          words = paragraph.split(var)
+          data = {
+            "first": words[0],
+            "peaces": words[1:],
+            "word": var,
+            }
+          s_text.append(data)
   if page is not None:
     title = help_page[page]["title"]
     text = help_page[page]["text"]
