@@ -132,7 +132,7 @@ $(function(){
         name: 'Эмперические значения'
       }
     ];
-    console.log();
+    console.log(imperic_exp);
     Plotly.newPlot('myDiv', data);
     $("#reportModal").modal("show");
   }
