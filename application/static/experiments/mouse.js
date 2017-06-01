@@ -73,6 +73,7 @@ $(function(){
     button.innerHTML = "<a href='#'>click me</a>";
     button.style.left = button_position[cbp].left();
     button.style.top = button_position[cbp].top();
+    button.style.width = 50+"px";
     if (random_button_width) button.style.width = get_random_position(50, 90)+"px";
     if (random_button_height) {
       var height = get_random_position(20, 40);
@@ -81,7 +82,7 @@ $(function(){
       button.style.top = (top-height/2)+"px";
       button.style["line-height"] = height+"px";
     }
-    IMPERICAL.push(button.style.top, button.style.left, button.style.width);
+    IMPERICAL.push(parseInt(button.style.top), parseInt(button.style.left), parseInt(button.style.width));
     button.addEventListener("click", click_on_button);
     $("#mouse").append(button);
   }
