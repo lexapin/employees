@@ -1,6 +1,7 @@
 $(function() {
   var max_depth = 4;
   var max_items = 5;
+  var IMPERICAL = []; //Переменная для расчета времени по имперической формуле
   var menu = {
     name: "0",
     items: [],
@@ -69,6 +70,7 @@ $(function() {
   var get_command_path = function(command){
     var command_name = "Меню " + command.name.slice(2);
     if(command.parent != null){
+      IMPERICAL.push(command.parent.items.length);
       var path = get_command_path(command.parent);
       path.push(command_name);
       return path;
@@ -99,6 +101,7 @@ $(function() {
   });
   // experiment management functions
   var start_experiment = function(){
+    IMPERICAL = [];
     var command = rand_command();
     CURRENT_RANDOM_COMMAND = command;
     experiments[count] = Date.now();
@@ -106,6 +109,7 @@ $(function() {
 
   var close_experiment = function(){
     experiments[count] = Date.now() - experiments[count];
+    console.log(IMPERICAL);
     count++;
     if (count<10)
       setTimeout(start_experiment, 500);
