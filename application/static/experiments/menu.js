@@ -92,6 +92,7 @@ $(function() {
   var count = 0;
   var CURRENT_RANDOM_COMMAND = null;
   var experiments = {};
+  var imperic_exp = {};
   // Добавляем событие клавиши
   $('li.hello').click(function(){
     if($(this).attr("id") == CURRENT_RANDOM_COMMAND.name)
@@ -110,6 +111,11 @@ $(function() {
   var close_experiment = function(){
     experiments[count] = Date.now() - experiments[count];
     console.log(IMPERICAL);
+    var sum = 0;
+    IMPERICAL.forEach(function(digit){
+      sum+=50+150*Math.log2(digit+1);
+    });
+    imperic_exp[count] = sum;
     count++;
     if (count<10)
       setTimeout(start_experiment, 500);
@@ -122,7 +128,14 @@ $(function() {
       {
         x: _.keys(experiments),
         y: _.values(experiments),
-        type: 'scatter'
+        type: 'scatter',
+        name: 'Экспериментальные значения'
+      },
+      {
+        x: _.keys(experiments),
+        y: _.values(imperic_exp),
+        type: 'scatter',
+        name: 'Эмперические значения'
       }
     ];
 
