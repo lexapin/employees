@@ -108,7 +108,7 @@ $(function(){
     experiments[count] = Date.now() - experiments[count];
     D = Math.sqrt((IMPERICAL[0]-IMPERICAL[2])*(IMPERICAL[0]-IMPERICAL[2])+(IMPERICAL[1]-IMPERICAL[3])*(IMPERICAL[1]-IMPERICAL[3]));
     S = IMPERICAL[5];
-    console.log(D, S, D/(S+1));
+    console.log(IMPERICAL, D/(S+1));
     imperic_exp[count] = 50+150*Math.log2(D/(S+1));
     count++;
     if (count<max_experiments)
