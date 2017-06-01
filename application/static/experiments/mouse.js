@@ -19,6 +19,7 @@ $(function(){
   var random_button_width = true;
   var random_button_height = false;
   var regim_vars = null;
+  var IMPERICAL = []; //Переменная для расчета времени по имперической формуле
   var ccp = 0; //current circle position
   var cbp = 0; //current button position
   var circle_position = {
@@ -49,6 +50,7 @@ $(function(){
     circle.addEventListener("mouseenter", function(){
       var top = parseInt($(this).css("top"));
       var left = parseInt($(this).css("left"));
+      IMPERICAL.push(top, left);
       $(this).animate({
           width: "10px",
           height: "10px",
@@ -79,6 +81,7 @@ $(function(){
       button.style.top = (top-height/2)+"px";
       button.style["line-height"] = height+"px";
     }
+    IMPERICAL.push(button.style.top, button.style.left, button.style.width);
     button.addEventListener("click", click_on_button);
     $("#mouse").append(button);
   }
@@ -91,9 +94,11 @@ $(function(){
   var max_experiments = 10;
   var count = 0;
   var experiments = {};
+  var imperic_exp = {};
   // управление экспериментом
   var start_experiment = function(chars){
     // start experiment
+    IMPERICAL = [];
     ccp = get_random_position(regim_vars[0], regim_vars[1]);
     cbp = get_random_position(regim_vars[0], regim_vars[1]);
     create_start_position();
@@ -101,6 +106,9 @@ $(function(){
 
   var close_experiment = function(){
     experiments[count] = Date.now() - experiments[count];
+    D = Math.sqrt((IMPERICAL[0]-IMPERICAL[2])*(IMPERICAL[0]-IMPERICAL[2])+(IMPERICAL[1]-IMPERICAL[3])*(IMPERICAL[1]-IMPERICAL[3]));
+    S = IMPERICAL[5];
+    imperic_exp[count] = 50+150*Math.log2(D/(S+1));
     count++;
     if (count<max_experiments)
       setTimeout(start_experiment, 500);
@@ -114,7 +122,14 @@ $(function(){
       {
         x: _.keys(experiments),
         y: _.values(experiments),
-        type: 'scatter'
+        type: 'scatter',
+        name: 'Экспериментальные значения'
+      },
+      {
+        x: _.keys(experiments),
+        y: _.values(imperic_exp),
+        type: 'scatter',
+        name: 'Эмперические значения'
       }
     ];
 
