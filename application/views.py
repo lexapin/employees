@@ -93,6 +93,11 @@ def mouse_form():
   return render_template("experiment_mouse.html", mouse_experiment = True)
 
 
+@app.route('/possibility')
+def possibility_form():
+  return render_template("experiment_possibility.html", possibility_experiment = True)
+
+
 from helps import help_page
 @app.route('/help', methods=['GET', 'POST'])
 @app.route('/help/<page>')
@@ -126,15 +131,15 @@ class Queue:
     self.__storage = []
     self.__limit = limit
     self.__index = 0
-  
+
   def isEmpty(self):
     return self.__index == 0
-  
+
   def push(self, data):
     self.__index+=1
     self.__storage.append(data)
     if self.__index == self.__limit: self.pop()
-  
+
   def pop(self):
     if not self.isEmpty():
       self.__index-=1

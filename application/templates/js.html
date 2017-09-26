@@ -1,5 +1,9 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-<script src="http://getbootstrap.com/dist/js/bootstrap.min.js"></script>
+<!--<script src="http://getbootstrap.com/dist/js/bootstrap.min.js"></script>-->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous">
+</script>
 <script src="http://snapsvg.io/assets/js/snap.svg-min.js"></script>
 <script src="http://underscorejs.org/underscore.js"></script>
 <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
@@ -46,7 +50,7 @@
 <script type="text/javascript"  charset="utf-8">
     $(function() {
         $.contextMenu({
-            selector: '.table-context-menu', 
+            selector: '.table-context-menu',
             callback: function(key, options) {
                 var item = $(this).closest('tr').attr('id');
                 location.replace("{{ base['name'] }}/" + key + "/" + item);
@@ -76,4 +80,7 @@
 {% endif %}
 {% if help_experiment %}
 <script src="{{ request.url_root }}static/experiments/help.js"></script>
+{% endif %}
+{% if possibility_experiment %}
+<script src="{{ request.url_root }}static/experiments/possibility.js"></script>
 {% endif %}
