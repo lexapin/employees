@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% block title %}
+  <h1>
+    Исследование времени реакции пользователя на события экрана с помощью мыши
+  </h1>
+{% endblock %}
+{% block content %}
+<div id="mouse" style="border:1px solid; width:640px; height:480px;">
+</div>
+<div class="modal fade" tabindex="-1" role="dialog" id="mouseModal">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Параметры эксперимента</h4>
+      </div>
+      <div class="modal-body">
+        <div class="checkbox">
+          <label>
+            <input type="checkbox" value="option0" id="random_width">
+            Изменять ширину кнопки
+          </label>
+        </div>
+        <div class="radio">
+          <label>
+            <input type="radio" name="optionsRadios" id="inLine" value="option1" checked>
+            Кнопка и мышь на одной линии экрана
+          </label>
+        </div>
+        <div class="radio">
+          <label>
+            <input type="radio" name="optionsRadios" id="inWindow" value="option2">
+            Кнопка и мышь на всей области экрана
+          </label>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
+        <button type="button" class="btn btn-primary">Начать эксперимент</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" tabindex="-1" role="dialog" id="reportModal">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Результаты эксперимента</h4>
+      </div>
+      <div class="modal-body">
+        <p>Вы получили следующие результаты&hellip;</p>
+        <div id="myDiv" style="width: 480px; height: 400px;"></div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

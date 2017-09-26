@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% block title %}
+{% endblock %}
+{% block content %}
+<div class="container">
+  <div class="jumbotron">
+    <h1>Прогностическая модель</h1>
+    <h2>Метод бинарной логистической регрессии</h2>
+  </div>
+  <form>
+    <div class="form-group">
+      <label for="x1">Расстояние от опухоли до ануса (см)</label>
+      <input type="text" class="form-control" id="x1" placeholder="1.0 ... 20.0" required>
+    </div>
+    <div class="form-group">
+      <label for="x2">Расстояние от ануса до анастомоза (см)</label>
+      <input type="text" class="form-control" id="x2" placeholder="1.0 ... 20.0" required>
+    </div>
+    <div class="form-group">
+      <label for="x3">Индекс массы тела (кг/м2)</label>
+      <input type="text" class="form-control" id="x3" placeholder="15.0 ... 50.0" required>
+    </div>
+    <div class="form-group">
+      <label for="x4">Наличие ИБС в анамнезе</label>
+      <select class="form-control" id="x4" placeholder="Выберите значение">
+        <option value="0">0 (Нет ИБС)</option>
+        <option value="1">1 (ИБС)</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="x5">Возраст пациента (полных лет)</label>
+      <input type="text" class="form-control" id="x5" placeholder="10 ... 90" required>
+    </div>
+    <div class="form-group">
+      <label for="x6">Показатель физического состояния по ASA</label>
+      <select class="form-control" id="x6">
+        <option value="1">1 (I-II)</option>
+        <option value="2">2 (III-IV)</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="x7">Показатель размеров опухоли</label>
+      <select class="form-control" id="x7" placeholder="Выберите значение">
+        <option value="1">1 (Т1-2)</option>
+        <option value="2">2 (Т3-4)</option>
+      </select>
+    </div>
+    <button class="btn btn-primary" id="solve" type="button">Определить вероятность развития НШКРА</button>
+  </form>
+</div>
+
+<div class="modal fade" tabindex="-1" role="dialog" id="reportModal">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Результаты расчета</h4>
+      </div>
+      <div class="modal-body">
+        <div style="text-align: center;"><h3>Вероятность развития НШКРА составляет</h3></div>
+        <div id="result" style="text-align: center;"></div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Изменить данные</button>
+        <button type="button" class="btn btn-default" id="refresh">Сбросить значения формы</button>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

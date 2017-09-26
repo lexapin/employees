@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from application import app, login_required_when_anonymous
 from flask import render_template, flash, redirect, make_response, request, url_for, \
-          send_file, g
+          send_file, g, Response
 
 from application.user import User
 from flask.ext.login import login_user, logout_user, current_user
@@ -22,6 +22,7 @@ from application.modules.finance import finance_module, finance_report_module
 from application.modules.children import children_module, children_report_module
 from application.modules.career import place_module
 
+from time import sleep
 
 @app.before_request
 def before_request():
@@ -66,10 +67,128 @@ def index():
   if current_user.is_anonymous(): return redirect(url_for('login'))
   return redirect(url_for('employees'))
 
+
 @app.route('/closed')
 def closed():
   return render_template("closed.html")
 
+
+@app.route('/form')
+def form():
+  return render_template("modalforms.html")
+
+
+@app.route('/keyboard')
+def keyboard_form():
+  return render_template("experiment_keyboard.html", keyboard_experiment = True)
+
+
+@app.route('/menu')
+def menu_form():
+  return render_template("experiment_menu.html", menu_experiment = True)
+
+
+@app.route('/mouse')
+def mouse_form():
+  return render_template("experiment_mouse.html", mouse_experiment = True)
+
+
+@app.route('/possibility')
+def possibility_form():
+  return render_template("experiment_possibility.html", possibility_experiment = True)
+
+
+from helps import help_page
+@app.route('/help', methods=['GET', 'POST'])
+@app.route('/help/<page>')
+def help_html(page=None):
+  text = []
+  s_text = []
+  title = ""
+  if request.method == 'POST':
+    var = request.form.get("search_value")
+    title = u"Результаты поиска по '%s'"%var
+    for url, help_text in help_page.items():
+      for paragraph in help_text["text"]:
+        if var in paragraph:
+          words = paragraph.split(var)
+          data = {
+            "first": words[0],
+            "peaces": words[1:],
+            "word": var,
+            "url": url,
+            "hint": help_text["title"],
+            }
+          s_text.append(data)
+  if page is not None:
+    title = help_page[page]["title"]
+    text = help_page[page]["text"]
+  return render_template("help.html", help_experiment = True, help_text = text, help_title = title, search_text = s_text)
+
+
+class Queue:
+  def __init__(self, limit = float("inf")):
+    self.__storage = []
+    self.__limit = limit
+    self.__index = 0
+
+  def isEmpty(self):
+    return self.__index == 0
+
+  def push(self, data):
+    self.__index+=1
+    self.__storage.append(data)
+    if self.__index == self.__limit: self.pop()
+
+  def pop(self):
+    if not self.isEmpty():
+      self.__index-=1
+      return self.__storage.pop(0)
+    return None
+
+  def __repr__(self):
+    return str(self.__storage)
+
+  def __len__(self):
+    return self.__index
+
+global image_queue
+image_queue = Queue()
+
+@app.route('/stream/upload', methods=['POST'])
+def upload():
+  global image_queue
+  file = request.files.get("file", None)
+  image_queue.push(file.read())
+  # Save uploaded images to server storage
+  size = 0
+  # with open("/".join(["/home/robot4/uploaded_files", file.filename]), "wb") as server_file:
+  #   server_file.write(file.read())
+  #   size = server_file.tell()
+  return file.filename+str(size)
+
+@app.route('/stream/view', methods=['GET'])
+def page():
+  return render_template('stream.html')
+
+@app.route('/stream/data', methods=['GET'])
+def view_stream():
+  def image_generator(queue):
+    while True:
+      frame = queue.pop()
+      if frame is None:
+        break
+      sleep(1)
+      yield (b'--frame\r\n'
+             b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
+  global image_queue
+  return Response(image_generator(image_queue),
+                    mimetype='multipart/x-mixed-replace; boundary=frame')
+
+@app.route('/stream/queue', methods=['GET'])
+def queue():
+  global image_queue
+  return str(len(image_queue))
 
 # Основная часть приложения
 class TableView(object):
