@@ -17,8 +17,8 @@ $(function(){
     var description;
     if (p>20) description = "Высокий риск несостоятельности швов колоректального рака";
     else description = "Низкий риск развития несостоятельности швов колоректального анастомоза";
-    $("#result").append("<h2>"+p.toFixed(2)+"%"+"</h2>");
-    $("#description").append("<h5>"+description+"</h5>");
+    $("#result").html("<h2>"+p.toFixed(2)+"%"+"</h2>");
+    $("#description").html("<h5>"+description+"</h5>");
     $("#reportModal").modal("show");
   });
 })
