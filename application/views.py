@@ -116,7 +116,7 @@ def rtmp_auth():
   global rtmp_log
   data = rtmp_log[-1] if rtmp_log else {}
   data['length'] = len(rtmp_log)
-  return json.loads(data, indent = 4)
+  return json.dumps(data, indent = 4)
 
 # 
 
