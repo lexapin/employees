@@ -101,21 +101,21 @@ def possibility_form():
 # RTMP
 
 import json
-rtmp_log = []
+rtmp_log_list = []
 
 @app.route('/rtmp.auth')
 def rtmp_auth():
-  global rtmp_log
+  global rtmp_log_list
   data = {}
-  rtmp_log.append(data)
+  rtmp_log_list.append(data)
   return 'rtmp'
 
 
 @app.route('/rtmp.log')
 def rtmp_log():
-  global rtmp_log
-  data = rtmp_log[-1] if rtmp_log else {}
-  data['length'] = len(rtmp_log)
+  global rtmp_log_list
+  data = rtmp_log_list[-1] if rtmp_log_list else {}
+  data['length'] = len(rtmp_log_list)
   return json.dumps(data, indent = 4)
 
 # 
