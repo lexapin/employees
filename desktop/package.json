@@ -7,9 +7,9 @@
   "window": {
     "icon": "logo.png",
     "width": 470,
-    "height": 800,
+    "height": 600,
     "min_width": 470,
-    "min_height": 800,
+    "min_height": 600,
     "max_width": 470,
     "max_height": 800,
     "resizable": false
