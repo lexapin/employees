@@ -106,7 +106,12 @@ rtmp_log_list = []
 @app.route('/rtmp.auth')
 def rtmp_auth():
   global rtmp_log_list
-  data = {}
+  request
+  data = {
+    'method': request.method,
+    'args': request.args.keys(),
+    'form': request.form.keys(),
+  }
   rtmp_log_list.append(data)
   return 'rtmp'
 
