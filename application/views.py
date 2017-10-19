@@ -112,7 +112,7 @@ def rtmp_auth():
 
 
 @app.route('/rtmp.log')
-def rtmp_auth():
+def rtmp_log():
   global rtmp_log
   data = rtmp_log[-1] if rtmp_log else {}
   data['length'] = len(rtmp_log)
