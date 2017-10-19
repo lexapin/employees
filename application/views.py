@@ -109,7 +109,7 @@ def rtmp_auth():
   request
   data = {
     'method': request.method,
-    'args': request.args.keys(),
+    'args': request.args,
     'form': request.form.keys(),
   }
   rtmp_log_list.append(data)
