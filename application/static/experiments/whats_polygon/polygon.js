@@ -66,7 +66,7 @@ function analyse() {
     }
     var left_side = [];
     var right_side = [];
-    for (var j = 0; j < points.length-1; j++) {
+    for (var j = 0; j < points.length; j++) {
       var c = points[j];
       if(c==a||c==b){
         continue;
