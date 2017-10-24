@@ -98,6 +98,34 @@ def possibility_form():
   return render_template("experiment_possibility.html", possibility_experiment = True)
 
 
+# RTMP
+
+import json
+rtmp_log_list = []
+
+@app.route('/rtmp.auth')
+def rtmp_auth():
+  global rtmp_log_list
+  request
+  data = {
+    'method': request.method,
+    'args': request.args,
+    'form': request.form.keys(),
+  }
+  rtmp_log_list.append(data)
+  return 'rtmp'
+
+
+@app.route('/rtmp.log')
+def rtmp_log():
+  global rtmp_log_list
+  data = rtmp_log_list[-1] if rtmp_log_list else {}
+  data['length'] = len(rtmp_log_list)
+  return json.dumps(data, indent = 4)
+
+# 
+
+
 from helps import help_page
 @app.route('/help', methods=['GET', 'POST'])
 @app.route('/help/<page>')

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Частотный лексикографический словарь русского и английского текста</title>
+  <meta charset="utf-8">
+  <link rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+      integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+      crossorigin="anonymous"
+  >
+  <link rel="stylesheet" href="https://rawgit.com/wenzhixin/bootstrap-table/master/src/bootstrap-table.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+      integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+      crossorigin="anonymous"></script>
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  <script src="https://rawgit.com/wenzhixin/bootstrap-table/master/src/bootstrap-table.js"></script>
+  <script src="charfreq.js"></script>
+</head>
+<body>
+  <div style="margin-left: 100px; margin-right: 100px; margin-top: 50px;">
+    <div class="form-group">
+      <label for="textarea">Введите текст для анализа</label>
+      <textarea class="form-control" id="textarea" rows="20"></textarea>
+    </div>
+    <button type="button" class="btn btn-primary" onclick="analise()">Анализ</button>
+    <!-- Отчеты по выполненному анализу -->
+    <div id="bar_chart" style="margin-top: 15px;"></div>
+    <div id="div_table" style="margin-top: 15px; visibility: hidden;">
+      <table id="freq_table">
+          <thead>
+          <tr>
+              <th data-field="char">Символ</th>
+              <th data-field="freq">Частота</th>
+          </tr>
+          </thead>
+      </table>
+    </div>
+  </div>
+</body>
+</html>

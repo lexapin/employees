@@ -1,0 +1,17 @@
+{
+  "name": "nw-app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.html",
+  "author": "",
+  "window": {
+    "icon": "logo.png",
+    "width": 470,
+    "height": 600,
+    "min_width": 470,
+    "min_height": 600,
+    "max_width": 470,
+    "max_height": 800,
+    "resizable": false
+  }
+}
