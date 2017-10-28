@@ -1,0 +1,264 @@
+SQL> connect system/sapass
+Connected.
+SQL> create user user10 identified by user10
+  2  default tablespace system
+  3  quota unlimited on system;
+
+User created.
+
+SQL> connect system/sapass
+Connected.
+SQL> grant connect user10;
+grant connect user10
+      *
+ERROR at line 1:
+ORA-00990: missing or invalid privilege 
+
+
+SQL> grant connect to user10;
+
+Grant succeeded.
+
+SQL> grant create any table to user10;
+
+Grant succeeded.
+
+SQL> connect user10/user10
+Connected.
+SQL> select username from user_users;
+
+USERNAME                                                                        
+------------------------------                                                  
+user10                                                                           
+
+SQL> create table tab_user10(col1 NUMBER, col2 VARCHAR2(20));
+
+Table created.
+
+SQL> insert into tab_user10 values(1, 'USER1');
+
+1 row created.
+
+SQL> insert into tab_user10 values(1, 'USER2');
+
+1 row created.
+
+SQL> commit;
+
+Commit complete.
+
+SQL> create user user7 identified by user7
+  2  default tablespace system
+  3  quota unlimited on system;
+create user user7 identified by user7
+                                *
+ERROR at line 1:
+ORA-01031: insufficient privileges 
+
+
+SQL> connect system/sapass
+Connected.
+SQL> create user user7 identified by user7
+  2  default tablespace system
+  3  quota unlimited on system;
+
+User created.
+
+SQL> grant select on user10.tab_user10 to user7;
+
+Grant succeeded.
+
+SQL> grant insert on user10.tab_user10 to user7;
+
+Grant succeeded.
+
+SQL> grant delete on user10.tab_user10 to user7;
+
+Grant succeeded.
+
+SQL> connect user7/user7
+ERROR:
+ORA-01045: user USER7 lacks CREATE SESSION privilege; logon denied 
+
+
+Warning: You are no longer connected to ORACLE.
+SQL> grant connect to user7
+  2  ;
+SP2-0640: Not connected
+SQL> connect system/sapass
+Connected.
+SQL> grant connect to user7;
+
+Grant succeeded.
+
+SQL> connect user7/user7
+Connected.
+SQL> select * from user10.tab_user10
+  2  ;
+
+      COL1 COL2                                                                 
+---------- --------------------                                                 
+         1 USER1                                                                
+         1 USER2                                                                
+
+SQL> insert into user10.tab_user10 values(3,'USER3');
+
+1 row created.
+
+SQL> delete from user10.tab_user10 where col1=3;
+
+1 row deleted.
+
+SQL> commit;
+
+Commit complete.
+
+SQL> connect user10/user10
+Connected.
+SQL> revoke select on user10.tab_user10 from user7;
+
+Revoke succeeded.
+
+SQL> revoke insert on user10.tab_user10 from user7;
+
+Revoke succeeded.
+
+SQL> revoke delete on user10.tab_user10 from user7;
+
+Revoke succeeded.
+
+SQL> connect user7/user7
+Connected.
+SQL> select * from user10.tab_user10;
+select * from user10.tab_user10
+                    *
+ERROR at line 1:
+ORA-00942: table or view does not exist 
+
+
+SQL> insert into user10.tab_user10 values(3,'USER3');
+insert into user10.tab_user10 values(3,'USER3')
+                  *
+ERROR at line 1:
+ORA-00942: table or view does not exist 
+
+
+SQL> delete from user10.tab_user10 where col1=3;
+delete from user10.tab_user10 where col1=3
+                  *
+ERROR at line 1:
+ORA-00942: table or view does not exist 
+
+
+SQL> connect user10/user10
+Connected.
+SQL> select username from sys.dba_user;
+select username from sys.dba_user
+                         *
+ERROR at line 1:
+ORA-00942: table or view does not exist 
+
+
+SQL> connect system/sapass
+Connected.
+SQL> grant dba to user10;
+
+Grant succeeded.
+
+SQL> connect user10/user10
+Connected.
+SQL> select username from sys.dba_user;
+select username from sys.dba_user
+                         *
+ERROR at line 1:
+ORA-00942: table or view does not exist 
+
+
+SQL> select username from sys.dba_users;
+
+USERNAME                                                                        
+------------------------------                                                  
+USER7                                                                           
+user10                                                                           
+USER1                                                                           
+SYS                                                                             
+SYSTEM                                                                          
+ANONYMOUS                                                                       
+APEX_PUBLIC_USER                                                                
+FLOWS_FILES                                                                     
+APEX_040000                                                                     
+OUTLN                                                                           
+DIP                                                                             
+
+USERNAME                                                                        
+------------------------------                                                  
+ORACLE_OCM                                                                      
+XS$NULL                                                                         
+MDSYS                                                                           
+CTXSYS                                                                          
+DBSNMP                                                                          
+XDB                                                                             
+APPQOSSYS                                                                       
+HR                                                                              
+
+19 rows selected.
+
+SQL> connect system/sapass
+Connected.
+SQL> alter user user10 identified by test;
+
+User altered.
+
+SQL> create profile prof_user10 limit
+  2  failed_login_attempts 2;
+
+Profile created.
+
+SQL> alter user user5 profile prof_user10;
+alter user user5 profile prof_user10
+           *
+ERROR at line 1:
+ORA-01918: user 'USER5' does not exist 
+
+
+SQL> alter user user10 profile prof_user10;
+
+User altered.
+
+SQL> connect user10/asdasdas
+ERROR:
+ORA-01017: invalid username/password; logon denied 
+
+
+Warning: You are no longer connected to ORACLE.
+SQL> connect user10/asdasdas
+ERROR:
+ORA-01017: invalid username/password; logon denied 
+
+
+SQL> connect user10/test
+ERROR:
+ORA-28000: the account is locked 
+
+
+SQL> system/sapass
+SP2-0734: unknown command beginning "system/sap..." - rest of line ignored.
+SQL> connect system/sapass
+Connected.
+SQL> alter user user10 account unlock;
+
+User altered.
+
+SQL> connect user10/test
+Connected.
+SQL> connect system/sapass
+Connected.
+SQL> drop user user10 cascade;
+
+User dropped.
+
+SQL> drop profile prof_user10;
+
+Profile dropped.
+
+SQL> spool off

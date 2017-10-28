@@ -1,0 +1,713 @@
+SQL> connect system/sapass
+Connected.
+SQL> create user user10 identified by user10
+  2  default tablespace system
+  3  quota unlimited on system;
+
+User created.
+
+SQL> grant connect to user10;
+
+Grant succeeded.
+
+SQL> alter system set resource_limit=true;
+
+System altered.
+
+SQL> create profile profile_fomin_4 limit
+  2  sessions_per_user 1;
+
+Profile created.
+
+SQL> alter user user10 profile profile_fomin_4;
+
+User altered.
+
+SQL> connect user10/user10
+Connected.
+SQL> connect user10/user10
+Connected.
+SQL> connect user10/user10
+Connected.
+SQL> connect system/sapass
+Connected.
+SQL> connect user10/user10
+ERROR:
+ORA-02391: exceeded simultaneous SESSIONS_PER_USER limit 
+
+
+Warning: You are no longer connected to ORACLE.
+SQL> create profile profile_fomin_6 limit
+  2  connect_time 1;
+SP2-0640: Not connected
+SQL> connect system/sapass
+Connected.
+SQL> create profile profile_fomin_6 limit
+  2  connect_time 1;
+
+Profile created.
+
+SQL> alter user user10 profile profile_ivanov_6;
+alter user user10 profile profile_ivanov_6
+*
+ERROR at line 1:
+ORA-02380: profile PROFILE_IVANOV_6 does not exist 
+
+
+SQL> alter user user10 profile profile_fomin_6;
+
+User altered.
+
+SQL> connect user10/user10
+Connected.
+SQL> create table t1;
+create table t1
+              *
+ERROR at line 1:
+ORA-00906: missing left parenthesis 
+
+
+SQL> create table t1(col1 NUMBER);
+create table t1(col1 NUMBER)
+*
+ERROR at line 1:
+ORA-02399: exceeded maximum connect time, you are being logged off 
+
+
+SQL> create profile profile_fomin_8 limit
+  2  cpu_per_session_1;
+create profile profile_fomin_8 limit
+*
+ERROR at line 1:
+ORA-01012: not logged on 
+Process ID: 3548 
+Session ID: 8 Serial number: 151 
+
+
+SQL> connect system/sapass
+Connected.
+SQL> create profile profile_fomin_8 limit
+  2  cpu_per_session_1;
+cpu_per_session_1
+*
+ERROR at line 2:
+ORA-02376: invalid or redundant resource 
+
+
+SQL> create profile profile_fomin_8 limit
+  2  cpu_per_session 1;
+
+Profile created.
+
+SQL> connect user10/user10
+Connected.
+SQL> connect system/sapass
+Connected.
+SQL> alter user user10 profile profile_fomin_8;
+
+User altered.
+
+SQL> connect user10/user10
+Connected.
+SQL> select * from user_users;
+
+USERNAME                          USER_ID ACCOUNT_STATUS                        
+------------------------------ ---------- --------------------------------      
+LOCK_DAT EXPIRY_D DEFAULT_TABLESPACE             TEMPORARY_TABLESPACE           
+-------- -------- ------------------------------ ------------------------------ 
+CREATED  INITIAL_RSRC_CONSUMER_GROUP                                            
+-------- ------------------------------                                         
+EXTERNAL_NAME                                                                   
+--------------------------------------------------------------------------------
+user10                                  51 OPEN                                  
+         30.03.18 SYSTEM                         TEMP                           
+01.10.17 DEFAULT_CONSUMER_GROUP                                                 
+                                                                                
+                                                                                
+
+SQL> select * from user_users;
+select * from user_users
+              *
+ERROR at line 1:
+ORA-02392: exceeded session limit on CPU usage, you are being logged off 
+
+
+SQL> connect system/sapass
+Connected.
+SQL> create profile profile_fomin_10 limit
+  2  failed_login_attempts 3;
+
+Profile created.
+
+SQL> alter user user10 profile profile_fomin_19;
+alter user user10 profile profile_fomin_19
+*
+ERROR at line 1:
+ORA-02380: profile PROFILE_fomin_19 does not exist 
+
+
+SQL> alter user user10 profile profile_fomin_10;
+
+User altered.
+
+SQL> connect user10/asasd
+ERROR:
+ORA-01017: invalid username/password; logon denied 
+
+
+Warning: You are no longer connected to ORACLE.
+SQL> connect user10/asasd
+ERROR:
+ORA-01017: invalid username/password; logon denied 
+
+
+SQL> connect user10/asasd
+ERROR:
+ORA-01017: invalid username/password; logon denied 
+
+
+SQL> connect user10/user10
+ERROR:
+ORA-28000: the account is locked 
+
+
+SQL> connect system/sapass
+Connected.
+SQL> alter user user10 account unlock;
+
+User altered.
+
+SQL> create or replace function test_verify_function
+  2  (username varchar2,
+  3  password varchar2,
+  4  old_password varchar2)
+  5  return boolean is
+  6  n boolean;
+  7  m integer;
+  8  differ integer;
+  9  isdigit boolean;
+ 10  ischar boolean;
+ 11  iscpunct boolean;
+ 12  digitarray varchar2(20);
+ 13  punctarray varchar2(25);
+ 14  chararray varchar2(25);
+ 15  begin
+ 16  digitarray:='0123456789';
+ 17  chararray:='abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+ 18  punctarray:='!"#$%&()``*+,-/:;<=>?_';
+ 19  IF password = username then
+ 20  raise_application_error(-20001, 'Password same as user');
+ 21  end if;
+ 22  if length(password)<4 then
+ 23  raise_application_error(-20002, 'Password length less than 4');
+ 24  end if;
+ 25  IF NLS_LOWER(password) IN ('welcome', 'database', 'account', 'user', 'password',
+ 26  'oracle', 'computer', 'abcd') THEN raise_application_error(-20002, 'Password too simple');
+ 27  end if;
+ 28  isdigit:=FALSE;
+ 29  m := length(password);
+ 30  for i in 1..10 loop
+ 31  for j in 1..m loop
+ 32  IF substr(password,j,1) = substr(digitarray,i,1) THEN
+ 33  isdigit:=TRUE;
+ 34  GOTO findchar;
+ 35  end if;
+ 36  end loop;
+ 37  end loop;
+ 38  IF isdigit = FALSE THEN
+ 39  raise_application_error(-20003, 'Password should contain at least one
+ 40  digit, one character and one punctuation');
+ 41  end if:
+ 42  ischar:=FALSE;
+ 43  FOR i IN 1..length(chararray) LOOP
+ 44    FOR j IN 1..m LOOP
+ 45      IF substr(password,j,1) = substr(chararray,i,1) THEN
+ 46         ischar:=TRUE;
+ 47           GOTO findpunct;
+ 48         END IF;
+ 49      END LOOP;
+ 50  END LOOP;
+ 51  IF ischar = FALSE THEN
+ 52    raise_application_error(-20003, 'Password should contain at least one digit, one
+ 53  character and one punctuation');
+ 54  END IF;
+ 55    --3. Check for the punctuation
+ 56  <<findpunct>>
+ 57  ispunct:=FALSE;
+ 58  FOR i IN 1..length(punctarray) LOOP
+ 59    FOR j IN 1..m LOOP
+ 60      IF substr(password,j,1) = substr(punctarray,i,1) THEN
+ 61         ispunct:=TRUE;
+ 62           GOTO endsearch;
+ 63         END IF;
+ 64     END LOOP;
+ 65  END LOOP;
+ 66  IF ispunct = FALSE THEN raise_application_error(-20003, 'Password should contain at least
+ 67  one \ digit, one character and one punctuation');
+ 68  END IF;
+ 69  IF old_password = '' THEN
+ 70    raise_application_error(-20004, 'Old password is null');
+ 71  END IF;
+ 72  differ := length(old_password) - length(password);
+ 73  IF abs(differ) < 3 THEN
+ 74    IF length(password) < length(old_password) THEN
+ 75      m := length(password);
+ 76    ELSE
+ 77      m:= length(old_password);
+ 78    END IF;
+ 79    differ := abs(differ);
+ 80    FOR i IN 1..m LOOP
+ 81      IF substr(password,i,1) != substr(old_password,i,1) THEN
+ 82               differ := differ + 1;
+ 83      END IF;
+ 84    END LOOP;
+ 85    IF differ < 3 THEN
+ 86      raise_application_error(-20004, 'Password should differ by at \
+ 87        least 3 characters');
+ 88      END IF;
+ 89    END IF;
+ 90  RETURN(TRUE);
+ 91  END;
+ 92  /
+
+Warning: Function created with compilation errors.
+
+SQL> CREATE OR REPLACE FUNCTION test_verify_function
+  2  (username varchar2,
+  3     password varchar2,
+  4     old_password varchar2)
+  5     RETURN boolean IS
+  6     n boolean;
+  7     m integer;
+  8     differ integer;
+  9     isdigit boolean;
+ 10     ischar  boolean;
+ 11     ispunct boolean;
+ 12     digitarray varchar2(20);
+ 13     punctarray varchar2(25);
+ 14     chararray varchar2(52);
+ 15  
+ 16  BEGIN
+ 17     digitarray:= '0123456789';
+ 18     chararray:= 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+ 19     punctarray:='!"#$%&()``*+,-/:;<=>?_';
+ 20  
+ 21     --Check if the password is same as the username
+ 22  IF password = username THEN
+ 23     raise_application_error(-20001, 'Password same as user');
+ 24  END IF;
+ 25  
+ 26     --Check for the minimum length of the password
+ 27  IF length(password) < 4 THEN
+ 28     raise_application_error(-20002, 'Password length less than 4');
+ 29  END IF;
+ 30  
+ 31     --Check if the password is too simple. A dictionary of words may be
+ 32     --maintained and a check may be made so as not to allow the words
+ 33     --that are too simple for the password.
+ 34  IF NLS_LOWER(password) IN ('welcome', 'database', 'account', 'user', 'password',
+ 35  'oracle', 'computer', 'abcd') THEN raise_application_error(-20002, 'Password too simple');
+ 36  END IF;
+ 37  
+ 38     --Check if the password contains at least one letter, one digit and one
+ 39     --punctuation mark.
+ 40     --1. Check for the digit
+ 41     --You may delete 1. and replace with 2. or 3.
+ 42  isdigit:=FALSE;
+ 43  m := length(password);
+ 44  FOR i IN 1..10 LOOP
+ 45    FOR j IN 1..m LOOP
+ 46      IF substr(password,j,1) = substr(digitarray,i,1) THEN
+ 47        isdigit:=TRUE;
+ 48          GOTO findchar;
+ 49      END IF;
+ 50     END LOOP;
+ 51  END LOOP;
+ 52  IF isdigit = FALSE THEN
+ 53    raise_application_error(-20003, 'Password should contain at least one
+ 54  digit, one character and one punctuation');
+ 55  END IF;
+ 56     --2. Check for the character
+ 57  <<findchar>>
+ 58  ischar:=FALSE;
+ 59  FOR i IN 1..length(chararray) LOOP
+ 60    FOR j IN 1..m LOOP
+ 61      IF substr(password,j,1) = substr(chararray,i,1) THEN
+ 62         ischar:=TRUE;
+ 63           GOTO findpunct;
+ 64         END IF;
+ 65      END LOOP;
+ 66  END LOOP;
+ 67  IF ischar = FALSE THEN
+ 68    raise_application_error(-20003, 'Password should contain at least one digit, one
+ 69  character and one punctuation');
+ 70  END IF;
+ 71    --3. Check for the punctuation
+ 72  <<findpunct>>
+ 73  ispunct:=FALSE;
+ 74  FOR i IN 1..length(punctarray) LOOP
+ 75    FOR j IN 1..m LOOP
+ 76      IF substr(password,j,1) = substr(punctarray,i,1) THEN
+ 77         ispunct:=TRUE;
+ 78           GOTO endsearch;
+ 79         END IF;
+ 80     END LOOP;
+ 81  END LOOP;
+ 82  IF ispunct = FALSE THEN raise_application_error(-20003, 'Password should contain at least
+ 83  one \ digit, one character and one punctuation');
+ 84  END IF;
+ 85  
+ 86  <<endsearch>>
+ 87  
+ 88     --Check if the password differs from the previous password by at least 3 letters
+ 89  IF old_password = '' THEN
+ 90    raise_application_error(-20004, 'Old password is null');
+ 91  END IF;
+ 92    --Everything is fine; return TRUE ;
+ 93  differ := length(old_password) - length(password);
+ 94  
+ 95  IF abs(differ) < 3 THEN
+ 96    IF length(password) < length(old_password) THEN
+ 97      m := length(password);
+ 98    ELSE
+ 99      m:= length(old_password);
+100    END IF;
+101    differ := abs(differ);
+102    FOR i IN 1..m LOOP
+103      IF substr(password,i,1) != substr(old_password,i,1) THEN
+104               differ := differ + 1;
+105      END IF;
+106    END LOOP;
+107    IF differ < 3 THEN
+108      raise_application_error(-20004, 'Password should differ by at \
+109        least 3 characters');
+110      END IF;
+111    END IF;
+112     --Everything is fine; return TRUE ;
+113    RETURN(TRUE);
+114  END;
+115  /
+
+Function created.
+
+SQL> 
+SQL> connect system/msapass
+ERROR:
+ORA-01017: invalid username/password; logon denied 
+
+
+Warning: You are no longer connected to ORACLE.
+SQL> connect system/sapass
+Connected.
+SQL> create profile profile_mosiseev_12 limit
+  2  password_verify_function test_verify_function;
+create profile profile_mosiseev_12 limit
+*
+ERROR at line 1:
+ORA-07443: function TEST_VERIFY_FUNCTION not found 
+
+
+SQL> CREATE OR REPLACE FUNCTION test_verify_function
+  2  (username varchar2,
+  3     password varchar2,
+  4     old_password varchar2)
+  5     RETURN boolean IS
+  6     n boolean;
+  7     m integer;
+  8     differ integer;
+  9     isdigit boolean;
+ 10     ischar  boolean;
+ 11     ispunct boolean;
+ 12     digitarray varchar2(20);
+ 13     punctarray varchar2(25);
+ 14     chararray varchar2(52);
+ 15  
+ 16  BEGIN
+ 17     digitarray:= '0123456789';
+ 18     chararray:= 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+ 19     punctarray:='!"#$%&()``*+,-/:;<=>?_';
+ 20  
+ 21     --Check if the password is same as the username
+ 22  IF password = username THEN
+ 23     raise_application_error(-20001, 'Password same as user');
+ 24  END IF;
+ 25  
+ 26     --Check for the minimum length of the password
+ 27  IF length(password) < 4 THEN
+ 28     raise_application_error(-20002, 'Password length less than 4');
+ 29  END IF;
+ 30  
+ 31     --Check if the password is too simple. A dictionary of words may be
+ 32     --maintained and a check may be made so as not to allow the words
+ 33     --that are too simple for the password.
+ 34  IF NLS_LOWER(password) IN ('welcome', 'database', 'account', 'user', 'password',
+ 35  'oracle', 'computer', 'abcd') THEN raise_application_error(-20002, 'Password too simple');
+ 36  END IF;
+ 37  
+ 38     --Check if the password contains at least one letter, one digit and one
+ 39     --punctuation mark.
+ 40     --1. Check for the digit
+ 41     --You may delete 1. and replace with 2. or 3.
+ 42  isdigit:=FALSE;
+ 43  m := length(password);
+ 44  FOR i IN 1..10 LOOP
+ 45    FOR j IN 1..m LOOP
+ 46      IF substr(password,j,1) = substr(digitarray,i,1) THEN
+ 47        isdigit:=TRUE;
+ 48          GOTO findchar;
+ 49      END IF;
+ 50     END LOOP;
+ 51  END LOOP;
+ 52  IF isdigit = FALSE THEN
+ 53    raise_application_error(-20003, 'Password should contain at least one
+ 54  digit, one character and one punctuation');
+ 55  END IF;
+ 56     --2. Check for the character
+ 57  <<findchar>>
+ 58  ischar:=FALSE;
+ 59  FOR i IN 1..length(chararray) LOOP
+ 60    FOR j IN 1..m LOOP
+ 61      IF substr(password,j,1) = substr(chararray,i,1) THEN
+ 62         ischar:=TRUE;
+ 63           GOTO findpunct;
+ 64         END IF;
+ 65      END LOOP;
+ 66  END LOOP;
+ 67  IF ischar = FALSE THEN
+ 68    raise_application_error(-20003, 'Password should contain at least one digit, one
+ 69  character and one punctuation');
+ 70  END IF;
+ 71    --3. Check for the punctuation
+ 72  <<findpunct>>
+ 73  ispunct:=FALSE;
+ 74  FOR i IN 1..length(punctarray) LOOP
+ 75    FOR j IN 1..m LOOP
+ 76      IF substr(password,j,1) = substr(punctarray,i,1) THEN
+ 77         ispunct:=TRUE;
+ 78           GOTO endsearch;
+ 79         END IF;
+ 80     END LOOP;
+ 81  END LOOP;
+ 82  IF ispunct = FALSE THEN raise_application_error(-20003, 'Password should contain at least
+ 83  one \ digit, one character and one punctuation');
+ 84  END IF;
+ 85  
+ 86  <<endsearch>>
+ 87  
+ 88     --Check if the password differs from the previous password by at least 3 letters
+ 89  IF old_password = '' THEN
+ 90    raise_application_error(-20004, 'Old password is null');
+ 91  END IF;
+ 92    --Everything is fine; return TRUE ;
+ 93  differ := length(old_password) - length(password);
+ 94  
+ 95  IF abs(differ) < 3 THEN
+ 96    IF length(password) < length(old_password) THEN
+ 97      m := length(password);
+ 98    ELSE
+ 99      m:= length(old_password);
+100    END IF;
+101    differ := abs(differ);
+102    FOR i IN 1..m LOOP
+103      IF substr(password,i,1) != substr(old_password,i,1) THEN
+104               differ := differ + 1;
+105      END IF;
+106    END LOOP;
+107    IF differ < 3 THEN
+108      raise_application_error(-20004, 'Password should differ by at \
+109        least 3 characters');
+110      END IF;
+111    END IF;
+112     --Everything is fine; return TRUE ;
+113    RETURN(TRUE);
+114  END;
+115  /
+
+Function created.
+
+SQL> create profile profile_fomin_12 limit
+  2  password_verify_function test_verify_function;
+create profile profile_fomin_12 limit
+*
+ERROR at line 1:
+ORA-07443: function TEST_VERIFY_FUNCTION not found 
+
+
+SQL> create profile profile_fomin_12 limit
+  2  password_verify_function test_verify_function;
+create profile profile_fomin_12 limit
+*
+ERROR at line 1:
+ORA-07443: function TEST_VERIFY_FUNCTION not found 
+
+
+SQL> commit;
+
+Commit complete.
+
+SQL> create profile profile_fomin_12 limit
+  2  password_verify_function test_verify_function;
+create profile profile_fomin_12 limit
+*
+ERROR at line 1:
+ORA-07443: function TEST_VERIFY_FUNCTION not found 
+
+
+SQL> CREATE OR REPLACE FUNCTION test_verify_function
+  2  (username varchar2,
+  3     password varchar2,
+  4     old_password varchar2)
+  5     RETURN boolean IS
+  6     n boolean;
+  7     m integer;
+  8     differ integer;
+  9     isdigit boolean;
+ 10     ischar  boolean;
+ 11     ispunct boolean;
+ 12     digitarray varchar2(20);
+ 13     punctarray varchar2(25);
+ 14     chararray varchar2(52);
+ 15  
+ 16  BEGIN
+ 17     digitarray:= '0123456789';
+ 18     chararray:= 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+ 19     punctarray:='!"#$%&()``*+,-/:;<=>?_';
+ 20  
+ 21     --Check if the password is same as the username
+ 22  IF password = username THEN
+ 23     raise_application_error(-20001, 'Password same as user');
+ 24  END IF;
+ 25  
+ 26     --Check for the minimum length of the password
+ 27  IF length(password) < 4 THEN
+ 28     raise_application_error(-20002, 'Password length less than 4');
+ 29  END IF;
+ 30  
+ 31     --Check if the password is too simple. A dictionary of words may be
+ 32     --maintained and a check may be made so as not to allow the words
+ 33     --that are too simple for the password.
+ 34  IF NLS_LOWER(password) IN ('welcome', 'database', 'account', 'user', 'password',
+ 35  'oracle', 'computer', 'abcd') THEN raise_application_error(-20002, 'Password too simple');
+ 36  END IF;
+ 37  
+ 38     --Check if the password contains at least one letter, one digit and one
+ 39     --punctuation mark.
+ 40     --1. Check for the digit
+ 41     --You may delete 1. and replace with 2. or 3.
+ 42  isdigit:=FALSE;
+ 43  m := length(password);
+ 44  FOR i IN 1..10 LOOP
+ 45    FOR j IN 1..m LOOP
+ 46      IF substr(password,j,1) = substr(digitarray,i,1) THEN
+ 47        isdigit:=TRUE;
+ 48          GOTO findchar;
+ 49      END IF;
+ 50     END LOOP;
+ 51  END LOOP;
+ 52  IF isdigit = FALSE THEN
+ 53    raise_application_error(-20003, 'Password should contain at least one
+ 54  digit, one character and one punctuation');
+ 55  END IF;
+ 56     --2. Check for the character
+ 57  <<findchar>>
+ 58  ischar:=FALSE;
+ 59  FOR i IN 1..length(chararray) LOOP
+ 60    FOR j IN 1..m LOOP
+ 61      IF substr(password,j,1) = substr(chararray,i,1) THEN
+ 62         ischar:=TRUE;
+ 63           GOTO findpunct;
+ 64         END IF;
+ 65      END LOOP;
+ 66  END LOOP;
+ 67  IF ischar = FALSE THEN
+ 68    raise_application_error(-20003, 'Password should contain at least one digit, one
+ 69  character and one punctuation');
+ 70  END IF;
+ 71    --3. Check for the punctuation
+ 72  <<findpunct>>
+ 73  ispunct:=FALSE;
+ 74  FOR i IN 1..length(punctarray) LOOP
+ 75    FOR j IN 1..m LOOP
+ 76      IF substr(password,j,1) = substr(punctarray,i,1) THEN
+ 77         ispunct:=TRUE;
+ 78           GOTO endsearch;
+ 79         END IF;
+ 80     END LOOP;
+ 81  END LOOP;
+ 82  IF ispunct = FALSE THEN raise_application_error(-20003, 'Password should contain at least
+ 83  one \ digit, one character and one punctuation');
+ 84  END IF;
+ 85  
+ 86  <<endsearch>>
+ 87  
+ 88     --Check if the password differs from the previous password by at least 3 letters
+ 89  IF old_password = '' THEN
+ 90    raise_application_error(-20004, 'Old password is null');
+ 91  END IF;
+ 92    --Everything is fine; return TRUE ;
+ 93  differ := length(old_password) - length(password);
+ 94  
+ 95  IF abs(differ) < 3 THEN
+ 96    IF length(password) < length(old_password) THEN
+ 97      m := length(password);
+ 98    ELSE
+ 99      m:= length(old_password);
+100    END IF;
+101    differ := abs(differ);
+102    FOR i IN 1..m LOOP
+103      IF substr(password,i,1) != substr(old_password,i,1) THEN
+104               differ := differ + 1;
+105      END IF;
+106    END LOOP;
+107    IF differ < 3 THEN
+108      raise_application_error(-20004, 'Password should differ by at \
+109        least 3 characters');
+110      END IF;
+111    END IF;
+112     --Everything is fine; return TRUE ;
+113    RETURN(TRUE);
+114  END;
+115  /
+
+Function created.
+
+SQL> commit;
+
+Commit complete.
+
+SQL> CREATE PROFILE profile_ivanov_12 LIMIT
+  2             PASSWORD_VERIFY_FUNCTION test_verify_function;
+CREATE PROFILE profile_ivanov_12 LIMIT
+*
+ERROR at line 1:
+ORA-07443: function TEST_VERIFY_FUNCTION not found 
+
+
+SQL> drop user user10 cascade;
+
+User dropped.
+
+SQL> drop profile profile_fomin_4;
+
+Profile dropped.
+
+SQL> drop profile profile_fomin_6;
+
+Profile dropped.
+
+SQL> drop profile profile_fomin_8;
+
+Profile dropped.
+
+SQL> drop profile profile_fomin_10;
+
+Profile dropped.
+
+SQL> drop profile profile_fomin_12;
+drop profile profile_fomin_12
+*
+ERROR at line 1:
+ORA-02380: profile PROFILE_fomin_12 does not exist 
+
+
+SQL> spool off
