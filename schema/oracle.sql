@@ -1,5 +1,21 @@
 -- Схема
 
+-- Вариант 10.
+-- Л. р. №1. Создание и заполнение отношений БД библиотеки.
+-- 1. Отношение "Журналы" (поля "Индекс журнала", "Название" и "Издатель").
+-- 2. Отношение "Рубрикатор" (поля "Шифр" и "Название рубрики").
+-- 3. Отношение "Выпуски журналов" (поля "Идентификатор", "Индекс журнала", "Год", "Номер выпуска").
+-- 4. Отношение "Публикации":
+-- Содержимое поля Тип Длина Дес. Примечание
+-- Автор(ы) публикации С 50 ключевая комбинация полей
+-- Название публикации C 60 
+-- Идентификатор выпуска N 6 0
+
+-- Шифр рубрики C 6 внешний ключ к таблице "Рубрикатор"
+-- Страницы С 7 например, с.56-62
+-- Примечание C 30 название раздела журнала
+-- Примечание: не для всех отношений указаны ключевые поля. Если они не указаны, их нужно добавить!
+
 CREATE SEQUENCE journal_seq
 START WITH 1 
 INCREMENT BY 1 
@@ -301,6 +317,8 @@ INSERT INTO article_author (id, author_id, article_id)
     AND author.name='Майоров Алексей';
 
 -- Выборка данных
+ЛАБА2
+
 SELECT journal.title, article.title, category.name, author.name, release.release_year
 FROM article, release, category, journal, article_author, author
 WHERE article.release_id=release.id
@@ -353,29 +371,29 @@ CREATE VIEW articles as
 
 select * from articles;
 
+create view journal_statistics as
+  select journal_title1 as title, category_name1 as name, journal_count1 as before_2000, journal_count2 as after_2000
+  from (
+    select journal.title as journal_title1, category.name as category_name1, count(*) as journal_count1
+    from release, article, journal, category
+    where release.id=article.release_id
+    and release.journal_id=journal.id
+    and article.category_id=category.id
+    and release.release_year<2000
+    group by journal.title, category.name), (
+    select journal.title as journal_title2, category.name as category_name2,  count(*) as journal_count2
+    from release, article, journal, category
+    where release.id=article.release_id
+    and release.journal_id=journal.id
+    and article.category_id=category.id
+    and release.release_year>2000
+    group by journal.title, category.name)
+  where journal_title1=journal_title2 and category_name1=category_name2;
 
-select journal_title1 as title, category_name1 as name, journal_count1 as before_2000, journal_count2 as after_2000
-from (
-  select journal.title as journal_title1, category.name as category_name1, count(*) as journal_count1
-  from release, article, journal, category
+create view journal_statistics as
+  select journal.title, release.release_year, count(*)
+  from release, article, journal
   where release.id=article.release_id
   and release.journal_id=journal.id
-  and article.category_id=category.id
-  and release.release_year<2000
-  group by journal.title, category.name), (
-  select journal.title as journal_title2, category.name as category_name2,  count(*) as journal_count2
-  from release, article, journal, category
-  where release.id=article.release_id
-  and release.journal_id=journal.id
-  and article.category_id=category.id
-  and release.release_year>2000
-  group by journal.title, category.name)
-where journal_title1=journal_title2 and category_name1=category_name2;
-
-
-select journal.title, release.release_year, count(*)
-from release, article, journal
-where release.id=article.release_id
-and release.journal_id=journal.id
-group by journal.title, release.release_year
-order by journal.title, release.release_year;
+  group by journal.title, release.release_year
+  order by journal.title, release.release_year;
